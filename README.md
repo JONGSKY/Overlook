@@ -62,12 +62,17 @@ A run without Bob is labelled **Draft audit** in the UI.
 
 ### Built with Bob 2.0
 
-Bob 2.0 was used at every stage of the project, not only inside the product.
+Bob 2.0 was used at every stage of the project, not only inside the product. Each team account ran its own tasks until its 40-Bobcoin budget was spent.
 
-- **Plan mode + document understanding:** Bob read the `.docx` brief and wrote the build plan, [`docs/PLAN.md`](docs/PLAN.md): phases, done checks, acceptance matrix and Bobcoin budget.
-- **Agent mode + subtasks:** Bob built the first version phase by phase as seven subtasks, each in a fresh context, committing after every phase.
-- **Fixes across two accounts:** review findings were fixed by Bob in Agent mode, first in the same account (fix 1), then in a second team account (fix 2).
-- **Budget:** three team accounts, **86.50 Bobcoins** in total.
+| Stage | Bob 2.0 | What Bob did |
+|---|---|---|
+| Start | Agent mode, `office-insights` skill | Wrote the spec, the request brief as a Word document and the first Auditor mode, rules and skills |
+| Plan | Plan mode, document understanding | Read the `.docx` brief and wrote [`docs/PLAN.md`](docs/PLAN.md): phases, done checks, acceptance matrix, Bobcoin budget |
+| Build | Agent mode, seven subtasks | Built the first version phase by phase, each subtask in a fresh context, committing after every phase |
+| Fix | Agent mode, a second account | Applied the review findings: test collection, bilingual text, revert commits, UI, samples |
+| Review | Agent mode | Reviewed the finished codebase: dead code removed, fixes, stronger tests, and the original test command taken from base so a rewritten test script cannot fake a pass |
+
+Three team accounts, four tasks, **119.03 Bobcoins** in total.
 
 Task IDs, per-phase usage and session summary screenshots are in [`bob_sessions/`](bob_sessions/) and [`docs/BOB_SESSIONS.md`](docs/BOB_SESSIONS.md). How the first version grew into this one is in [`docs/EVOLUTION.md`](docs/EVOLUTION.md).
 

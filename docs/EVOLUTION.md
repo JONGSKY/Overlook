@@ -18,7 +18,7 @@ Bob 2.0 was used at every stage: to plan the project, to build it, and as the en
 | Configure | **Custom modes**, **mode rules**, **skills**, **AGENTS.md** | Bob wrote its own configuration in P1: the `overlook-auditor` mode with a `fileRegex` write limit, the audit rules, the `fence-mapper`, `claim-extractor` and `business-translate` skills |
 | Run | **Parallel subagents**, **MCP**, **slash commands** | In the product, the Auditor mode reads the brief, runs four subagents at once (fence, claims, checks, plain language), calls the Overlook MCP tools, and the Fixer mode fixes forward inside the requested area |
 
-Three Bob accounts were used: task 00 (7.00 Bobcoins) started the repository, and tasks 01 and 02 used their full 40-Bobcoin budgets: **86.50 Bobcoins** in total, with Task Ids, per-phase usage and session summary screenshots in [`bob_sessions/`](../bob_sessions/) and [`docs/BOB_SESSIONS.md`](BOB_SESSIONS.md).
+Three Bob accounts were used in four tasks, each account until its 40-Bobcoin budget was spent: task 00 (7.00 Bobcoins) started the repository, tasks 01 (39.55) and 02 (39.95) built and fixed the prototype, and task 03 (32.53) reviewed and hardened the finished codebase: **119.03 Bobcoins** in total, with Task Ids, per-phase usage and session summary screenshots in [`bob_sessions/`](../bob_sessions/) and [`docs/BOB_SESSIONS.md`](BOB_SESSIONS.md).
 
 ## History of the current version
 
