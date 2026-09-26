@@ -4,173 +4,190 @@
 
 # Overlook
 
-**AI said done. See what actually changed.**
-
-Audit a coding task an AI agent has already finished: what changed, how it compares with what was requested,<br/>and whether the agent's report is true.
+### AI said done. See what actually changed.
 
 **English** · [한국어](README.ko.md)
 
-[![Live demo](https://img.shields.io/badge/demo-live-3b82d4?style=flat-square)](https://overlook-lime.vercel.app/)
-[![Built with IBM Bob 2.0](https://img.shields.io/badge/built%20with-IBM%20Bob%202.0-0f62fe?style=flat-square)](#built-with-bob-20)
+[![Live demo](https://img.shields.io/badge/▶_live_demo-overlook--lime.vercel.app-3b82d4?style=for-the-badge)](https://overlook-lime.vercel.app/)
+
+[![Built with IBM Bob 2.0](https://img.shields.io/badge/built_with-IBM_Bob_2.0-0f62fe?style=flat-square)](#built-with-ibm-bob-20)
+[![Tests](https://img.shields.io/badge/tests-47_passing-3c873a?style=flat-square)](engine/test)
+[![No dependencies](https://img.shields.io/badge/npm_dependencies-0-informational?style=flat-square)](package.json)
 [![MIT license](https://img.shields.io/badge/license-MIT-7c5cd8?style=flat-square)](LICENSE)
-[![Node.js 22+](https://img.shields.io/badge/node-%3E%3D22-3c873a?style=flat-square)](package.json)
-[![No dependencies](https://img.shields.io/badge/dependencies-none-informational?style=flat-square)](package.json)
-
-[Live demo](https://overlook-lime.vercel.app/) · [Getting started](#getting-started) · [How IBM Bob is used](#how-ibm-bob-is-used) · [Examples](#examples) · [How it works](#how-it-works)
-
-![Overlook: paste a GitHub link over a live map of a real audit](docs/images/overlook-main.png)
-
-<sub>Made by team <b>Time Has Density</b> for the IBM Bob 2.0 hackathon.</sub>
 
 </div>
 
----
+<br/>
 
-## Why Overlook
+AI agents can now take a ticket and come back with a finished pull request. The report always sounds great: *"Done. I only changed the article views. No API changes. All tests pass."* But is it true? Today you find out by reading the whole diff, or you don't find out at all.
 
-AI coding agents finish whole tasks and end with a confident report: *"Done. I only changed the article views. No API changes. All tests pass."* A reviewer can trust the report or read the entire diff to find out whether it is true.
+**Overlook reviews the agent's work for you.** Paste a GitHub link. It shows what the agent actually changed, compares that with what was requested, and checks every sentence of the report against git. Then you decide what stays and what gets reverted.
 
-Agents often touch code outside the request: a shared helper, an API serializer, a test assertion they "fixed". Those changes spread into screens and contracts nobody asked for, and they can collide with work other people merged while the agent was busy. Overlook answers the four questions a reviewer has before merging:
+<div align="center">
 
-1. **Did the agent stay inside the request?**
-2. **Is its report true?**
-3. **Do the original tests still pass?**
-4. **What needs a decision?**
+![Overlook: paste a GitHub link over a live map of a real audit](docs/images/overlook-main.png)
 
-## What it does
+</div>
 
-- **Paste a link and it runs.** A pull request, compare, commit or repository URL is enough. The range comes from the link, the **request** from the issue the pull request closes (`Fixes #724`), the **agent's report** from its description. For a repository link, the latest task is audited; a merged pull request is restored from its own branch.
-- **Evidence from git, not from a model.** A dependency-free collector reads `base..head`: changed files, commits, rewritten or weakened tests, API files, the import graph (JavaScript/TypeScript, Go, Python) and the branch picture around the task.
-- **The codebase as a map.** Folders are blocks and files are buildings, coloured by verdict: blue inside the request, red outside, amber may be affected. The requested area is a dashed blue fence.
-- **Every commit against the one before.** The history bar draws the branches as a git graph. Replay the task commit by commit, or click any commit on any branch to see what it changed.
-- **Tests are run, not reported.** The *original* tests (as they were at base, with the base test command) run against the agent's code in a throwaway worktree. "All tests pass" stays *unverified* until they run.
-- **Decide, revert, receipt.** Approve or revert each change outside the request. Decisions become one revert commit per file, and a receipt goes on the pull request.
-- **Evidence decides, Bob explains.** IBM Bob reads the request, proposes the requested area, splits the report into claims and writes executable checks. Every fact git can check is computed, never taken from Bob.
+## What you see
 
-## Getting started
+A codebase turned into a city. Every folder is a block, every file a building. Blue changed inside the request, red changed outside it, amber wasn't touched but depends on something that was.
 
-### Live demo
+<table>
+  <tr>
+    <td width="50%" valign="top"><img src="docs/images/overlook-workspace.png" alt="The audit workspace" /><br/><b>Did the agent stay in scope?</b><br/>The requested area is fenced in blue. Anything red is a change nobody asked for.</td>
+    <td width="50%" valign="top"><img src="docs/images/overlook-review.png" alt="Reviewing one change" /><br/><b>What does this change break?</b><br/>Click a building: why it was flagged, which files depend on it, the diff, and Approve or Revert.</td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top"><img src="docs/images/overlook-replay.png" alt="Replaying the task commit by commit" /><br/><b>How did it get there?</b><br/>Replay the task commit by commit and watch where it drifted out of scope.</td>
+    <td width="50%" valign="top"><img src="docs/images/overlook-compare.png" alt="Comparing a branch with the task" /><br/><b>Will it collide with my team?</b><br/>Compare any branch with the task and see the files both sides touched.</td>
+  </tr>
+</table>
 
-[overlook-lime.vercel.app](https://overlook-lime.vercel.app/) opens the GT-142 sample and every example, with no sign-in and no keys. The static site has no API and runs no model.
+## Why it matters
 
-### Audit any GitHub link
+Agents are fast, and they're usually right about the part they were asked to do. The trouble is the rest: a shared date helper "cleaned up", an API serializer tweaked on the way, a failing test assertion quietly rewritten until it passes. Each change looks harmless in a diff, and together they reach screens and contracts nobody meant to touch.
 
-Requires Node.js 22+ and git. There are no npm dependencies.
+The people who feel this most are:
+
+- **Reviewers and tech leads**, who now approve more agent pull requests than they can read line by line.
+- **Product owners**, who wrote the request but can't read a diff to see whether what shipped is what they asked for.
+- **Teams running agents in parallel**, whose branches overlap in ways nobody planned.
+
+Overlook gives each of them four answers before merge: **did the agent stay in scope, is its report true, do the original tests still pass, and what needs a decision.**
+
+## What we found
+
+We didn't want to argue from a made-up demo alone, so we ran Overlook on real agent work too.
+
+| | Result |
+|---|---|
+| **GT-142**, our scripted demo task | The report said "only the article views, no API changes, all tests pass". Overlook found **4 of 6 changed files outside the request**, **3 more files affected** through a shared helper, an API serializer change and a rewritten test. **1 of 4 claims held.** |
+| **Copilot agent PR** in GitHub's own MCP server ([#1645](https://github.com/github/github-mcp-server/pull/1645)) | A compatibility fix that also rewrote a test expectation and five tool snapshots: **5 of 7 files outside the request**. "Tests pass" is only partly true. |
+| **Copilot agent PR** in Microsoft's Playwright MCP ([#725](https://github.com/microsoft/playwright-mcp/pull/725)) | Stayed in scope, but the description still claims a change that a later commit reverted. |
+| **22 merged agent PRs** (Copilot, Codex, Devin), measured through the GitHub API | **15 of 20** changed a test file and **6** rewrote test assertions. Details and limits in [`docs/measurements.md`](docs/measurements.md). |
+
+## Built with IBM Bob 2.0
+
+Bob plays two roles in this project. It's the auditor inside the product, and it's the teammate we built the product with.
+
+### Bob inside Overlook
+
+We had one rule from day one: **evidence decides, Bob explains.** Anything git can prove, like which files changed, whether an API file was touched, or whether a test was rewritten, is computed by plain code with no model involved. Bob does the part that needs judgment: reading the request, drawing the line around what was asked, splitting the agent's report into checkable claims, writing a test for each feature claim, and explaining each change in plain words.
+
+```mermaid
+flowchart LR
+  brief["Request brief<br/>(.docx)"] --> auditor
+  report["Agent's report"] --> auditor
+  git["git base..head"] -->|overlook_collect| auditor
+  auditor{{"Overlook Auditor mode<br/>can only write to out/"}}
+  auditor --> s1["fence-mapper<br/>what was requested"]
+  auditor --> s2["claim-extractor<br/>what the agent claims"]
+  auditor --> s3["feature-check<br/>a test per feature claim"]
+  auditor --> s4["business-translate<br/>plain language"]
+  s1 & s2 & s3 & s4 --> audit["audit.json"]
+  audit -->|overlook_build| engine["Engine computes the verdicts<br/>from git and executed tests"]
+  engine --> map["Map, replay, receipt"]
+```
+
+| Bob 2.0 feature | How Overlook uses it | Where |
+|---|---|---|
+| Custom modes | **Overlook Auditor** can read everything but write only audit output, so an audit can never quietly "fix" what it's auditing. **Overlook Fixer** re-does the work inside the requested area after a review. | [`.bob/custom_modes.yaml`](.bob/custom_modes.yaml) |
+| Parallel subagents | Scope, claims, checks and plain language run at once, each in a clean context | [auditor rules](.bob/rules-overlook-auditor/01-evidence-first.md) |
+| Skills | Four audit steps (`fence-mapper`, `claim-extractor`, `feature-check`, `business-translate`) and four one-call workflows (`audit`, `verify`, `receipt`, `fix-forward`) | [`.bob/skills/`](.bob/skills/) |
+| Document understanding | The request arrives as a Word document, the way tickets often do | [`brief/GT-142.docx`](brief/GT-142.docx) |
+| MCP server | Seven tools, from `overlook_collect` to `overlook_apply`, so Bob drives the engine directly | [`engine/mcp.mjs`](engine/mcp.mjs) |
+| Slash commands | `/audit`, `/verify`, `/fix-forward`, `/receipt` | [`.bob/commands/`](.bob/commands/) |
+| Mode rules | Collect evidence first, never set a verdict git can check, never soften a finding | [`.bob/rules-overlook-auditor/`](.bob/rules-overlook-auditor/) |
+
+Without Bob, Overlook still runs on logic alone and labels the result **Draft audit**: the map, the history and the verdicts git can compute all work, but the requested area is only a guess and feature claims stay *unverified*. The Atlas example below was audited the full way: Bob ran the Overlook Auditor mode on it.
+
+### How we built it with Bob
+
+Three of our accounts ran Bob until each 40-Bobcoin budget was gone. We planned in Plan mode, wrote code and tests in Agent mode, ran the service to check it, and went back for fixes.
+
+| | Bob 2.0 | What Bob did |
+|:---:|---|---|
+| **Start** | Agent mode, `office-insights` skill | Wrote the spec and the request brief as a Word document, and set up the first Auditor mode, rules and skills |
+| **Plan** | Plan mode, document understanding | Read the brief and wrote [`docs/PLAN.md`](docs/PLAN.md): phases, done checks, an acceptance matrix and a Bobcoin budget |
+| **Build** | Agent mode, 7 subtasks | Built the first version phase by phase, each subtask in a fresh context, with tests and a commit after every phase |
+| **Fix** | Agent mode, a second account | Worked through the review list and regenerated the samples |
+| **Review** | Agent mode | Read the whole finished codebase, removed dead code, added tests, and closed a hole where an agent could fake "tests pass" by rewriting the test script |
+
+<table>
+  <tr>
+    <td align="center"><img src="bob_sessions/timehasdensity_task00_full_task_session.png" width="220" alt="Task 00 session summary" /><br/><sub>Start · 7.00</sub></td>
+    <td align="center"><img src="bob_sessions/timehasdensity_task01_full_task_session.png" width="220" alt="Task 01 session summary" /><br/><sub>Plan and build · 39.55</sub></td>
+    <td align="center"><img src="bob_sessions/timehasdensity_task02_full_task_session.png" width="220" alt="Task 02 session summary" /><br/><sub>Fix · 39.95</sub></td>
+    <td align="center"><img src="bob_sessions/timehasdensity_task03_full_task_session.png" width="220" alt="Task 03 session summary" /><br/><sub>Review · 32.53</sub></td>
+  </tr>
+</table>
+
+**4 tasks · 3 accounts · 119 Bobcoins on these tasks, every account's budget used.** We spent Bobcoins only where judgment was needed and kept every fact in plain code, and we opened a new task per phase so each context stayed small. Screenshots per teammate are in [`bob_sessions/`](bob_sessions/), Task Ids in [`docs/BOB_SESSIONS.md`](docs/BOB_SESSIONS.md), the files Bob wrote in [`BOB_CONTRIBUTIONS.md`](BOB_CONTRIBUTIONS.md), and the story from first prototype to this version in [`docs/EVOLUTION.md`](docs/EVOLUTION.md).
+
+## Try it
+
+**In your browser, right now.** [overlook-lime.vercel.app](https://overlook-lime.vercel.app/) opens the demo and every example. No sign-in, no keys.
+
+**On any GitHub link.** You need Node.js 22+ and git. There's nothing to install.
 
 ```bash
 git clone https://github.com/JONGSKY/Overlook.git
 cd Overlook
-npm run site        # http://localhost:4280
+npm run site
 ```
 
-Paste a pull request, compare, commit or repository URL. Overlook fetches it, audits it and opens the result, usually within seconds (a large repository takes a minute the first time it is cloned). This run is logic only, without a model, and is labelled **Draft audit**.
+Open http://localhost:4280 and paste a pull request, compare, commit or repository link. Overlook reads the request from the issue the PR closes and the report from the PR description, and has the map up in seconds (a big repository takes about a minute the first time). Set `GITHUB_TOKEN` if you hit the GitHub API rate limit.
 
-> Set `GITHUB_TOKEN` to raise the GitHub API rate limit. *Choose them yourself* lets you set the commits, the request, the report or the area by hand, or load an `out/audit.json` written by Bob.
-
-### With IBM Bob
-
-Open this repository in Bob IDE, select the **Overlook Auditor** mode and run:
+**With Bob.** Open the repository in Bob IDE, switch to the **Overlook Auditor** mode and run:
 
 ```
 /audit ../my-app <base-sha> brief/GT-142.docx "Done. I only changed the article views. No API changes. All tests pass."
 ```
 
-Bob collects the evidence, runs four subagents, writes `out/audit.json` and publishes the audit with `overlook_build`. You get a link to the map and the receipt.
+You get back a link to the map and a receipt you can post on the pull request.
 
-## How IBM Bob is used
+## A closer look
 
-### In the product
-
-| | Without Bob (logic only) | With the Overlook Auditor mode |
-|---|---|---|
-| Map, file tree, branch graph, replay, branch comparison | ✅ | ✅ |
-| Inside or outside the requested area, may be affected, risk | ✅ once the area is set | ✅ |
-| Running the original tests, reverts, receipt | ✅ | ✅ |
-| **The requested area** | guessed from folder and file names in the request | proposed from the brief, with a rationale |
-| **Splitting the report into claims** | one claim per sentence | atomic claims, typed |
-| **Feature claims** ("fixed X") | shown as *unverified* | an executable check whose exit code decides |
-| **Plain-language notes** | none | one sentence per change for the reviewer |
-
-| Bob feature | What it does in Overlook | Where |
-|---|---|---|
-| **Custom modes** | `overlook-auditor` reads everything and can only write audit output in `out/`; `overlook-fixer` fixes forward inside the requested area only | [`.bob/custom_modes.yaml`](.bob/custom_modes.yaml) |
-| **Mode rules** | Collect evidence first, never set a verdict git can check, never soften a finding | [`.bob/rules-overlook-auditor/`](.bob/rules-overlook-auditor/) |
-| **Parallel subagents** | Area, claims, checks and plain language run at the same time | step 3 of the auditor rules |
-| **Skills** | `fence-mapper`, `claim-extractor`, `feature-check`, `business-translate` | [`.bob/skills/`](.bob/skills/) |
-| **Document understanding** | The request brief is a `.docx` read directly by Bob | [`brief/GT-142.docx`](brief/GT-142.docx) |
-| **MCP server** | `overlook_collect`, `overlook_build`, `overlook_fence`, `overlook_verify`, `overlook_receipt`, `overlook_apply`, `overlook_audits` | [`engine/mcp.mjs`](engine/mcp.mjs), [`.bob/mcp.json`](.bob/mcp.json) |
-| **Slash commands** | `/audit`, `/verify`, `/fix-forward`, `/receipt` | [`.bob/commands/`](.bob/commands/) |
-| **Project rules, AGENTS.md** | Keep the engine dependency-free, the UI static and the samples reproducible | [`.bob/rules/`](.bob/rules/), [`AGENTS.md`](AGENTS.md) |
-
-### Built with Bob 2.0
-
-Bob 2.0 was used at every stage of the project, not only inside the product. Each of the three team accounts ran its own tasks until its 40-Bobcoin budget was spent.
-
-| Stage | Bob 2.0 | What Bob did |
-|---|---|---|
-| Start | Agent mode, `office-insights` skill | Wrote the spec, the request brief as a Word document and the first Auditor mode, rules and skills |
-| Plan | Plan mode, document understanding | Read the `.docx` brief and wrote [`docs/PLAN.md`](docs/PLAN.md): phases, done checks, acceptance matrix, Bobcoin budget |
-| Build | Agent mode, seven subtasks | Built the first version phase by phase, each subtask in a fresh context, committing after every phase |
-| Fix | Agent mode, a second account | Applied the review findings: test collection, bilingual text, revert commits, UI, samples |
-| Review | Agent mode | Reviewed the finished codebase: dead code removed, fixes, stronger tests, and the original test command taken from base so a rewritten test script cannot fake a pass |
-
-**Three accounts, four tasks, 119.03 Bobcoins.** Session summaries per account are in [`bob_sessions/`](bob_sessions/), Task Ids and per-phase usage in [`docs/BOB_SESSIONS.md`](docs/BOB_SESSIONS.md), the files Bob wrote in [`BOB_CONTRIBUTIONS.md`](BOB_CONTRIBUTIONS.md), and how the first version grew into this one in [`docs/EVOLUTION.md`](docs/EVOLUTION.md).
-
-## A tour of the workspace
-
-![Workspace: the verdict line on top, what changed on the left, the map, the verdict on the right, the branch history below](docs/images/overlook-workspace.png)
-
-| Region | Question | What it shows |
-|---|---|---|
-| **Top** | Where do things stand? | A verdict (*Needs your review*, *Check the report*, *Ready to merge*, *Looks clean*), then four numbers: outside the request, may be affected, claims that hold, original tests |
-| **Left** | What changed? | Only the files this task touched, as a folder tree coloured by verdict; with another commit on screen, its files come first |
-| **Map** | Where? | The city with the requested area fenced in blue; Before / Compare / After; a Layers menu |
-| **Right** | Is it OK? | One card at a time: the four questions, the selected file (why it was flagged, what it may affect, the diff, **Approve / Revert**), or the commit in focus |
-| **Bottom** | How did it unfold? | The branch history; panels switch from the header (Shift+1 / Shift+3 / Shift+2) |
-
-**Replay.** ▶ at the top right of the history bar plays the task commit by commit (1× · 2× · 0.5×). The map lights each commit's buildings, and the right card compares the commit with the one before.
-
-![Replay at commit 3: the top line, the tree, the map and the card all show that commit](docs/images/overlook-replay.png)
-
-**Any commit, any branch.** Click a commit on the base branch or another branch: the card, the map, the tree and the top line show what it changed against the commit before it, and which of those files this task changed too.
+**Any commit, on any branch.** Click a commit anywhere in the history bar and the whole screen switches to it: what it changed against the commit before, and which of those files this task also touched.
 
 ![A commit on main after the task: 37 files changed, 2 of them also changed by this task](docs/images/overlook-commit.png)
 
-**Compare a branch with the task.** Files changed on both sides are where a merge may conflict. A green dashed line shows where the task itself was merged.
+**Tests are run, not trusted.** Overlook runs the *original* tests, as they were before the agent started, against the agent's code in a throwaway worktree. Until they run, "all tests pass" is marked *unverified*.
 
-![Comparing main with the GT-142 task](docs/images/overlook-compare.png)
-
-**Review a change.** Why it was flagged, what it may affect and why, the diff, then Approve or Revert.
-
-![A change outside the request: why it was flagged, what it may affect, Approve or Revert](docs/images/overlook-review.png)
+**Decide, then act.** Approve or revert each change outside the request. Your decisions become one git revert commit per file, and a receipt with every verdict goes on the pull request.
 
 <details>
-<summary><b>Reading the map and the history bar</b></summary>
+<summary><b>How to read the map and the history bar</b></summary>
+<br/>
 
 | On the map | Meaning |
 |---|---|
 | Building height · bright top band | Lines of code · share of them this task changed |
-| Blue building | Changed inside the requested area |
-| Red building with a `!` pin | Changed outside the request: needs a decision |
-| Amber building in a hatched ring | Not edited, but imports a changed file, so it **may be affected** |
-| Block sides in red, blue or amber | The folder holds a change outside the request, inside it, or a file that may be affected |
-| Purple building | A file of the commit on screen that this task did not change |
-| Dashed outline | A new file, or its height before a revert |
-| Dashed blue border | The requested area |
+| Blue / red building | Changed inside / outside the requested area (red ones get a `!` pin) |
+| Amber building in a hatched ring | Not edited, but imports a changed file, so it may be affected |
+| Colored block sides | The folder holds a change outside the request (red), inside it (blue), or an affected file (amber) |
+| Purple building | A file of the commit on screen that this task didn't change |
+| Dashed outline · dashed blue border | A new file or a pre-revert height · the requested area |
 
 | In the history bar | Meaning |
 |---|---|
-| Rows | Other branches of the same period, the base branch, the audited branch |
-| Dashed band · numbered circles | This task and its commits; red when a commit leaves the requested area |
-| Green dashed line "PR #n merged" | Where the task reached the base branch |
-| Purple ring on the base branch | A commit that merged another pull request |
-| Dashed purple circle in the task | A merge of the base branch into the task's branch |
+| Numbered circles in a dashed band | This task's commits; red when a commit leaves the requested area |
+| Green dashed line | Where the task was merged into the base branch |
+| Purple ring · dashed purple circle | Another pull request merged on the base branch · the base branch merged into the task |
 
 </details>
 
 ## Examples
 
-**Real audits.** Finished agent tasks from public repositories (`samples/real/`, rebuilt with `npm run real`). The request and the agent's report are quoted from the source; every verdict git can check is computed from git.
+<table>
+  <tr>
+    <td width="50%" valign="top"><img src="docs/images/overlook-pr.png" alt="A real Copilot agent pull request" /><br/><sub>A real Copilot agent PR, squash-merged into main a day later</sub></td>
+    <td width="50%" valign="top"><img src="docs/images/overlook-examples.png" alt="The examples page" /><br/><sub>Every audit as a card with a snapshot of its map</sub></td>
+  </tr>
+</table>
+
+**Real audits** of finished agent work in public repositories. The request and the report are quoted from the source, and every verdict git can check is computed from git.
 
 | Example | Source | What Overlook finds | Auditor |
 |---|---|---|---|
@@ -178,77 +195,56 @@ Bob 2.0 was used at every stage of the project, not only inside the product. Eac
 | playwright-mcp #725 | [microsoft/playwright-mcp](https://github.com/microsoft/playwright-mcp/pull/725) (Copilot) | Inside the request, but the description still claims a change a later commit reverted; squash-merged a day later | Overlook team |
 | Atlas · Bob session 10 | [chanjoongx/atlas](https://github.com/chanjoongx/atlas) (IBM Bob hackathon, May 2026, 2nd place) | Committed straight to main; Bob stayed inside the four files the prompt named | **IBM Bob** (Overlook Auditor mode) |
 
-**Scripted examples.** Repositories with scripted git history, audited by the same engine (`npm run sample`, `npm run examples`). They are never presented as real agent runs.
-
-| Example | Request | What it shows |
-|---|---|---|
-| GT-142 (the sample) | Relative publish dates | 4 of 6 changes outside the request, 3 files may be affected, a rewritten test, 1 of 4 claims holds |
-| `infra-drift` | SET-88 · Dark mode toggle in Settings | A small UI feature that also changes theme tokens, `.env.example`, `config/env.ts`, `docker-compose.yml`, Terraform and CI: 7 of 10 outside |
-| `monorepo-scale` | ADM-310 · Rename Customer to Client | A rename in a 625-file monorepo that leaks into shared types, the public API and a migration: 13 outside, 94 may be affected |
-| `clean-pass` | PAY-17 · Fix rounding in checkout total | The contrast: everything inside the request, every claim holds |
-
-![Examples: every audit as a card with a snapshot of its map](docs/images/overlook-examples.png)
+**Scripted scenarios**, audited by the same engine: the GT-142 demo, a UI feature that leaks into infrastructure (`infra-drift`), a rename across a 625-file monorepo (`monorepo-scale`) and a clean pass for contrast. The scripted ones are clearly labelled and never passed off as real agent runs.
 
 ## How it works
 
 ```mermaid
 flowchart LR
-  L[GitHub link] -->|sources.mjs| A[git base..head<br/>PR, issue, branches]
-  A -->|collect.mjs| B[evidence.json<br/>files, commits, branch graph]
-  R[request brief<br/>agent's report] --> C
-  B --> C{{Overlook Auditor mode<br/>4 parallel subagents}}
-  C -->|area, claims, checks, plain language| D[audit.json]
-  B -.no Bob.-> DA[draft-audit.mjs]
-  B --> E[build-city.mjs<br/>verdicts, risks, ripple]
-  D --> E
+  L[GitHub link] -->|sources| A[git base..head<br/>PR, issue, branches]
+  A -->|collect| B[evidence<br/>files, commits, imports, branch graph]
+  B --> C{{Bob: Overlook Auditor}}
+  C --> D[audit.json]
+  B -.without Bob.-> DA[draft audit]
+  D --> E[verdicts, risks, ripple]
   DA --> E
-  E --> F[Map + history + review]
-  F -->|decisions.json| G[apply-decisions.mjs<br/>one revert commit per file]
-  F -->|pr-comment.mjs| H[PR comment]
+  B --> E
+  E --> F[map · history · review]
+  F --> G[one revert commit per file]
+  F --> H[receipt on the PR]
 ```
 
-Details and data contracts: [`docs/architecture.md`](docs/architecture.md) and [`SPEC.md`](SPEC.md).
+Everything is plain Node.js with no npm dependencies, and the UI is a static site with no build step. The same verdict code runs in the CLI, the local server, the MCP server and the browser. [`docs/architecture.md`](docs/architecture.md) walks through it, and [`SPEC.md`](SPEC.md) has the data contracts.
 
 <details>
 <summary><b>Repository layout and commands</b></summary>
+<br/>
 
 ```
-.bob/                  IBM Bob configuration: modes, rules, skills, slash commands, MCP server
-AGENTS.md              guidance Bob loads in every mode
-bob_sessions/          Bob task session summaries, by team account
-brief/GT-142.docx      the demo request
-engine/                sources, collect, core/city, build-city, draft-audit, verify,
-                       apply-decisions, pr-comment, site, mcp, scan, tests
-schema/                audit.schema.json, the contract for Bob's audit output
-samples/               the scripted GT-142 sample; examples/ scripted examples; real/ real audits
-ui/                    static site, no build step: index.html, app.js, workspace.js, atlas3d.js,
-                       history-graph.js, map.js, iso.js, layers.js, util.js, styles.css
-docs/                  architecture, plan, Bob sessions, evolution, metrics, measurements, screenshots
+.bob/            Bob configuration: modes, rules, skills, slash commands, MCP server
+bob_sessions/    Bob task session summaries from each team account
+brief/           the demo request (GT-142.docx)
+engine/          sources, collect, verdicts, draft audit, verify, reverts, receipt, site, mcp, tests
+samples/         the GT-142 sample, scripted examples, real audits
+ui/              the static site
+docs/            architecture, plan, Bob sessions, evolution, measurements, screenshots
 ```
 
 ```bash
-npm test          # node:test: collector, branch graph, merges, imports, verdicts, verify, reverts,
-                  #            receipt, site API, MCP server, examples
-npm run site      # the local site and API at http://localhost:4280
-npm run mcp       # the MCP server over stdio (configured in .bob/mcp.json)
+npm test          # 47 node:test tests
+npm run site      # local site and API on http://localhost:4280
+npm run mcp       # MCP server over stdio for Bob
 npm run sample    # rebuild the GT-142 sample
 npm run examples  # rebuild the scripted examples
-npm run real      # rebuild the real audits (clones the public repositories)
-npm run scan      # measure public agent pull requests through the GitHub API
+npm run real      # rebuild the real audits
+npm run scan      # measure public agent pull requests
 ```
 
 </details>
 
-## Metrics
+## License
 
-- **Public agent pull requests, measured:** [`docs/measurements.md`](docs/measurements.md) runs the same rules over 22 merged pull requests by Copilot, Codex and Devin agents. 15 of 20 changed a test file and 6 rewrote test assertions; none weakened a test. The write-up explains the limitations.
-- **Review time and accuracy:** the method is in [`docs/metrics.md`](docs/metrics.md). Numbers are filled in only after they are measured.
-
-## Data and license
-
-The scripted examples are repositories created by this project. The real audits quote public repositories under the MIT or Apache-2.0 licence. No customer data, company-confidential information or personal information is used.
-
-Released under the [MIT License](LICENSE).
+MIT, see [LICENSE](LICENSE). The real audits quote public repositories under MIT or Apache-2.0; no customer, confidential or personal data is used.
 
 ## Team
 
@@ -257,7 +253,5 @@ Released under the [MIT License](LICENSE).
 **Time Has Density**
 
 Seokyoung Cho · Jongho Lee · Chanyoung Han · Jeong Hae Jun
-
-Repository contributors on GitHub: [@JONGSKY](https://github.com/JONGSKY), [@asher-han](https://github.com/asher-han)
 
 </div>
