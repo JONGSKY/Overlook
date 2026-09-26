@@ -357,14 +357,27 @@ window.CITY = {
       {
         "id": "head",
         "name": "copilot/fix-724",
-        "kind": "head"
+        "kind": "head",
+        "pr": {
+          "number": 725,
+          "title": "fix: browser_take_screenshot to not require snapshot unless element is specified",
+          "state": "merged",
+          "url": "https://github.com/microsoft/playwright-mcp/pull/725",
+          "mergedAt": "2025-07-21T17:52:06Z"
+        }
       },
       {
         "id": "o1",
         "name": "copilot/fix-726",
         "kind": "other",
         "merged": false,
-        "more": 0
+        "more": 0,
+        "pr": {
+          "number": 727,
+          "title": "Introduce --save-session option for logging tool calls and snapshots",
+          "state": "closed",
+          "url": "https://github.com/microsoft/playwright-mcp/pull/727"
+        }
       }
     ],
     "commits": [

@@ -65,7 +65,8 @@ We didn't want to argue from a made-up demo alone, so we ran Overlook on real ag
 | **GT-142**, our scripted demo task | The report said "only the article views, no API changes, all tests pass". Overlook found **4 of 6 changed files outside the request**, **3 more files affected** through a shared helper, an API serializer change and a rewritten test. **1 of 4 claims held.** |
 | **Copilot agent PR** in GitHub's own MCP server ([#1645](https://github.com/github/github-mcp-server/pull/1645)) | A compatibility fix that also rewrote a test expectation and five tool snapshots: **5 of 7 files outside the request**. "Tests pass" is only partly true. |
 | **Copilot agent PR** in Microsoft's Playwright MCP ([#725](https://github.com/microsoft/playwright-mcp/pull/725)) | Stayed in scope, but the description still claims a change that a later commit reverted. |
-| **22 merged agent PRs** (Copilot, Codex, Devin), measured through the GitHub API | **15 of 20** changed a test file and **6** rewrote test assertions. Details and limits in [`docs/measurements.md`](docs/measurements.md). |
+| **Bob's own audits** of the three real tasks | Bob drew the requested area and split each report into claims. It caught a false claim in **both Copilot PRs**, each shown with Bob's reasoning and labelled as its judgement, next to the verdicts git computed. |
+| **22 merged agent PRs** (Copilot, Codex, Devin), measured through the GitHub API | **15 of 20** changed a test file and **6** rewrote test assertions. Details and limits in [`docs/measurements.md`](docs/measurements.md); before/after numbers in [`docs/metrics.md`](docs/metrics.md). |
 
 ## Built with IBM Bob 2.0
 
@@ -100,7 +101,7 @@ flowchart LR
 | Slash commands | `/audit`, `/verify`, `/fix-forward`, `/receipt` | [`.bob/commands/`](.bob/commands/) |
 | Mode rules | Collect evidence first, never set a verdict git can check, never soften a finding | [`.bob/rules-overlook-auditor/`](.bob/rules-overlook-auditor/) |
 
-Without Bob, Overlook still runs on logic alone and labels the result **Draft audit**: the map, the history and the verdicts git can compute all work, but the requested area is only a guess and feature claims stay *unverified*. The Atlas example below was audited the full way: Bob ran the Overlook Auditor mode on it.
+Without Bob, Overlook still runs on logic alone and labels the result **Draft audit**: the map, the history and the verdicts git can compute all work, but the requested area is only a guess and feature claims stay *unverified*. All three real audits below were done the full way: Bob ran the Overlook Auditor mode on each one, and it caught a false claim in both Copilot pull requests.
 
 ### How we built it with Bob
 
@@ -191,8 +192,8 @@ You get back a link to the map and a receipt you can post on the pull request.
 
 | Example | Source | What Overlook finds | Auditor |
 |---|---|---|---|
-| github-mcp-server #1645 | [github/github-mcp-server](https://github.com/github/github-mcp-server/pull/1645) (Copilot) | A compatibility fix that also rewrites a test expectation and five tool snapshots: 5 of 7 files outside the request; "tests pass" is only partly true | Overlook team |
-| playwright-mcp #725 | [microsoft/playwright-mcp](https://github.com/microsoft/playwright-mcp/pull/725) (Copilot) | Inside the request, but the description still claims a change a later commit reverted; squash-merged a day later | Overlook team |
+| github-mcp-server #1645 | [github/github-mcp-server](https://github.com/github/github-mcp-server/pull/1645) (Copilot) | A compatibility fix that also rewrites a test expectation and five tool snapshots: 5 of 7 files outside the request; "tests pass" is only partly true | **IBM Bob** (Overlook Auditor mode) |
+| playwright-mcp #725 | [microsoft/playwright-mcp](https://github.com/microsoft/playwright-mcp/pull/725) (Copilot) | Inside the request, but the description still claims a change a later commit reverted; squash-merged a day later | **IBM Bob** (Overlook Auditor mode) |
 | Atlas · Bob session 10 | [chanjoongx/atlas](https://github.com/chanjoongx/atlas) (IBM Bob hackathon, May 2026, 2nd place) | Committed straight to main; Bob stayed inside the four files the prompt named | **IBM Bob** (Overlook Auditor mode) |
 
 **Scripted scenarios**, audited by the same engine: the GT-142 demo, a UI feature that leaks into infrastructure (`infra-drift`), a rename across a 625-file monorepo (`monorepo-scale`) and a clean pass for contrast. The scripted ones are clearly labelled and never passed off as real agent runs.

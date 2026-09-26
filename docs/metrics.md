@@ -28,7 +28,7 @@ The sample is deterministic; the numbers do not depend on a particular run date.
 | github-mcp-server #1645 (Copilot) | 5 of 7 | **1 of 4** | 1 | **IBM Bob** |
 | playwright-mcp #725 (Copilot) | 0 of 2 | **1 of 3** | 0 | **IBM Bob** |
 
-Bob found a false claim in 2 of the 3 Copilot PRs. In both cases the agent's description claimed something git contradicts.
+Bob found a false claim in both Copilot PRs (2 of 2). In each case the agent's description claimed something the code at head contradicts; both verdicts are Bob's judgement, stored with its reasoning, since no executable check was written for them.
 
 ## Bob usage (built with Bob 2.0)
 
@@ -46,7 +46,9 @@ Full session records: [`bob_sessions/`](../bob_sessions/), [`docs/BOB_SESSIONS.m
 
 From the `measurements.md` scan of 22 real agent PRs:
 
-| | Draft heuristic (no Bob) | Bob (Overlook Auditor mode) |
+The Bob column describes how the Auditor mode draws a fence; Bob was not run on these 22 pull requests, so it is expected behaviour, not a measurement.
+
+| | Draft heuristic (no Bob), measured | Bob (Overlook Auditor mode), expected |
 |---|---|---|
 | Fence drawn from | folder names in issue text | full brief + rationale, quoting the request |
 | File-level fence entries | ❌ (folder level only) | ✅ (can fence individual files) |
@@ -54,4 +56,4 @@ From the `measurements.md` scan of 22 real agent PRs:
 | Issues naming no repo folder → no fence | 5 of 21 issues (24%) | rare (Bob reads the brief even without folder names) |
 | Outside count inflated by missed fence | 8 of 14 PRs with outside files | avoided with a Bob-drawn fence |
 
-The scan found 6 of 16 PRs with plausible scope drift; the other 8 "outside" files were the requested work the heuristic missed. Bob's fence uses the full brief so it avoids both false positives (inflated outside counts) and false negatives (missed out-of-scope files).
+The scan found 6 of 16 PRs with plausible scope drift; the other 8 "outside" files were the requested work the heuristic missed. Bob's fence reads the full brief, so it should avoid both false positives (inflated outside counts) and false negatives (missed out-of-scope files); running the Auditor mode on these pull requests would measure it.

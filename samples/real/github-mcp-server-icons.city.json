@@ -533,42 +533,79 @@
       {
         "id": "head",
         "name": "copilot/record-sdk-version-usage",
-        "kind": "head"
+        "kind": "head",
+        "pr": {
+          "number": 1645,
+          "title": "Omit icon sizes field for backward compatibility with older MCP clients",
+          "state": "merged",
+          "url": "https://github.com/github/github-mcp-server/pull/1645",
+          "mergedAt": "2025-12-18T18:45:30Z"
+        }
       },
       {
         "id": "o1",
         "name": "perf/composable-enable-conditions",
         "kind": "other",
         "merged": false,
-        "more": 0
+        "more": 0,
+        "pr": {
+          "number": 1641,
+          "title": "feat: composable EnableCondition with bitmask optimization",
+          "state": "closed",
+          "url": "https://github.com/github/github-mcp-server/pull/1641"
+        }
       },
       {
         "id": "o2",
         "name": "sammorrowdrums/oauth-device-flow-auth",
         "kind": "other",
         "merged": false,
-        "more": 3
+        "more": 3,
+        "pr": {
+          "number": 1649,
+          "title": "feat: implement OAuth device flow authentication",
+          "state": "closed",
+          "url": "https://github.com/github/github-mcp-server/pull/1649"
+        }
       },
       {
         "id": "o3",
         "name": "perf/bitmap-index",
         "kind": "other",
         "merged": false,
-        "more": 0
+        "more": 0,
+        "pr": {
+          "number": 1637,
+          "title": "[Experiment] Bitmap-based tool index for O(1) filtering",
+          "state": "closed",
+          "url": "https://github.com/github/github-mcp-server/pull/1637"
+        }
       },
       {
         "id": "o4",
         "name": "perf/inventory-cache",
         "kind": "other",
         "merged": false,
-        "more": 0
+        "more": 0,
+        "pr": {
+          "number": 1636,
+          "title": "perf: add inventory cache for stateless server patterns",
+          "state": "closed",
+          "url": "https://github.com/github/github-mcp-server/pull/1636"
+        }
       },
       {
         "id": "o5",
         "name": "mock-migration",
         "kind": "other",
         "merged": false,
-        "more": 0
+        "more": 0,
+        "pr": {
+          "number": 1653,
+          "title": "Continue replacing migueleliasweb/go-github-mock",
+          "state": "closed",
+          "url": "https://github.com/github/github-mcp-server/pull/1653"
+        }
       }
     ],
     "commits": [

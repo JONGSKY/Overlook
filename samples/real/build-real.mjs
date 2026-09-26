@@ -61,7 +61,7 @@ async function buildOne(ex) {
   console.log(`${ex.id}: ${t.filesChanged} changed, ${t.outside} outside, ${t.affected} affected, ${t.claimsTrue}/${t.claims} claims hold`);
   return {
     id: ex.id, title: typeof city.request.title === 'string' ? city.request.title : city.request.title?.en,
-    repo: ex.repo, kind: audit.example.kind, context: audit.example.context ?? '', url: audit.example.url, blurb: ex.blurb,
+    repo: ex.repo, kind: audit.example.kind, context: audit.example.context ?? '', url: audit.example.url, blurb: ex.blurb, ...(audit.example.bob_generated ? { bob_generated: true } : {}),
     files: city.files.length, changed: t.filesChanged, outside: t.outside, affected: t.affected, claims: t.claims, claimsTrue: t.claimsTrue,
     falseClaims: city.claims.filter((c) => c.verdict === 'false').length,
   };

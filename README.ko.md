@@ -65,7 +65,8 @@ Overlook은 합치기 전에 네 가지에 답합니다. **에이전트가 범�
 | **GT-142**, 우리가 만든 데모 작업 | 보고는 "기사 화면만, API 변경 없음, 테스트 모두 통과"였습니다. Overlook은 **바뀐 파일 6개 중 4개가 요청 범위 밖**, 공용 헬퍼를 통해 **파일 3개가 추가로 영향**, API 직렬화 변경, 다시 쓰인 테스트를 찾았습니다. **주장 4개 중 1개만 사실**이었습니다. |
 | GitHub 공식 MCP 서버의 **Copilot 에이전트 PR** ([#1645](https://github.com/github/github-mcp-server/pull/1645)) | 호환성 수정이 테스트 기대값과 도구 스냅샷 5개까지 다시 썼습니다. **파일 7개 중 5개가 범위 밖**, "테스트 통과"는 일부만 사실입니다. |
 | Microsoft Playwright MCP의 **Copilot 에이전트 PR** ([#725](https://github.com/microsoft/playwright-mcp/pull/725)) | 범위 안에서 작업했지만, 설명에는 나중 커밋이 되돌린 변경이 여전히 적혀 있습니다. |
-| GitHub API로 측정한 **병합된 에이전트 PR 22개** (Copilot, Codex, Devin) | **20개 중 15개**가 테스트 파일을 바꿨고 **6개**가 테스트 기대값을 다시 썼습니다. 자세한 내용과 한계는 [`docs/measurements.md`](docs/measurements.md) (영문). |
+| 실제 작업 3개에 대한 **Bob의 감사** | Bob이 요청 범위를 긋고 보고를 주장으로 나눴습니다. **Copilot PR 두 개 모두**에서 거짓 주장을 잡았습니다. 이 판정은 Bob의 판단으로 표시되고 근거가 함께 붙으며, git이 계산한 판정과 나란히 보입니다. |
+| GitHub API로 측정한 **병합된 에이전트 PR 22개** (Copilot, Codex, Devin) | **20개 중 15개**가 테스트 파일을 바꿨고 **6개**가 테스트 기대값을 다시 썼습니다. 자세한 내용과 한계는 [`docs/measurements.md`](docs/measurements.md), 전후 비교 수치는 [`docs/metrics.md`](docs/metrics.md) (영문). |
 
 ## IBM Bob 2.0으로 만들었습니다
 
@@ -100,7 +101,7 @@ flowchart LR
 | 슬래시 명령 | `/audit`, `/verify`, `/fix-forward`, `/receipt` | [`.bob/commands/`](.bob/commands/) |
 | 모드 규칙 | 증거부터 모으고, git으로 확인 가능한 판정은 직접 정하지 않고, 문제를 누그러뜨리지 않음 | [`.bob/rules-overlook-auditor/`](.bob/rules-overlook-auditor/) |
 
-Bob 없이도 Overlook은 로직만으로 돌아가며 결과를 **Draft audit**으로 표시합니다. 지도, 기록, git으로 계산할 수 있는 판정은 모두 나오지만, 요청 범위는 추정일 뿐이고 기능 주장은 *확인 안 됨*으로 남습니다. 아래 예시 중 Atlas는 Bob이 Overlook Auditor 모드로 직접 감사한 결과입니다.
+Bob 없이도 Overlook은 로직만으로 돌아가며 결과를 **Draft audit**으로 표시합니다. 지도, 기록, git으로 계산할 수 있는 판정은 모두 나오지만, 요청 범위는 추정일 뿐이고 기능 주장은 *확인 안 됨*으로 남습니다. 아래 실제 감사 3개는 모두 Bob이 Overlook Auditor 모드로 직접 감사한 결과이고, Copilot PR 두 개 모두에서 거짓 주장을 잡아냈습니다.
 
 ### Bob과 함께 만든 과정
 
@@ -191,8 +192,8 @@ http://localhost:4280 을 열고 풀 리퀘스트, compare, 커밋, 저장소 �
 
 | 예시 | 출처 | Overlook이 찾은 것 | 감사자 |
 |---|---|---|---|
-| github-mcp-server #1645 | [github/github-mcp-server](https://github.com/github/github-mcp-server/pull/1645) (Copilot) | 호환성 수정이 테스트 기대값과 도구 스냅샷 5개까지 다시 씀: 파일 7개 중 5개가 범위 밖, "테스트 통과"는 일부만 사실 | Overlook 팀 |
-| playwright-mcp #725 | [microsoft/playwright-mcp](https://github.com/microsoft/playwright-mcp/pull/725) (Copilot) | 범위 안이지만, 설명에는 나중 커밋이 되돌린 변경이 여전히 적혀 있음. 하루 뒤 squash 병합 | Overlook 팀 |
+| github-mcp-server #1645 | [github/github-mcp-server](https://github.com/github/github-mcp-server/pull/1645) (Copilot) | 호환성 수정이 테스트 기대값과 도구 스냅샷 5개까지 다시 씀: 파일 7개 중 5개가 범위 밖, "테스트 통과"는 일부만 사실 | **IBM Bob** (Overlook Auditor 모드) |
+| playwright-mcp #725 | [microsoft/playwright-mcp](https://github.com/microsoft/playwright-mcp/pull/725) (Copilot) | 범위 안이지만, 설명에는 나중 커밋이 되돌린 변경이 여전히 적혀 있음. 하루 뒤 squash 병합 | **IBM Bob** (Overlook Auditor 모드) |
 | Atlas · Bob 세션 10 | [chanjoongx/atlas](https://github.com/chanjoongx/atlas) (IBM Bob 해커톤 2026년 5월, 2위) | main에 바로 커밋. Bob은 프롬프트가 지정한 파일 4개 안에서만 작업 | **IBM Bob** (Overlook Auditor 모드) |
 
 **대본 시나리오**도 같은 엔진으로 감사했습니다. 대본 시나리오는 GT-142 데모, 인프라까지 번지는 UI 기능(`infra-drift`), 파일 625개 모노레포의 이름 변경(`monorepo-scale`), 그리고 비교용 깨끗한 작업(`clean-pass`)입니다. 대본 시나리오는 분명히 표시되어 있고, 실제 에이전트 실행으로 소개하지 않습니다.

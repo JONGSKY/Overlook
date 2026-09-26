@@ -131,9 +131,9 @@ So the scan finds candidate scope drift in 6 of 16 PRs. Deciding whether that dr
 
 ### What this says about Overlook
 
-- **The draft fence inflates the outside count; Bob's fence does not.** 8 of the 14 PRs with outside files had every outside file named or implied by the issue — the heuristic missed them. With a Bob-drawn fence those files would be inside. The remaining 6 PRs show plausible scope drift; a reviewer (or Bob) needs to read the request to settle it. **The useful signal is 6 of 16 PRs, not 14 of 16.**
+- **The draft fence inflates the outside count; a fence drawn from the brief should not.** 8 of the 14 PRs with outside files had every outside file named or implied by the issue — the heuristic missed them. A fence drawn from the full brief, as the Auditor mode does, would put those files inside (expected; Bob was not run on these pull requests). The remaining 6 PRs show plausible scope drift; a reviewer (or Bob) needs to read the request to settle it. **The useful signal is 6 of 16 PRs, not 14 of 16.**
 
-- **Bob's fence vs the draft heuristic — what changes:**
+- **Bob's fence vs the draft heuristic, by design (not measured on this sample):**
 
   | | Draft heuristic | Bob (Overlook Auditor mode) |
   |---|---|---|
@@ -145,7 +145,7 @@ So the scan finds candidate scope drift in 6 of 16 PRs. Deciding whether that dr
 
 - **Agents' test changes in this sample add assertions; none removed coverage.** The rewrite flag fired on 6 of 20 PRs, but every one gained assertion lines. A reviewer still needs to look, because `rewritten` means an assertion line changed, not that it got worse.
 
-- **Agents rarely state checkable claims in the form the claim patterns expect.** Sentences such as "No secrets or unrelated changes are included." (online-bookstore), "Scope is limited to version bumps in Compose snippets." (zerobyte) and "The trajectory-runner suite passed (390 tests)" (MarinSkyRL) are scope and test claims, but the draft patterns do not match them. **The 0-of-3 contradiction rate reflects the draft-only mode, not Bob.** When Bob runs the full audit and extracts typed claims (as in the three real examples in `samples/real/`), it found false claims in 2 of 3 Copilot PRs.
+- **Agents rarely state checkable claims in the form the claim patterns expect.** Sentences such as "No secrets or unrelated changes are included." (online-bookstore), "Scope is limited to version bumps in Compose snippets." (zerobyte) and "The trajectory-runner suite passed (390 tests)" (MarinSkyRL) are scope and test claims, but the draft patterns do not match them. **The 0-of-3 contradiction rate reflects the draft-only mode, not Bob.** When Bob runs the full audit and extracts typed claims (as in the three real examples in `samples/real/`), it found a false claim in both Copilot PRs.
 
 ## Limitations
 
