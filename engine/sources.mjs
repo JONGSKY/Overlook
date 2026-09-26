@@ -1,6 +1,7 @@
 // sources.mjs — where an audit's git history comes from: a GitHub URL or a local folder.
 //
 // GitHub repositories are cloned into out/repos/<owner>__<repo> and fetched again on reuse.
+// On Vercel (read-only filesystem) clones go into /tmp/overlook-repos instead.
 // Pull request, compare and commit URLs resolve to a base..head range the same way GitHub
 // computes its diff (merge-base of base and head).
 
@@ -12,6 +13,9 @@ import { promisify } from 'node:util';
 import { git, prOfSubject } from './collect.mjs';
 
 const run = promisify(execFile);
+
+// On Vercel the source tree is read-only; clones go to /tmp.
+const ON_VERCEL = process.env.VERCEL === '1';
 
 /**
  * Parse the GitHub URL forms Overlook accepts.
@@ -50,7 +54,9 @@ export function parseGithubUrl(input) {
   return { ...base, kind: 'repo' };
 }
 
-export const cloneDir = (root, gh) => path.join(root, 'out', 'repos', `${gh.owner}__${gh.repo}`);
+export const cloneDir = (root, gh) => ON_VERCEL
+  ? path.join('/tmp', 'overlook-repos', `${gh.owner}__${gh.repo}`)
+  : path.join(root, 'out', 'repos', `${gh.owner}__${gh.repo}`);
 
 /** Clone (or refresh) a GitHub repository. Uses the machine's git credentials, so private repos work too. */
 export async function ensureClone(gh, root) {

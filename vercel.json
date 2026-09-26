@@ -1,30 +1,20 @@
 {
   "buildCommand": "",
   "outputDirectory": ".",
-  "rewrites": [
-    {
-      "source": "/",
-      "destination": "/ui/index.html"
-    },
-    {
-      "source": "/main",
-      "destination": "/ui/index.html"
-    },
-    {
-      "source": "/examples",
-      "destination": "/ui/index.html"
-    },
-    {
-      "source": "/sample",
-      "destination": "/ui/index.html"
-    },
-    {
-      "source": "/sample/:id",
-      "destination": "/ui/index.html"
-    },
-    {
-      "source": "/audit/:id",
-      "destination": "/ui/index.html"
+  "functions": {
+    "api/**/*.mjs": {
+      "maxDuration": 60
     }
+  },
+  "rewrites": [
+    { "source": "/api/audits/:id/receipt", "destination": "/api/audits/[id]" },
+    { "source": "/api/audits/:id/fence",   "destination": "/api/audits/[id]" },
+    { "source": "/api/audits/:id/verify",  "destination": "/api/audits/[id]" },
+    { "source": "/",            "destination": "/ui/index.html" },
+    { "source": "/main",        "destination": "/ui/index.html" },
+    { "source": "/examples",    "destination": "/ui/index.html" },
+    { "source": "/sample",      "destination": "/ui/index.html" },
+    { "source": "/sample/:id",  "destination": "/ui/index.html" },
+    { "source": "/audit/:id",   "destination": "/ui/index.html" }
   ]
 }

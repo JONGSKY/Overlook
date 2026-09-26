@@ -1,4 +1,7 @@
 // audits.mjs — saved audits (out/audits/<id>.json), shared by the site and the MCP server.
+//
+// On Vercel (read-only filesystem) audits are stored in /tmp instead.
+// The /tmp store is ephemeral (per function instance) but sufficient for a single session.
 
 import crypto from 'node:crypto';
 import fs from 'node:fs';
@@ -6,7 +9,12 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 export const ROOT = path.resolve(fileURLToPath(new URL('..', import.meta.url)));
-export const AUDITS = path.join(ROOT, 'out', 'audits');
+
+// Vercel mounts the source tree read-only; /tmp is the only writable location.
+const ON_VERCEL = process.env.VERCEL === '1';
+export const AUDITS = ON_VERCEL
+  ? path.join('/tmp', 'overlook-audits')
+  : path.join(ROOT, 'out', 'audits');
 
 export function saveAudit(city, source = {}) {
   fs.mkdirSync(AUDITS, { recursive: true });
