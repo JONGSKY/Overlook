@@ -41,7 +41,7 @@ Subtasks total 13.97 Bobcoins; the parent itself used 25.58, of which about 22.9
 |---|---|---|---|---|---|
 | 02 | Test files collected repo-wide, `{en,ko}` kept, real newline in revert commits, sample hints removed, UI fixes (SPEC 6.2–6.4, 6.8), samples regenerated | Agent | `fee241e48621efb456883040a4573662` (workspace `05_IBM_Bob_2.0`) | 22.353 for fix 2 (task total 39.95) | Bob's `69425be` published as `a8327ba`, `c5719cc`, `732ddab`, `c12a61d`, `21bfba4`, `419e20d` |
 
-Task 02 also ended at the 40-Bobcoin limit. Details: `bob_sessions/README.md` and `bob_sessions/timehasdensity_task02_fix2_usage.md`.
+Task 02 also ended at the 40-Bobcoin limit. Session summary: `bob_sessions/timehasdensity_task02_full_task_session.png`.
 
 ### Task 03 · Code review (JONGSKY's account, workspace `Overlook`)
 
