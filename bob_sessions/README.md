@@ -54,7 +54,27 @@ Team **Time Has Density** built Overlook with IBM Bob 2.0. Each screenshot below
 - **Security:** reproduced a way an agent could fake "tests pass" by rewriting the test script, then fixed it: the original test command is now read from the base commit.
 - **Run:** ran the full test suite after each change, and ran the collector on a freshly built GT-142 sample repository.
 
-![JONGSKY account: 40.00 budget, 40.03 used (email partly hidden)](timehasdensity_jongsky_budget.png)
+
+---
+
+## Budgets
+
+Each team member's Bob account page: a 40.00 Bobcoin budget, fully used. Emails are partly hidden.
+
+| Account | Used |
+|---|---:|
+| JONGSKY | 40.03 |
+| Team account (ck…) | 40.02 |
+| Team account (sy…) | 40.27 |
+| **Total** | **120.32** |
+
+The account pages count every task an account ran, so the total is a little above the sum of the four tasks above.
+
+![JONGSKY account: 40.00 budget, 40.03 used](timehasdensity_jongsky_budget.png)
+
+![Team account: 40.00 budget, 40.02 used](timehasdensity_account_ck_budget.png)
+
+![Team account: 40.00 budget, 40.27 used](timehasdensity_account_sy_budget.png)
 
 ---
 
