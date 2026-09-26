@@ -1,0 +1,7 @@
+# Keep Bob's context on the source, not on generated or cloned data.
+node_modules/
+out/repos/
+out/audits/
+samples/city.sample.js
+.env
+.env.*

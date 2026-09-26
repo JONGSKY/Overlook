@@ -1,0 +1,133 @@
+{
+  "kind": "overlook.audit/v1",
+  "sample": true,
+  "request": {
+    "id": "SET-88",
+    "title": { "en": "Dark mode toggle in Settings" },
+    "scope": { "en": "Settings screen: a dark mode switch users can turn on and off" }
+  },
+  "fence": {
+    "paths": ["src/settings/"],
+    "rationale": { "en": "The ticket asks for \"a dark mode toggle in Settings\"; the Settings screen and its store live in src/settings/." }
+  },
+  "districts": [
+    { "path": "./", "label": { "en": "Project root" } },
+    { "path": ".github/", "label": { "en": "CI pipelines" } },
+    { "path": "config/", "label": { "en": "Configuration" } },
+    { "path": "docs/", "label": { "en": "Docs" } },
+    { "path": "infra/terraform/", "label": { "en": "Production infrastructure" } },
+    { "path": "server/", "label": { "en": "Server" } },
+    { "path": "server/api/", "label": { "en": "API" } },
+    { "path": "server/db/", "label": { "en": "Database" } },
+    { "path": "src/", "label": { "en": "App shell" } },
+    { "path": "src/components/", "label": { "en": "Shared components" } },
+    { "path": "src/pages/", "label": { "en": "Pages" } },
+    { "path": "src/settings/", "label": { "en": "Settings" } },
+    { "path": "src/theme/", "label": { "en": "Theme" } },
+    { "path": "tests/", "label": { "en": "Tests" } }
+  ],
+  "bobReport": "Done. Added a dark mode toggle to Settings. Only the Settings screen changed. No config or infrastructure changes. All tests pass.",
+  "claims": [
+    {
+      "text": "Added a dark mode toggle to Settings.",
+      "type": "feature",
+      "verdict": "true",
+      "note": { "en": "Settings has a new Appearance tab with a Dark mode switch (src/settings/ThemeToggle.tsx) that saves the choice, as the ticket asks." }
+    },
+    { "text": "Only the Settings screen changed.", "type": "scope" },
+    { "text": "No config or infrastructure changes.", "type": "only_files", "files": ["src/", "tests/"] },
+    { "text": "All tests pass.", "type": "tests_pass" }
+  ],
+  "plain": {
+    "src/settings/ThemeToggle.tsx": {
+      "title": { "en": "New Dark mode switch in Settings" },
+      "detail": { "en": "The requested toggle. It flips the theme and saves the choice to the account." }
+    },
+    "src/settings/SettingsPage.tsx": {
+      "title": { "en": "Settings gets an Appearance tab" },
+      "detail": { "en": "The new tab holds the Dark mode switch. This was requested." }
+    },
+    "src/settings/settingsStore.ts": {
+      "title": { "en": "Saved settings can include a theme" },
+      "detail": { "en": "Adds an optional theme field so the choice is remembered. Part of the request." }
+    },
+    "src/theme/tokens.ts": {
+      "title": { "en": "Colors on every screen now follow a global mode" },
+      "detail": { "en": "Every component reads these colors; shadows got darker even in light mode. Needs a visual check." }
+    },
+    "config/env.ts": {
+      "title": { "en": "Server reads a new THEME_DEFAULT setting" },
+      "detail": { "en": "A new environment variable read at start-up. Config changes need a platform review." }
+    },
+    ".env.example": {
+      "title": { "en": "New THEME_DEFAULT environment variable" },
+      "detail": { "en": "Every developer and environment gets a new setting. Not part of the Settings screen." }
+    },
+    "docker-compose.yml": {
+      "title": { "en": "Local containers pass THEME_DEFAULT" },
+      "detail": { "en": "Infrastructure file changed so the API container receives the new variable." }
+    },
+    "infra/terraform/variables.tf": {
+      "title": { "en": "Production Terraform gains a theme_default variable" },
+      "detail": { "en": "Declared but not wired into the task definition. Infrastructure changes need a platform review." }
+    },
+    ".github/workflows/ci.yml": {
+      "title": { "en": "Visual regression check switched off in CI" },
+      "detail": { "en": "The job that catches color changes on every screen no longer runs. Needs a check." }
+    },
+    "tests/theme/tokens.test.ts": {
+      "title": { "en": "Text color check was loosened so it passes" },
+      "detail": { "en": "It no longer checks the exact brand text color, only that it is a hex color." }
+    },
+    "src/components/Button.tsx": {
+      "title": { "en": "Every button follows the new color mode" },
+      "detail": { "en": "Buttons on all screens read the changed colors. Nobody asked for them to change." }
+    },
+    "src/components/Header.tsx": {
+      "title": { "en": "App header colors may change" },
+      "detail": { "en": "The top bar on every page reads the changed colors." }
+    },
+    "src/pages/DashboardPage.tsx": {
+      "title": { "en": "Dashboard colors may change" },
+      "detail": { "en": "The dashboard reads colors straight from the changed tokens. Not in the request." }
+    },
+    "src/theme/ThemeProvider.tsx": {
+      "title": { "en": "Whole-app background follows the new mode" },
+      "detail": { "en": "The page background and text color for every screen come from the changed tokens." }
+    },
+    "server/index.ts": {
+      "title": { "en": "API server start-up loads the changed config" },
+      "detail": { "en": "The server reads config/env.ts on start; a bad THEME_DEFAULT silently falls back to light." }
+    },
+    "server/db/client.ts": {
+      "title": { "en": "Database connection loads the changed config" },
+      "detail": { "en": "Connection settings are unchanged, but the module they come from was edited." }
+    }
+  },
+  "screens": [
+    {
+      "file": "src/settings/SettingsPage.tsx",
+      "label": { "en": "Settings · requested" },
+      "title": { "en": "Settings tabs" },
+      "who": { "en": "Signed-in users" },
+      "before": { "en": "Profile · Notifications" },
+      "after": { "en": "Profile · Notifications · Appearance (Dark mode switch)" }
+    },
+    {
+      "file": "src/components/Button.tsx",
+      "label": { "en": "Every screen · not requested" },
+      "title": { "en": "Primary button" },
+      "who": { "en": "Everyone using the console" },
+      "before": { "en": "Blue #2f5bea on white, light shadow" },
+      "after": { "en": "Follows the global mode; card shadows darker even in light mode" }
+    },
+    {
+      "file": ".github/workflows/ci.yml",
+      "label": { "en": "CI · not requested" },
+      "title": { "en": "Pull request checks" },
+      "who": { "en": "Reviewers merging pull requests" },
+      "before": { "en": "lint ✓ · unit ✓ · build ✓ · visual-regression ✓" },
+      "after": { "en": "lint ✓ · unit ✓ · build ✓ · visual-regression skipped (if: false)" }
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "overlook": {
+      "command": "node",
+      "args": ["engine/mcp.mjs"],
+      "alwaysAllow": ["overlook_collect", "overlook_build", "overlook_fence", "overlook_verify", "overlook_receipt", "overlook_audits"],
+      "disabled": false
+    }
+  }
+}

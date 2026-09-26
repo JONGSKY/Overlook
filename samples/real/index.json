@@ -1,0 +1,50 @@
+[
+  {
+    "id": "atlas-production-fixes",
+    "title": "Fix 4 production bugs: 405 on /api/analyze, response shape, GitHub link, page scroll",
+    "repo": "chanjoongx/atlas",
+    "kind": "Bob task",
+    "context": "IBM Bob Hackathon (May 2026), 2nd place · Bob session 10 (bob_sessions/10-production-fixes)",
+    "url": "https://github.com/chanjoongx/atlas/commit/1aff2bb067689d3f06e0924d2d3f28ac7c8cc370",
+    "blurb": "A real Bob session from last hackathon's runner-up. The prompt named four files and fenced off the backend; Bob stayed inside.",
+    "files": 88,
+    "changed": 8,
+    "outside": 0,
+    "affected": 0,
+    "claims": 4,
+    "claimsTrue": 2,
+    "falseClaims": 0
+  },
+  {
+    "id": "github-mcp-server-icons",
+    "title": "Remote MCP server breaks Cursor: icons.sizes is an array, older clients expect a string",
+    "repo": "github/github-mcp-server",
+    "kind": "Copilot agent PR",
+    "context": "GitHub's official MCP server · PR #1645 by the Copilot coding agent, merged",
+    "url": "https://github.com/github/github-mcp-server/pull/1645",
+    "blurb": "Copilot agent PR in GitHub's MCP server: a compatibility fix that also rewrites test expectations and five tool snapshots.",
+    "files": 367,
+    "changed": 7,
+    "outside": 5,
+    "affected": 0,
+    "claims": 4,
+    "claimsTrue": 2,
+    "falseClaims": 0
+  },
+  {
+    "id": "playwright-mcp-screenshot",
+    "title": "Do not require a snapshot in browser_take_screenshot unless an element is specified",
+    "repo": "microsoft/playwright-mcp",
+    "kind": "Copilot agent PR",
+    "context": "Microsoft's Playwright MCP server · PR #725 by the Copilot coding agent, merged",
+    "url": "https://github.com/microsoft/playwright-mcp/pull/725",
+    "blurb": "Copilot agent PR in Playwright MCP: a two-file fix inside the request, but the description still claims a change that was reverted.",
+    "files": 99,
+    "changed": 2,
+    "outside": 0,
+    "affected": 0,
+    "claims": 3,
+    "claimsTrue": 2,
+    "falseClaims": 1
+  }
+]

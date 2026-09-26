@@ -1,0 +1,20 @@
+{
+  "name": "overlook",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AI said done. See what actually changed.",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "site": "node engine/site.mjs",
+    "test": "node --test engine/test/*.test.mjs",
+    "mcp": "node engine/mcp.mjs",
+    "sample": "bash samples/build-sample.sh",
+    "examples": "bash samples/examples/build-examples.sh",
+    "scan": "node engine/scan.mjs",
+    "real": "node samples/real/build-real.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

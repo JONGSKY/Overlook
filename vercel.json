@@ -1,0 +1,30 @@
+{
+  "buildCommand": "",
+  "outputDirectory": ".",
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/ui/index.html"
+    },
+    {
+      "source": "/main",
+      "destination": "/ui/index.html"
+    },
+    {
+      "source": "/examples",
+      "destination": "/ui/index.html"
+    },
+    {
+      "source": "/sample",
+      "destination": "/ui/index.html"
+    },
+    {
+      "source": "/sample/:id",
+      "destination": "/ui/index.html"
+    },
+    {
+      "source": "/audit/:id",
+      "destination": "/ui/index.html"
+    }
+  ]
+}

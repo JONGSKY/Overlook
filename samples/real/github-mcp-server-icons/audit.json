@@ -1,0 +1,66 @@
+{
+  "kind": "overlook.audit/v1",
+  "sample": false,
+  "example": {
+    "kind": "Copilot agent PR",
+    "repo": "github/github-mcp-server",
+    "url": "https://github.com/github/github-mcp-server/pull/1645",
+    "context": "GitHub's official MCP server · PR #1645 by the Copilot coding agent, merged",
+    "auditor": "Overlook team (fence and claim types); verdicts computed from git by build-city",
+    "license": "MIT"
+  },
+  "request": {
+    "id": "#1644",
+    "title": "Remote MCP server breaks Cursor: icons.sizes is an array, older clients expect a string",
+    "scope": "Issue #1644 and the prompt given to the agent: \"see if there is a way to record the SDK version from initialize (like we do for host) and unless the spec version is high enough use the old icon size string format, or omit. If that's not possible, then omit icons entirely for now.\"",
+    "source": "https://github.com/github/github-mcp-server/issues/1644"
+  },
+  "fence": {
+    "paths": [
+      "pkg/octicons/"
+    ],
+    "rationale": "The icons and their sizes are built in pkg/octicons (octicons.Icons); the fix belongs there."
+  },
+  "districts": [
+    {
+      "path": "pkg/github/__toolsnaps__/",
+      "label": "Tool schema snapshots"
+    }
+  ],
+  "bobReport": "Removes the `sizes` field from icon definitions to fix connection failures with older MCP clients that expect a string instead of an array. Omit optional `Sizes` field in `octicons.Icons()` function. Update tests to verify field is empty. Regenerate toolsnaps for tools with explicit icons (assign_copilot_to_issue, fork_repository, merge_pull_request, request_copilot_review, star_repository). Tested locally with `./script/test`. Icon field is internal metadata; no user-facing documentation required.",
+  "claims": [
+    {
+      "text": "Omit optional `Sizes` field in `octicons.Icons()` function.",
+      "type": "feature",
+      "verdict": "true",
+      "note": "Both Sizes lines are removed from octicons.Icons(). The prompt's first option (keep the string format for old clients) was not attempted."
+    },
+    {
+      "text": "Update tests to verify field is empty.",
+      "type": "feature",
+      "verdict": "true",
+      "note": "Two assert.Equal(… []string{\"24x24\"} …) became assert.Empty(…): the old expectation is replaced, not kept."
+    },
+    {
+      "text": "Tested locally with `./script/test`.",
+      "type": "tests_pass"
+    },
+    {
+      "text": "Icon field is internal metadata; no user-facing documentation required.",
+      "type": "feature",
+      "verdict": "unverified",
+      "note": "The field is part of every tool's published schema (the snapshots changed), so clients can see it."
+    }
+  ],
+  "plain": {
+    "pkg/octicons/octicons.go": {
+      "title": "Icons no longer say their size",
+      "detail": "Older MCP clients like Cursor could not connect; now they can. Requested."
+    },
+    "pkg/octicons/octicons_test.go": {
+      "title": "The icon test now expects no size",
+      "detail": "The check was changed to match the new behaviour. Needs a look."
+    }
+  },
+  "screens": []
+}

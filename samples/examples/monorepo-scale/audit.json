@@ -1,0 +1,197 @@
+{
+  "kind": "overlook.audit/v1",
+  "sample": true,
+  "request": {
+    "id": "ADM-310",
+    "title": { "en": "Rename Customer to Client in the admin table" },
+    "scope": { "en": "Admin customers table: labels only" }
+  },
+  "fence": {
+    "paths": ["apps/admin/customers/"],
+    "rationale": { "en": "The ticket asks to \"rename Customer to Client in the admin table\" (labels only); the admin customers table and its tests live in apps/admin/customers/." }
+  },
+  "districts": [
+    { "path": "./", "label": { "en": "Project root" } },
+    { "path": ".github/", "label": { "en": "CI pipelines" } },
+    { "path": "apps/web/", "label": { "en": "Web shop" } },
+    { "path": "apps/admin/", "label": { "en": "Admin" } },
+    { "path": "apps/admin/customers/", "label": { "en": "Admin customers table" } },
+    { "path": "services/api/", "label": { "en": "API service" } },
+    { "path": "services/worker/", "label": { "en": "Background jobs" } },
+    { "path": "packages/types/", "label": { "en": "Shared types" } },
+    { "path": "packages/ui/", "label": { "en": "UI kit" } },
+    { "path": "packages/utils/", "label": { "en": "Shared helpers" } },
+    { "path": "infra/terraform/", "label": { "en": "Cloud infrastructure" } },
+    { "path": "infra/k8s/", "label": { "en": "Kubernetes config" } },
+    { "path": "docs/", "label": { "en": "Docs" } },
+    { "path": "tests/", "label": { "en": "End-to-end tests" } }
+  ],
+  "bobReport": "Done. Renamed Customer to Client in the admin table only. No API or database changes. All tests pass.",
+  "claims": [
+    {
+      "text": "Renamed Customer to Client",
+      "type": "feature",
+      "verdict": "true",
+      "note": { "en": "The admin customers table, its filters, search, details drawer and export button now say Client." }
+    },
+    { "text": "in the admin table only.", "type": "scope" },
+    { "text": "No API or database changes.", "type": "no_api_change" },
+    { "text": "All tests pass.", "type": "tests_pass" }
+  ],
+  "plain": {
+    "apps/admin/customers/columns.ts": {
+      "title": { "en": "Table column header now reads Client" },
+      "detail": { "en": "The first column of the admin table says Client. This was requested." }
+    },
+    "apps/admin/customers/CustomerRow.tsx": {
+      "title": { "en": "Table rows say Client" },
+      "detail": { "en": "Row labels say Client and read the renamed shared field." }
+    },
+    "apps/admin/customers/CustomerTable.tsx": {
+      "title": { "en": "Admin table sorts by the renamed field" },
+      "detail": { "en": "The default sort uses clientName. Part of the requested screen." }
+    },
+    "apps/admin/customers/strings.ts": {
+      "title": { "en": "Admin screen wording changes to Client" },
+      "detail": { "en": "Title, search hint, empty state and export label say Client. Requested." }
+    },
+    "apps/admin/customers/CustomerBadge.tsx": {
+      "title": { "en": "Tier badge says Client" },
+      "detail": { "en": "Requested label change in the admin table." }
+    },
+    "apps/admin/customers/CustomerSearch.tsx": {
+      "title": { "en": "Search box label says Clients" },
+      "detail": { "en": "Requested label change in the admin table." }
+    },
+    "apps/admin/customers/CustomerFilters.tsx": {
+      "title": { "en": "Tier filter says Client" },
+      "detail": { "en": "Requested label change in the admin table." }
+    },
+    "apps/admin/customers/CustomerExportButton.tsx": {
+      "title": { "en": "Exported file and its header are renamed" },
+      "detail": { "en": "Downloads are now clients.csv with a Client column. Anyone importing these files should know." }
+    },
+    "apps/admin/customers/CustomerDetail.tsx": {
+      "title": { "en": "Details drawer says Client" },
+      "detail": { "en": "Requested label change in the admin customers screen." }
+    },
+    "apps/admin/customers/CustomersPage.tsx": {
+      "title": { "en": "Screen reader text says Client" },
+      "detail": { "en": "Requested label change in the admin customers screen." }
+    },
+    "apps/admin/customers/useCustomers.ts": {
+      "title": { "en": "Admin list asks the API to sort by clientName" },
+      "detail": { "en": "The sort key sent to the API changed, so the API has to accept it." }
+    },
+    "apps/admin/customers/__tests__/CustomerTable.test.tsx": {
+      "title": { "en": "Table test updated for the new label" },
+      "detail": { "en": "Checks the Client column instead of Customer. Matches the requested change." }
+    },
+    "apps/admin/customers/__tests__/columns.test.ts": {
+      "title": { "en": "Column test updated for Client" },
+      "detail": { "en": "Expects the Client header and clientName key. Matches the requested change." }
+    },
+    "packages/types/customer.ts": {
+      "title": { "en": "Shared customer type renames its name field" },
+      "detail": { "en": "Web shop, admin, API and worker all use this type. customerName becomes optional. Needs a check." }
+    },
+    "packages/types/index.ts": {
+      "title": { "en": "Shared types export new Client names" },
+      "detail": { "en": "Adds Client and ClientSummary aliases for every app. Not requested." }
+    },
+    "packages/utils/names.ts": {
+      "title": { "en": "Customer names across the shop now read clientName" },
+      "detail": { "en": "Dozens of screens and emails use this helper. Records without clientName show the email instead." }
+    },
+    "apps/admin/orders/OrderCustomerCell.tsx": {
+      "title": { "en": "Admin orders table changes too" },
+      "detail": { "en": "The orders screen was edited to compile after the rename. Not in the request." }
+    },
+    "services/api/models/customer.ts": {
+      "title": { "en": "API reads and writes a renamed database column" },
+      "detail": { "en": "Every customer query now uses client_name. It fails until the migration runs." }
+    },
+    "services/api/controllers/customers.controller.ts": {
+      "title": { "en": "Customer API expects clientName instead of customerName" },
+      "detail": { "en": "Partner apps still sending customerName will have name updates ignored. Needs a check." }
+    },
+    "services/api/serializers/customer.serializer.ts": {
+      "title": { "en": "Customer API responses rename a field" },
+      "detail": { "en": "Responses send clientName, not customerName. Partner apps may break. Needs a check." }
+    },
+    "services/api/migrations/0031_rename_customer_name_to_client_name.sql": {
+      "title": { "en": "Database column renamed in production" },
+      "detail": { "en": "A schema migration renames customer_name. The report says no database changes. Needs a check." }
+    },
+    "services/api/tests/customers.controller.test.ts": {
+      "title": { "en": "API test rewritten for the new field" },
+      "detail": { "en": "It now expects clientName, so it passes with the changed API response." }
+    },
+    "docs/api/customers.md": {
+      "title": { "en": "Public API docs now show clientName" },
+      "detail": { "en": "The warning that renaming this field is breaking was itself rewritten." }
+    },
+    "docs/admin/customers.md": {
+      "title": { "en": "Admin guide updated to say Client" },
+      "detail": { "en": "Documentation only. Matches the requested label change." }
+    },
+    "infra/k8s/admin-configmap.yaml": {
+      "title": { "en": "Production config changes the export header" },
+      "detail": { "en": "Kubernetes config for the admin changed. Infrastructure changes need a platform review." }
+    },
+    "tests/e2e/admin-customers.spec.ts": {
+      "title": { "en": "End-to-end test updated for Client labels" },
+      "detail": { "en": "Its expectations were rewritten to the new labels rather than added." }
+    },
+    "apps/web/components/account/AccountHeader.tsx": {
+      "title": { "en": "Shop account header may show a blank name" },
+      "detail": { "en": "It still reads customerName, which the rename leaves empty. Not in the request." }
+    },
+    "apps/web/pages/AccountProfilePage.tsx": {
+      "title": { "en": "Shop profile page may show a blank name" },
+      "detail": { "en": "Still reads customerName from the changed type. Shoppers see this page." }
+    },
+    "apps/admin/customers/CustomerOrders.tsx": {
+      "title": { "en": "Customer orders panel was not updated" },
+      "detail": { "en": "Inside the requested screen but still reads customerName; it may show a blank name." }
+    },
+    "services/api/routes/customers.ts": {
+      "title": { "en": "Every customer API call uses the changed code" },
+      "detail": { "en": "All /api/customers routes go through the edited controller." }
+    },
+    "services/worker/jobs/send-welcome-email.ts": {
+      "title": { "en": "Welcome emails use the changed name helper" },
+      "detail": { "en": "Emails greet customers by name via the helper that now reads clientName." }
+    },
+    "packages/types/order.ts": {
+      "title": { "en": "Every order carries the changed customer summary" },
+      "detail": { "en": "Orders embed the customer summary whose name field was renamed." }
+    }
+  },
+  "screens": [
+    {
+      "file": "apps/admin/customers/columns.ts",
+      "label": { "en": "Admin table · requested" },
+      "title": { "en": "Customers table header" },
+      "who": { "en": "Support and finance staff" },
+      "before": { "en": "Customer | Email | Tier" },
+      "after": { "en": "Client | Email | Tier" }
+    },
+    {
+      "file": "services/api/serializers/customer.serializer.ts",
+      "label": { "en": "API · not requested" },
+      "title": { "en": "GET /api/customers/:id" },
+      "who": { "en": "Partner apps and the web shop" },
+      "before": { "en": "{ \"customerName\": \"Ada Lovelace\", \"email\": \"ada@example.com\" }" },
+      "after": { "en": "{ \"clientName\": \"Ada Lovelace\", \"email\": \"ada@example.com\" }" }
+    },
+    {
+      "file": "apps/web/components/account/AccountHeader.tsx",
+      "label": { "en": "Web shop · not requested" },
+      "title": { "en": "Account page header" },
+      "who": { "en": "Shoppers on their account page" },
+      "before": { "en": "Ada Lovelace" },
+      "after": { "en": "(blank: customerName is no longer sent)" }
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+node_modules/
+.env
+.env.*
+!.env.example
+
+# Audit output, cloned repositories and saved audits
+out/*
+!out/.gitkeep
+
+# OS
+*.DS_Store
+
+# Internal planning docs — not for submission repo
+IBM_Bob_2.0_*.md
+
+# Local editor / assistant settings
+.claude/
+CLAUDE.md
+CLAUDE.local.md
+.mcp.json

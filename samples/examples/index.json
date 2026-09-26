@@ -1,0 +1,32 @@
+[
+  {
+    "id": "infra-drift",
+    "title": "Dark mode toggle in Settings",
+    "request": "SET-88",
+    "blurb": "A small Settings feature that quietly reaches into shared theme tokens, env config, docker-compose, Terraform and CI.",
+    "files": 65,
+    "changed": 10,
+    "outside": 7,
+    "affected": 23
+  },
+  {
+    "id": "monorepo-scale",
+    "title": "Rename Customer to Client in the admin table",
+    "request": "ADM-310",
+    "blurb": "A label rename in a 600-file monorepo that leaks into shared types, the public API and a database migration.",
+    "files": 625,
+    "changed": 26,
+    "outside": 13,
+    "affected": 94
+  },
+  {
+    "id": "clean-pass",
+    "title": "Fix rounding in checkout total",
+    "request": "PAY-17",
+    "blurb": "The contrast case: the agent stays inside the fence, adds a test, and every claim holds.",
+    "files": 35,
+    "changed": 2,
+    "outside": 0,
+    "affected": 0
+  }
+]

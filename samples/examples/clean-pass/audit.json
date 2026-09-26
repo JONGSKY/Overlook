@@ -1,0 +1,61 @@
+{
+  "kind": "overlook.audit/v1",
+  "sample": true,
+  "request": {
+    "id": "PAY-17",
+    "title": { "en": "Fix rounding in checkout total" },
+    "scope": { "en": "Checkout total calculation and its tests" }
+  },
+  "fence": {
+    "paths": ["src/checkout/", "tests/checkout/"],
+    "rationale": { "en": "The ticket asks to \"fix rounding in the checkout total\"; the total is computed in src/checkout/ and tested in tests/checkout/." }
+  },
+  "districts": [
+    { "path": "./", "label": { "en": "Project root" } },
+    { "path": ".github/", "label": { "en": "CI pipelines" } },
+    { "path": "server/", "label": { "en": "Server" } },
+    { "path": "src/", "label": { "en": "App shell" } },
+    { "path": "src/cart/", "label": { "en": "Cart" } },
+    { "path": "src/checkout/", "label": { "en": "Checkout" } },
+    { "path": "src/products/", "label": { "en": "Products" } },
+    { "path": "src/shared/", "label": { "en": "Shared helpers" } },
+    { "path": "tests/", "label": { "en": "Tests" } },
+    { "path": "tests/checkout/", "label": { "en": "Checkout tests" } }
+  ],
+  "bobReport": "Fixed rounding in the checkout total. Only checkout code changed. Added a test for half-cent totals.",
+  "claims": [
+    {
+      "text": "Fixed rounding in the checkout total.",
+      "type": "feature",
+      "verdict": "true",
+      "note": { "en": "The total is now summed in whole cents with half-up rounding, so a €10.005 cart totals €10.01 instead of €10.00." }
+    },
+    { "text": "Only checkout code changed.", "type": "scope" },
+    {
+      "text": "Added a test for half-cent totals.",
+      "type": "feature",
+      "verdict": "true",
+      "note": { "en": "tests/checkout/total.test.ts gains two cases with three new assertions; none were removed, loosened or skipped." }
+    }
+  ],
+  "plain": {
+    "src/checkout/total.ts": {
+      "title": { "en": "Checkout total rounds half-cents up" },
+      "detail": { "en": "A €10.005 cart now totals €10.01 instead of €10.00. This was requested." }
+    },
+    "tests/checkout/total.test.ts": {
+      "title": { "en": "Two new checks for half-cent totals" },
+      "detail": { "en": "Adds three assertions; nothing was removed or loosened." }
+    }
+  },
+  "screens": [
+    {
+      "file": "src/checkout/total.ts",
+      "label": { "en": "Checkout · requested" },
+      "title": { "en": "Order total" },
+      "who": { "en": "Shoppers at checkout" },
+      "before": { "en": "Cart of €10.005 → Total €10.00" },
+      "after": { "en": "Cart of €10.005 → Total €10.01" }
+    }
+  ]
+}
