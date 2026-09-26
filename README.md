@@ -252,10 +252,12 @@ Released under the [MIT License](LICENSE).
 
 ## Team
 
+<div align="center">
+
 **Time Has Density**
 
-| Member | GitHub |
-|---|---|
-| Jongho Lee | [@JONGSKY](https://github.com/JONGSKY) |
-| Asher | [@asher-han](https://github.com/asher-han) |
-| seokyoung0213 | (Bob account) |
+Seokyoung Cho · Jongho Lee · Chanyoung Han · Jeong Hae Jun
+
+Repository contributors on GitHub: [@JONGSKY](https://github.com/JONGSKY), [@asher-han](https://github.com/asher-han)
+
+</div>

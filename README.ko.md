@@ -252,10 +252,12 @@ npm run scan      # GitHub API로 공개 에이전트 PR 측정
 
 ## 팀
 
+<div align="center">
+
 **Time Has Density**
 
-| 멤버 | GitHub |
-|---|---|
-| Jongho Lee | [@JONGSKY](https://github.com/JONGSKY) |
-| Asher | [@asher-han](https://github.com/asher-han) |
-| seokyoung0213 | (Bob 계정) |
+Seokyoung Cho · Jongho Lee · Chanyoung Han · Jeong Hae Jun
+
+GitHub 저장소 기여자: [@JONGSKY](https://github.com/JONGSKY), [@asher-han](https://github.com/asher-han)
+
+</div>
