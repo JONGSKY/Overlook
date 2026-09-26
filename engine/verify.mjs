@@ -52,6 +52,13 @@ function detectTestCommandAtBase(repo, baseSha, worktreeDir) {
     if (t && !/no test specified/.test(t)) {
       // Run the original script body directly, not via `npm test`.
       // This means the agent rewriting scripts.test in the head commit has no effect.
+      //
+      // If the script body is a bare binary name (e.g. "vitest", "jest", "mocha") it is
+      // only on PATH when npm sets it up — so prefix it with the local bin directory
+      // so it works when run directly from a fresh worktree.
+      if (/^[a-zA-Z0-9_-]+$/.test(t.trim())) {
+        return `./node_modules/.bin/${t.trim()}`;
+      }
       return t;
     }
   } catch { /* no package.json at base */ }
@@ -101,7 +108,11 @@ export async function inWorktree({ repo, rev, prepare, command, install = true, 
     if (!cmd) return { skipped: true, reason: 'No test command found (package.json "test", pytest, go test or cargo test). Pass one explicitly.' };
     let setup = null;
     if (install && needsInstall(dir)) {
-      setup = await sh(fs.existsSync(path.join(dir, 'package-lock.json')) ? 'npm ci --no-audit --no-fund' : 'npm install --no-audit --no-fund', dir, timeoutMs);
+      const hasLock = fs.existsSync(path.join(dir, 'package-lock.json'));
+      setup = await sh(hasLock ? 'npm ci --no-audit --no-fund' : 'npm install --no-audit --no-fund', dir, timeoutMs);
+      // npm ci fails when the lock file is out of sync (e.g. the base commit has a different lock).
+      // Fall back to npm install so the test can still run.
+      if (!setup.passed && hasLock) setup = await sh('npm install --no-audit --no-fund', dir, timeoutMs);
       if (!setup.passed) return { ...setup, passed: false, phase: 'install' };
     }
     const run = await sh(cmd, dir, timeoutMs);
