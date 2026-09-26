@@ -7,6 +7,7 @@
     "context": "IBM Bob Hackathon (May 2026), 2nd place · Bob session 10 (bob_sessions/10-production-fixes)",
     "url": "https://github.com/chanjoongx/atlas/commit/1aff2bb067689d3f06e0924d2d3f28ac7c8cc370",
     "blurb": "A real Bob session from last hackathon's runner-up. The prompt named four files and fenced off the backend; Bob stayed inside.",
+    "bob_generated": true,
     "files": 88,
     "changed": 8,
     "outside": 0,

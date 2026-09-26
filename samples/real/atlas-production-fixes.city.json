@@ -17,7 +17,8 @@
       "repo": "chanjoongx/atlas",
       "url": "https://github.com/chanjoongx/atlas/commit/1aff2bb067689d3f06e0924d2d3f28ac7c8cc370",
       "context": "IBM Bob Hackathon (May 2026), 2nd place · Bob session 10 (bob_sessions/10-production-fixes)",
-      "auditor": "Overlook team (fence and claim types); verdicts computed from git by build-city",
+      "bob_generated": true,
+      "auditor": "IBM Bob (Overlook Auditor mode); verdicts computed from git by build-city",
       "license": "MIT"
     },
     "prUrl": "https://github.com/chanjoongx/atlas/commit/1aff2bb067689d3f06e0924d2d3f28ac7c8cc370"
@@ -37,7 +38,7 @@
       "src/components/CityMap.tsx",
       "bob_sessions/10-production-fixes/"
     ],
-    "rationale": "The prompt lists the four files and says \"Do not touch other files.\" The session archive in bob_sessions/10-production-fixes/ was committed with the work by the author and is fenced so it does not count against Bob."
+    "rationale": "The prompt explicitly names four files and says \"Do not touch other files. Backend (functions/) MUST remain unchanged.\" The bob_sessions/10-production-fixes/ folder was committed with the work by the author as the session archive, so it is fenced and does not count against Bob."
   },
   "districts": [
     {
@@ -8714,8 +8715,12 @@
     {
       "text": "Page now fits exactly in viewport with no scroll.",
       "type": "feature",
+      "check": {
+        "command": "grep -E 'h-screen|overflow-hidden|h-full' src/App.tsx | grep -v '//' | head -5",
+        "why": "A no-scroll viewport layout requires CSS classes like h-screen or overflow-hidden on the root element; their presence is a necessary (though not sufficient) condition."
+      },
       "verdict": "unverified",
-      "detail": "A layout claim: it needs a browser, not git.",
+      "detail": "Not checkable from git; no note from Bob.",
       "evidence": [
         "bob-judgement"
       ]
@@ -8725,19 +8730,23 @@
   "plain": {
     "public/_routes.json": {
       "title": "API requests reach the server again",
-      "detail": "The Analyze button stopped failing with an error; this routing file was the cause."
+      "detail": "The /api/analyze route was returning 405 Method Not Allowed. This routing file now maps the path correctly so the Analyze button works."
     },
     "src/lib/api-client.ts": {
       "title": "The app reads the server's answer correctly",
-      "detail": "The map no longer crashes after analysis. Requested."
+      "detail": "The response shape from /api/analyze changed; the client now reads the right fields so the city map no longer crashes after analysis. Requested."
     },
     "src/App.tsx": {
-      "title": "Page fits the screen; footer link fixed",
-      "detail": "No scrolling, and the GitHub link points to the project."
+      "title": "Page fits the screen; footer GitHub link corrected",
+      "detail": "Layout classes added to remove the scroll. The GitHub link in the footer now points to the project repository. Requested."
     },
     "src/components/CityMap.tsx": {
-      "title": "The map fills the free space",
-      "detail": "Part of the no-scroll layout. Requested."
+      "title": "The map fills the available vertical space",
+      "detail": "Height class updated to match the new no-scroll layout. Requested."
+    },
+    "bob_sessions/10-production-fixes/": {
+      "title": "Bob session archive",
+      "detail": "The prompt, history and summary for this Bob session, committed together with the fix. Part of the session record, not production code."
     }
   },
   "totals": {
