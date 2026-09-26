@@ -113,6 +113,7 @@ Three of our accounts ran Bob until each 40-Bobcoin budget was gone. We planned 
 | **Plan** | Plan mode, document understanding | Read the brief and wrote [`docs/PLAN.md`](docs/PLAN.md): phases, done checks, an acceptance matrix and a Bobcoin budget |
 | **Build** | Agent mode, 7 subtasks | Built the first version phase by phase, each subtask in a fresh context, with tests and a commit after every phase |
 | **Fix** | Agent mode, a second account | Worked through the review list and regenerated the samples |
+| **Audit** | Overlook Auditor mode | Ran the product's own audit on real work: three finished agent tasks in public repositories, finding a false claim in both Copilot PRs |
 | **Review** | Agent mode | Read the whole finished codebase, removed dead code, added tests, and closed a hole where an agent could fake "tests pass" by rewriting the test script |
 
 <table>
@@ -121,10 +122,11 @@ Three of our accounts ran Bob until each 40-Bobcoin budget was gone. We planned 
     <td align="center"><img src="bob_sessions/timehasdensity_task01_full_task_session.png" width="220" alt="Task 01 session summary" /><br/><sub>Plan and build · 39.55</sub></td>
     <td align="center"><img src="bob_sessions/timehasdensity_task02_full_task_session.png" width="220" alt="Task 02 session summary" /><br/><sub>Fix · 39.95</sub></td>
     <td align="center"><img src="bob_sessions/timehasdensity_task03_full_task_session.png" width="220" alt="Task 03 session summary" /><br/><sub>Review · 32.53</sub></td>
+    <td align="center"><img src="bob_sessions/timehasdensity_task04_session_header.png" width="220" alt="Task 04 session summary" /><br/><sub>Audit · 17.12</sub></td>
   </tr>
 </table>
 
-**4 tasks · 3 accounts · 119 Bobcoins on these tasks, every account's budget used.** We spent Bobcoins only where judgment was needed and kept every fact in plain code, and we opened a new task per phase so each context stayed small. Screenshots per teammate are in [`bob_sessions/`](bob_sessions/), Task Ids in [`docs/BOB_SESSIONS.md`](docs/BOB_SESSIONS.md), the files Bob wrote in [`BOB_CONTRIBUTIONS.md`](BOB_CONTRIBUTIONS.md), and the story from first prototype to this version in [`docs/EVOLUTION.md`](docs/EVOLUTION.md).
+**5 tasks · 136 Bobcoins.** We spent Bobcoins only where judgment was needed and kept every fact in plain code, and we opened a new task per phase so each context stayed small. Screenshots per teammate are in [`bob_sessions/`](bob_sessions/), Task Ids in [`docs/BOB_SESSIONS.md`](docs/BOB_SESSIONS.md), the files Bob wrote in [`BOB_CONTRIBUTIONS.md`](BOB_CONTRIBUTIONS.md), and the story from first prototype to this version in [`docs/EVOLUTION.md`](docs/EVOLUTION.md).
 
 ## Try it
 

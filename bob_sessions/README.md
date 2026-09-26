@@ -1,6 +1,6 @@
 # Bob sessions
 
-Team **Time Has Density** built Overlook with IBM Bob 2.0. Each screenshot below is the task session summary from Bob IDE, captured by the team member who ran the task in their own account. Every account used its full 40-Bobcoin budget.
+Team **Time Has Density** built Overlook with IBM Bob 2.0. Each screenshot below is the task session summary from Bob IDE, captured by the team member who ran the task in their own account. The three accounts on the budget pages below each used their full 40-Bobcoin budget.
 
 | # | Captured by | Task | Bobcoins |
 |---|---|---|---:|
@@ -8,8 +8,8 @@ Team **Time Has Density** built Overlook with IBM Bob 2.0. Each screenshot below
 | 01 | Asher | Plan, then build the first version in seven subtasks | 39.55 |
 | 02 | seokyoung0213 | Fix the review findings | 39.95 |
 | 03 | JONGSKY | Review and harden the finished codebase | 32.53 |
-| 04 | JONGSKY | Prove Bob runs inside Overlook: audit 3 real agent PRs, fill metrics | 15.12 |
-| | **Team** | **5 tasks, 3 accounts** | **134.15** |
+| 04 | tour_captain | Run the Overlook Auditor mode on 3 real agent PRs, fill the metrics | 17.12 |
+| | **Team** | **5 tasks** | **136.15** |
 
 ---
 
@@ -58,7 +58,9 @@ Team **Time Has Density** built Overlook with IBM Bob 2.0. Each screenshot below
 
 ## Task 04 · Prove Bob runs inside Overlook
 
-**Captured by JONGSKY** · Task Id `42b63285d0a90a340949f70e491fd152` · 15.12 Bobcoins
+**Captured by tour_captain** · Sep 27 · Task Id `42b63285d0a90a340949f70e491fd152` · 17.12 Bobcoins
+
+![Task 04 session summary](timehasdensity_task04_session_header.png)
 
 - **Skills:** committed four new skills that were untracked: `audit`, `verify`, `receipt`, `fix-forward` — the one-call workflows that let a reviewer run the full audit cycle from a single command.
 - **Audit (1 of 3) — Atlas · Bob session 10:** switched to Overlook Auditor mode and ran the full procedure on `chanjoongx/atlas` (IBM Bob hackathon 2nd place). Collected evidence with `overlook_collect`, drew the fence from the prompt ("Do not touch other files. Backend MUST remain unchanged."), extracted 4 typed claims, wrote feature checks, computed verdicts with `overlook_build`. Result: **0 of 8 files outside the fence** — Bob stayed exactly inside the four files the prompt named. Saved as `samples/real/atlas-production-fixes/audit.json` with `"bob_generated": true`.

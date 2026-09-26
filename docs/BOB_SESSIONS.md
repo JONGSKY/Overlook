@@ -49,11 +49,11 @@ Task 02 also ended at the 40-Bobcoin limit. Session summary: `bob_sessions/timeh
 |---|---|---|---|---|---|---|
 | 03 | Whole-codebase review: dead code removed, a double stat and an audit URL path fixed, tests strengthened (temp-dir cleanup, health, static files, failing checks, test-diff analysis), the original test command taken from base, README polished | Agent | `2a3f849272487143b4f35663fa8b3e7d` | 223.1k / 270k | **32.53** | `92996ad`, `5083312`, `4f6b39f` |
 
-### Task 04 · Prove Bob runs inside Overlook (JONGSKY's account, workspace `Overlook`)
+### Task 04 · Prove Bob runs inside Overlook (tour_captain, workspace `Overlook`)
 
 | # | Task | Mode | Task Id | Context | Bobcoins | Commits |
 |---|---|---|---|---|---|---|
-| 04 | Committed 4 untracked skills; ran Overlook Auditor mode on 3 real agent PRs (atlas, github-mcp-server, playwright-mcp); filled metrics.md; resolved merge conflict and pushed | Agent (Overlook Auditor mode) | `42b63285d0a90a340949f70e491fd152` | 117.5k / 270k | **15.12** | `93f5697`, `80c6027`, `1409a2b`, `583f20f` |
+| 04 | Committed 4 untracked skills; ran Overlook Auditor mode on 3 real agent PRs (atlas, github-mcp-server, playwright-mcp); filled metrics.md; resolved merge conflict and pushed | Agent (Overlook Auditor mode) | `42b63285d0a90a340949f70e491fd152` | 128.7k / 270k | **17.12** | `93f5697`, `80c6027`, `1409a2b`, `583f20f` |
 
 Key findings from this task's audits:
 
@@ -63,7 +63,7 @@ Key findings from this task's audits:
 | github-mcp-server #1645 | 5 / 7 | **1** | 0 |
 | playwright-mcp #725 | 0 / 2 | **1** | 0 |
 
-Bob found false claims in 2 of the 3 Copilot PRs that the previous team-written audits missed. Both are git-provable: one from a snapshot diff, one from the agent's own revert commit.
+Bob found a false claim in both Copilot PRs, which the previous team-written audits missed. Both rest on evidence in git (a snapshot diff, the agent's own revert commit) and are recorded as Bob's judgement with its reasoning.
 
 ## Made outside Bob
 
@@ -82,7 +82,7 @@ Two small commits were made by hand and are marked `[manual]` in their commit me
 | `timehasdensity_task01_full_task_session.png` | session summary of task 01, all subtasks included (39.55 Bobcoins, Task Id `d0dc5380…`) | saved |
 | `timehasdensity_task02_full_task_session.png` | session summary of task 02 (39.95 Bobcoins, Task Id `fee241e4…`) | saved |
 | `timehasdensity_task03_full_task_session.png` | session summary of task 03 (32.53 Bobcoins, Task Id `2a3f8492…`) | saved |
-| `timehasdensity_task04_session_header.png` | task header of task 04 (15.12 Bobcoins, Task Id `42b63285…`) — context 117.5k / 270k | saved |
+| `timehasdensity_task04_session_header.png` | session summary of task 04 (17.12 Bobcoins, Task Id `42b63285…`, context 128.7k / 270k) | saved |
 
 Subtask usage is recorded as numbers in `bob_sessions/README.md` instead of separate screenshots.
 

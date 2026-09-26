@@ -38,7 +38,8 @@ Bob found a false claim in both Copilot PRs (2 of 2). In each case the agent's d
 | Task 01 | Plan → Agent (7 subtasks) | 39.55 | Plan, full first version phase by phase |
 | Task 02 | Agent | 39.95 | Review fixes, test collection, bilingual text, samples |
 | Task 03 | Agent | 32.53 | Code review, stronger tests, security fix, README |
-| **Total** | **3 accounts** | **119.03** | **Complete working product** |
+| Task 04 | Overlook Auditor mode | 17.12 | Bob audits of the three real agent tasks, these metrics |
+| **Total** | **5 tasks** | **136.15** | |
 
 Full session records: [`bob_sessions/`](../bob_sessions/), [`docs/BOB_SESSIONS.md`](BOB_SESSIONS.md).
 

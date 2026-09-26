@@ -113,6 +113,7 @@ Bob 없이도 Overlook은 로직만으로 돌아가며 결과를 **Draft audit**
 | **계획** | Plan 모드, 문서 이해 | 요청서를 읽고 [`docs/PLAN.md`](docs/PLAN.md) 작성: 단계, 완료 기준, 수용 매트릭스, Bobcoin 예산 |
 | **구축** | Agent 모드, 하위 작업 7개 | 첫 버전을 단계별로 구축. 하위 작업마다 새 맥락, 단계마다 테스트와 커밋 |
 | **수정** | Agent 모드, 두 번째 계정 | 리뷰 목록을 반영하고 샘플을 다시 생성 |
+| **감사** | Overlook Auditor 모드 | 제품의 감사 절차를 실제 작업에 돌림: 공개 저장소의 실제 에이전트 작업 3개를 감사하고, Copilot PR 두 개 모두에서 거짓 주장을 찾음 |
 | **리뷰** | Agent 모드 | 완성된 코드 전체를 읽고 쓰지 않는 코드를 지우고 테스트를 보강. 에이전트가 테스트 스크립트를 바꿔 "통과"를 꾸밀 수 있는 구멍도 막음 |
 
 <table>
@@ -121,10 +122,11 @@ Bob 없이도 Overlook은 로직만으로 돌아가며 결과를 **Draft audit**
     <td align="center"><img src="bob_sessions/timehasdensity_task01_full_task_session.png" width="220" alt="Task 01 세션 요약" /><br/><sub>계획과 구축 · 39.55</sub></td>
     <td align="center"><img src="bob_sessions/timehasdensity_task02_full_task_session.png" width="220" alt="Task 02 세션 요약" /><br/><sub>수정 · 39.95</sub></td>
     <td align="center"><img src="bob_sessions/timehasdensity_task03_full_task_session.png" width="220" alt="Task 03 세션 요약" /><br/><sub>리뷰 · 32.53</sub></td>
+    <td align="center"><img src="bob_sessions/timehasdensity_task04_session_header.png" width="220" alt="Task 04 세션 요약" /><br/><sub>감사 · 17.12</sub></td>
   </tr>
 </table>
 
-**작업 4개 · 계정 3개 · 이 작업들에 119 Bobcoin, 모든 계정의 예산 소진.** Bobcoin은 판단이 필요한 곳에만 쓰고 사실은 모두 코드로 계산했으며, 단계마다 새 작업을 열어 맥락을 작게 유지했습니다. 팀원별 세션 화면은 [`bob_sessions/`](bob_sessions/), Task Id는 [`docs/BOB_SESSIONS.md`](docs/BOB_SESSIONS.md), Bob이 만든 파일은 [`BOB_CONTRIBUTIONS.md`](BOB_CONTRIBUTIONS.md), 첫 프로토타입에서 지금 버전까지의 과정은 [`docs/EVOLUTION.md`](docs/EVOLUTION.md)에 있습니다.
+**작업 5개 · 136 Bobcoin.** Bobcoin은 판단이 필요한 곳에만 쓰고 사실은 모두 코드로 계산했으며, 단계마다 새 작업을 열어 맥락을 작게 유지했습니다. 팀원별 세션 화면은 [`bob_sessions/`](bob_sessions/), Task Id는 [`docs/BOB_SESSIONS.md`](docs/BOB_SESSIONS.md), Bob이 만든 파일은 [`BOB_CONTRIBUTIONS.md`](BOB_CONTRIBUTIONS.md), 첫 프로토타입에서 지금 버전까지의 과정은 [`docs/EVOLUTION.md`](docs/EVOLUTION.md)에 있습니다.
 
 ## 써 보기
 
