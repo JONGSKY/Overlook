@@ -54,7 +54,7 @@ test('MCP: collect, build (publishes a map link) and receipt on the GT-142 sampl
 
     const built = await s.tool('overlook_build', { evidence: ev, audit: 'samples/audit.sample.json', out: path.join(dir, 'city.json') });
     auditFile = path.join(ROOT, 'out', 'audits', `${built.auditId}.json`);
-    assert.match(built.map, /\/ui\/#\/audit\/[0-9a-f]{10}$/);
+    assert.match(built.map, /\/audit\/[0-9a-f]{10}$/);
     assert.deepEqual([built.totals.outside, built.totals.affected], [4, 3]);
     assert.equal(built.claims.length, 4);
 

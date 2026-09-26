@@ -1136,7 +1136,7 @@ function mountWorkspace(root, city, { id, label, step = null, hasApi = false, ba
 
   // ---------------------------------------------------------------- wiring
   function wire(scope) {
-    $$('[data-file]', scope).forEach((b) => (b.onclick = (e) => { e.stopPropagation(); select({ type: 'file', id: b.dataset.file, commit: b.dataset.inCommit ? Number(b.dataset.inCommit) : V.view === 'commits' && V.sel?.type === 'commit' ? V.sel.id : undefined }); }));
+    $$('[data-file]', scope).forEach((b) => (b.onclick = (e) => { e.stopPropagation(); select({ type: 'file', id: b.dataset.file, commit: b.dataset.inCommit ? Number(b.dataset.inCommit) : V.sel?.type === 'commit' ? V.sel.id : undefined }); }));
     $$('[data-commit]', scope).forEach((b) => (b.onclick = (e) => { e.stopPropagation(); const n = Number(b.dataset.commit); if (!isSel('commit', n)) select({ type: 'commit', id: n }); }));
     $$('[data-claim]', scope).forEach((b) => (b.onclick = (e) => { e.stopPropagation(); select({ type: 'claim', id: Number(b.dataset.claim) }); }));
     $$('[data-dir]', scope).forEach((b) => (b.onclick = () => {

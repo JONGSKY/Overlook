@@ -298,11 +298,10 @@ function showExamples() {
       }));
     }
   }
-  const redraw = () => drawAll();
-  const themeObs = new MutationObserver(redraw);
+  const themeObs = new MutationObserver(drawAll);
   themeObs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-  systemDark.addEventListener('change', redraw);
-  return () => { alive = false; gen++; themeObs.disconnect(); systemDark.removeEventListener('change', redraw); for (const m of maps) m.destroy(); };
+  systemDark.addEventListener('change', drawAll);
+  return () => { alive = false; gen++; themeObs.disconnect(); systemDark.removeEventListener('change', drawAll); for (const m of maps) m.destroy(); };
 }
 
 // GitHub links only (the engine can still read a local folder: API and MCP, not the page).

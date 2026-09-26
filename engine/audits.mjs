@@ -50,4 +50,4 @@ export function listAudits(limit = 20) {
     .slice(0, limit);
 }
 
-export const auditUrl = (id, port = process.env.OVERLOOK_PORT ?? 4280) => `http://localhost:${port}/ui/#/audit/${id}`;
+export const auditUrl = (id, port = process.env.OVERLOOK_PORT ?? 4280) => `http://localhost:${port}/audit/${id}`;

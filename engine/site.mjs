@@ -189,8 +189,11 @@ function serveStatic(res, url) {
   if (!allowed.some((a) => file.startsWith(a + path.sep))) return res.writeHead(404).end('Not found');
   let target = file;
   try {
-    if (fs.statSync(target).isDirectory()) target = path.join(target, 'index.html');
-    fs.statSync(target);
+    const st = fs.statSync(target);
+    if (st.isDirectory()) {
+      target = path.join(target, 'index.html');
+      fs.statSync(target); // confirm index.html exists
+    }
   } catch {
     return res.writeHead(404, { 'content-type': 'text/plain' }).end('Not found');
   }
