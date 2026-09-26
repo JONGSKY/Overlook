@@ -9,7 +9,8 @@ Team **Time Has Density** built Overlook with IBM Bob 2.0. Each screenshot below
 | 02 | seokyoung0213 | Fix the review findings | 39.95 |
 | 03 | JONGSKY | Review and harden the finished codebase | 32.53 |
 | 04 | tour_captain | Run the Overlook Auditor mode on 3 real agent PRs, fill the metrics | 17.12 |
-| | **Team** | **5 tasks** | **136.15** |
+| 05 | JONGSKY | Vercel deployment + run `/verify` on atlas example | — |
+| | **Team** | **6 tasks** | **136.15+** |
 
 ---
 
@@ -89,6 +90,16 @@ The account pages count every task an account ran, so the total is a little abov
 ![Team account: 40.00 budget, 40.02 used](timehasdensity_account_ck_budget.png)
 
 ![Team account: 40.00 budget, 40.27 used](timehasdensity_account_sy_budget.png)
+
+## Task 05 · Vercel deployment + /verify on atlas
+
+**Captured by JONGSKY** · Sep 27
+
+Full write-up: [`bob_sessions/timehasdensity_task05_vercel_and_verify.md`](timehasdensity_task05_vercel_and_verify.md)
+
+- **Deploy:** added `api/` Serverless Functions for every endpoint; routed sub-paths in `vercel.json`; switched `out/` storage to `/tmp` when `VERCEL=1`; added `.env.example`.
+- **Verify:** fixed `detectTestCommandAtBase` to prefix bare binary names with `./node_modules/.bin/`; added `npm install` fallback when `npm ci` fails due to lock file drift.
+- **Result:** `crossTests` on `chanjoongx/atlas` — 78 tests, 4 files, all passed. `atlas-production-fixes.city.json` updated with `runs.cross`; `tests_pass` claim verdict: `unverified → true`.
 
 ---
 

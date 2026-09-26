@@ -55,6 +55,14 @@ Task 02 also ended at the 40-Bobcoin limit. Session summary: `bob_sessions/timeh
 |---|---|---|---|---|---|---|
 | 04 | Committed 4 untracked skills; ran Overlook Auditor mode on 3 real agent PRs (atlas, github-mcp-server, playwright-mcp); filled metrics.md; resolved merge conflict and pushed | Agent (Overlook Auditor mode) | `42b63285d0a90a340949f70e491fd152` | 128.7k / 270k | **17.12** | `93f5697`, `80c6027`, `1409a2b`, `583f20f` |
 
+### Task 05 · Vercel deployment + /verify on real example (JONGSKY's account, workspace `Overlook`)
+
+| # | Task | Mode | Task Id | Commits |
+|---|---|---|---|---|
+| 05 | Added `api/` Serverless Functions; adapted `out/` storage to `/tmp` on Vercel; fixed bare-binary test command detection and `npm ci` fallback; ran `crossTests` on atlas (78 tests pass); updated city.json with `runs.cross`; recorded session | Agent | _(this conversation)_ | `cb114b3`, `91c26a2`, _(this commit)_ |
+
+Full write-up: [`bob_sessions/timehasdensity_task05_vercel_and_verify.md`](../bob_sessions/timehasdensity_task05_vercel_and_verify.md)
+
 Key findings from this task's audits:
 
 | Audit | Outside | False claims (Bob) | False claims (team-written) |
