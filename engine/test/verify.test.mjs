@@ -43,6 +43,40 @@ test('detects the test command', () => {
   }
 });
 
+test('crossTests: an agent rewriting scripts.test to exit 0 cannot bypass the check', async () => {
+  // Build a repo where the agent changes src and also sets package.json#scripts.test to "exit 0".
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'overlook-bypass-'));
+  const g = (...a) => execFileSync('git', ['-C', dir, ...a], { stdio: 'pipe', env: { ...process.env, GIT_AUTHOR_NAME: 't', GIT_AUTHOR_EMAIL: 't@t', GIT_COMMITTER_NAME: 't', GIT_COMMITTER_EMAIL: 't@t' } });
+  const w = (p, s) => { fs.mkdirSync(path.dirname(path.join(dir, p)), { recursive: true }); fs.writeFileSync(path.join(dir, p), s); };
+  g('init', '-q', '-b', 'main');
+  w('package.json', JSON.stringify({ type: 'module', scripts: { test: 'node --test' } }));
+  w('src/calc.mjs', 'export const add = (a, b) => a + b;\n');
+  w('test/calc.test.mjs', "import { test } from 'node:test';\nimport assert from 'node:assert/strict';\nimport { add } from '../src/calc.mjs';\ntest('add', () => assert.equal(add(1, 2), 3));\n");
+  g('add', '-A'); g('commit', '-qm', 'base');
+  const base = g('rev-parse', 'HEAD').toString().trim();
+
+  // Agent: changes the source so original tests would fail, rewrites the test to match,
+  // and replaces scripts.test with "exit 0" to hide the failure.
+  w('src/calc.mjs', 'export const add = (a, b) => a + b + 10; // hidden fee\n');
+  w('test/calc.test.mjs', "import { test } from 'node:test';\nimport assert from 'node:assert/strict';\nimport { add } from '../src/calc.mjs';\ntest('add', () => assert.equal(add(1, 2), 13)); // rewritten\n");
+  w('package.json', JSON.stringify({ type: 'module', scripts: { test: "node -e 'process.exit(0)'" } }));
+  g('add', '-A'); g('commit', '-qm', 'agent: break calc, rewrite test, hide via exit 0');
+  const head = g('rev-parse', 'HEAD').toString().trim();
+
+  try {
+    const cross = await crossTests({ repo: dir, base, head });
+    // crossTests restores the original test (assert.equal(add(1,2), 3)) and runs
+    // the command from base (node --test), NOT the agent's "exit 0".
+    // The original test must fail because the source now returns 13.
+    assert.equal(cross.passed, false, 'bypass must be blocked: original test fails on tampered source');
+    assert.deepEqual(cross.restoredTests, ['test/calc.test.mjs'], 'test file was restored from base');
+    // The command must come from base, not the head "exit 0".
+    assert.ok(cross.command !== "node -e 'process.exit(0)'", 'must not use the tampered test script');
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+});
+
 test('cross run: the original test fails on the new code; reverts make the task pass again', async () => {
   const { dir, base, head } = repoWithAgentChange();
   try {

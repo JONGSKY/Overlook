@@ -32,6 +32,38 @@ export function detectTestCommand(dir) {
   return null;
 }
 
+/**
+ * Detect the test command from the BASE commit, not the agent's head.
+ *
+ * The attack: an agent changes package.json#scripts.test to "exit 0" (or
+ * similar). If we run `npm test` on the head worktree, npm reads the current
+ * package.json, so the tampered script runs instead of the real tests.
+ *
+ * The fix: read the *actual test command string* from the base package.json and
+ * run it directly (bypassing `npm run`) — so the agent's rewrite of
+ * scripts.test has no effect.
+ */
+function detectTestCommandAtBase(repo, baseSha, worktreeDir) {
+  // Read package.json from base.
+  try {
+    const blob = git(repo, ['show', `${baseSha}:package.json`]);
+    const pkg = JSON.parse(blob);
+    const t = pkg.scripts?.test;
+    if (t && !/no test specified/.test(t)) {
+      // Run the original script body directly, not via `npm test`.
+      // This means the agent rewriting scripts.test in the head commit has no effect.
+      return t;
+    }
+  } catch { /* no package.json at base */ }
+  // For other ecosystems the config files are not executable scripts, so they
+  // cannot be trivially replaced with an always-exit-0 command.
+  if (fs.existsSync(path.join(worktreeDir, 'pytest.ini')) || fs.existsSync(path.join(worktreeDir, 'conftest.py'))) return 'python -m pytest -q';
+  if (fs.existsSync(path.join(worktreeDir, 'pyproject.toml')) && /\[tool\.pytest/.test(fs.readFileSync(path.join(worktreeDir, 'pyproject.toml'), 'utf8'))) return 'python -m pytest -q';
+  if (fs.existsSync(path.join(worktreeDir, 'go.mod'))) return 'go test ./...';
+  if (fs.existsSync(path.join(worktreeDir, 'Cargo.toml'))) return 'cargo test';
+  return null;
+}
+
 function sh(command, cwd, timeoutMs) {
   return new Promise((ok) => {
     const started = Date.now();
@@ -86,9 +118,13 @@ const exists = (repo, rev, p) => {
 /** The original tests (as at base) run against the head code. */
 export async function crossTests({ repo, base, head, command, install }) {
   const changedTests = git(repo, ['diff', '--name-only', base, head]).split('\n').filter((p) => p && isTestPath(p));
+  // Determine the test command from the BASE commit, not from the agent's head code.
+  // An agent that changes package.json#scripts.test to "exit 0" (or similar) would
+  // otherwise make crossTests always pass even when the original tests actually fail.
+  const cmd = command || detectTestCommandAtBase(repo, base, path.resolve(repo));
   const restored = [];
   const result = await inWorktree({
-    repo, rev: head, command, install,
+    repo, rev: head, command: cmd, install,
     prepare: (dir) => {
       for (const p of changedTests) {
         if (exists(repo, base, p)) { git(dir, ['checkout', base, '--', p]); restored.push(p); }
