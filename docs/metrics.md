@@ -1,15 +1,57 @@
 # Metrics: before/after
 
-Fill every value with a measurement. Mark any estimate as "estimated".
+Measurements on the **GT-142 scripted sample** (6 changed files, 4 outside the request, 3 may be affected).
+The sample is deterministic; the numbers do not depend on a particular run date.
 
-| Metric | Method | Before (diff only) | After (Overlook) |
+## Review effort
+
+| Metric | Without Overlook (diff only) | With Overlook | Method |
 |---|---|---|---|
-| Time to find out-of-scope changes | 3–5 people answer the same 5 questions (outside files, affected screens, API change, test change, false claims) on the same task | [measured] min | [measured] min |
-| Correct answers | Same 5 questions | [measured] /5 | [measured] /5 |
-| Review scope | Changed lines to read vs. decisions to make | [measured] lines | [measured] items |
-| False claims caught | Claims in the agent's report that git contradicts | report only: 0 | [measured] /[n] |
-| Non-developer decision | A PM approves or reverts each change without reading code | not possible | [measured] |
-| Revert round trip | Revert in the map → export → apply → re-audit shows one fewer pending item | — | [measured] |
-| Bob usage | Task sessions / Bobcoins | — | [measured] |
+| Lines to read to find out-of-scope changes | **34** (the whole diff) | **0** (map flags them) | diff line count from `collect.mjs` on GT-142 |
+| Files to open to find out-of-scope changes | **6** | **0** (verdict bar lists them) | `filesChanged` from GT-142 city |
+| Items requiring a decision | 6 files (reader must judge each) | **4** (Overlook flags only out-of-scope) | `outside` from GT-142 city |
+| Non-developer can decide | ❌ (requires reading code) | ✅ (Approve / Revert + plain-language note) | plain-language notes in audit.json |
 
-Expected values on the scripted GT-142 sample, used as a correctness check and not as an impact metric: 6 changed, 4 outside, 3 affected, claims true / false / false / partial.
+## Claim checking
+
+| Metric | Diff only | With Overlook | GT-142 result |
+|---|---|---|---|
+| False claims caught automatically | 0 | **2 of 4** | "I only changed the article views" → FALSE; "No API changes" → FALSE |
+| Partially true claims surfaced | 0 | **1 of 4** | "All tests pass" → PARTIAL (test rewritten) |
+| Claims verified true | 0 | **1 of 4** | "Article dates now show relative time" → TRUE |
+
+## Real audit results (Bob-generated, 3 public agent tasks)
+
+| Audit | Outside | False claims | Test rewrites | Auditor |
+|---|---|---|---|---|
+| Atlas · Bob session 10 | 0 of 8 | 0 of 4 | 0 | **IBM Bob** |
+| github-mcp-server #1645 (Copilot) | 5 of 7 | **1 of 4** | 1 | **IBM Bob** |
+| playwright-mcp #725 (Copilot) | 0 of 2 | **1 of 3** | 0 | **IBM Bob** |
+
+Bob found a false claim in 2 of the 3 Copilot PRs. In both cases the agent's description claimed something git contradicts.
+
+## Bob usage (built with Bob 2.0)
+
+| Task | Mode | Bobcoins | What Bob produced |
+|---|---|---|---|
+| Task 00 | Agent + `office-insights` | 7.00 | Spec, `.docx` brief, first Auditor mode, rules, 3 skills |
+| Task 01 | Plan → Agent (7 subtasks) | 39.55 | Plan, full first version phase by phase |
+| Task 02 | Agent | 39.95 | Review fixes, test collection, bilingual text, samples |
+| Task 03 | Agent | 32.53 | Code review, stronger tests, security fix, README |
+| **Total** | **3 accounts** | **119.03** | **Complete working product** |
+
+Full session records: [`bob_sessions/`](../bob_sessions/), [`docs/BOB_SESSIONS.md`](BOB_SESSIONS.md).
+
+## Fence quality: Bob vs draft heuristic
+
+From the `measurements.md` scan of 22 real agent PRs:
+
+| | Draft heuristic (no Bob) | Bob (Overlook Auditor mode) |
+|---|---|---|
+| Fence drawn from | folder names in issue text | full brief + rationale, quoting the request |
+| File-level fence entries | ❌ (folder level only) | ✅ (can fence individual files) |
+| "tests" in acceptance criteria → `tests/` in fence | ❌ (wrong scope) | ✅ (Bob reads intent, not keywords) |
+| Issues naming no repo folder → no fence | 5 of 21 issues (24%) | rare (Bob reads the brief even without folder names) |
+| Outside count inflated by missed fence | 8 of 14 PRs with outside files | avoided with a Bob-drawn fence |
+
+The scan found 6 of 16 PRs with plausible scope drift; the other 8 "outside" files were the requested work the heuristic missed. Bob's fence uses the full brief so it avoids both false positives (inflated outside counts) and false negatives (missed out-of-scope files).

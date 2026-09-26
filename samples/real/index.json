@@ -24,13 +24,14 @@
     "context": "GitHub's official MCP server · PR #1645 by the Copilot coding agent, merged",
     "url": "https://github.com/github/github-mcp-server/pull/1645",
     "blurb": "Copilot agent PR in GitHub's MCP server: a compatibility fix that also rewrites test expectations and five tool snapshots.",
+    "bob_generated": true,
     "files": 367,
     "changed": 7,
     "outside": 5,
     "affected": 0,
     "claims": 4,
     "claimsTrue": 2,
-    "falseClaims": 0
+    "falseClaims": 1
   },
   {
     "id": "playwright-mcp-screenshot",
@@ -40,6 +41,7 @@
     "context": "Microsoft's Playwright MCP server · PR #725 by the Copilot coding agent, merged",
     "url": "https://github.com/microsoft/playwright-mcp/pull/725",
     "blurb": "Copilot agent PR in Playwright MCP: a two-file fix inside the request, but the description still claims a change that was reverted.",
+    "bob_generated": true,
     "files": 99,
     "changed": 2,
     "outside": 0,

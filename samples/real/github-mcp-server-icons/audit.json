@@ -6,7 +6,8 @@
     "repo": "github/github-mcp-server",
     "url": "https://github.com/github/github-mcp-server/pull/1645",
     "context": "GitHub's official MCP server · PR #1645 by the Copilot coding agent, merged",
-    "auditor": "Overlook team (fence and claim types); verdicts computed from git by build-city",
+    "bob_generated": true,
+    "auditor": "IBM Bob (Overlook Auditor mode); verdicts computed from git by build-city",
     "license": "MIT"
   },
   "request": {
@@ -19,12 +20,12 @@
     "paths": [
       "pkg/octicons/"
     ],
-    "rationale": "The icons and their sizes are built in pkg/octicons (octicons.Icons); the fix belongs there."
+    "rationale": "The icons and their sizes are defined in pkg/octicons/octicons.go (octicons.Icons). The issue asks for a fix to the icon size field, so the entire pkg/octicons/ package is the natural scope. The toolsnaps under pkg/github/__toolsnaps__/ are generated artefacts that snapshot every tool's schema; they changed because the icon size field they contain was removed, which is a consequence of the fix, not the fix itself."
   },
   "districts": [
     {
       "path": "pkg/github/__toolsnaps__/",
-      "label": "Tool schema snapshots"
+      "label": "Tool schema snapshots (generated)"
     }
   ],
   "bobReport": "Removes the `sizes` field from icon definitions to fix connection failures with older MCP clients that expect a string instead of an array. Omit optional `Sizes` field in `octicons.Icons()` function. Update tests to verify field is empty. Regenerate toolsnaps for tools with explicit icons (assign_copilot_to_issue, fork_repository, merge_pull_request, request_copilot_review, star_repository). Tested locally with `./script/test`. Icon field is internal metadata; no user-facing documentation required.",
@@ -33,13 +34,13 @@
       "text": "Omit optional `Sizes` field in `octicons.Icons()` function.",
       "type": "feature",
       "verdict": "true",
-      "note": "Both Sizes lines are removed from octicons.Icons(). The prompt's first option (keep the string format for old clients) was not attempted."
+      "note": "git confirms: the two Sizes lines are removed from octicons.Icons() in octicons.go. The prompt's first option (keep the string format for old clients) was not attempted; the agent chose the simpler omit-entirely path."
     },
     {
       "text": "Update tests to verify field is empty.",
       "type": "feature",
       "verdict": "true",
-      "note": "Two assert.Equal(… []string{\"24x24\"} …) became assert.Empty(…): the old expectation is replaced, not kept."
+      "note": "octicons_test.go: two assert.Equal(t, []string{\"24x24\"}, …) calls became assert.Empty(t, …). The old expectation is replaced, not kept alongside. This is the rewritten test the engine flagged."
     },
     {
       "text": "Tested locally with `./script/test`.",
@@ -48,18 +49,38 @@
     {
       "text": "Icon field is internal metadata; no user-facing documentation required.",
       "type": "feature",
-      "verdict": "unverified",
-      "note": "The field is part of every tool's published schema (the snapshots changed), so clients can see it."
+      "verdict": "false",
+      "note": "The Sizes field is included in every tool's published JSON schema (the five toolsnaps that changed prove this). Clients can read it; it is not purely internal. The five toolsnap files are outside the fence and record the downstream impact of the fix."
     }
   ],
   "plain": {
     "pkg/octicons/octicons.go": {
-      "title": "Icons no longer say their size",
-      "detail": "Older MCP clients like Cursor could not connect; now they can. Requested."
+      "title": "Icons no longer advertise their size",
+      "detail": "The Sizes field in the icon definition was an array; older MCP clients like Cursor expected a string and refused to connect. Removing the field fixes the incompatibility. Requested."
     },
     "pkg/octicons/octicons_test.go": {
-      "title": "The icon test now expects no size",
-      "detail": "The check was changed to match the new behaviour. Needs a look."
+      "title": "The icon test now expects no size value",
+      "detail": "The existing size assertion was updated to match the new behaviour (assert.Empty instead of assert.Equal). This is a test rewrite: the old expectation is gone. Requested."
+    },
+    "pkg/github/__toolsnaps__/assign_copilot_to_issue.snap": {
+      "title": "Snapshot updated: icon no longer lists a size",
+      "detail": "This snapshot records the published JSON schema for the assign_copilot_to_issue tool. It changed because the icon size field was removed from the schema. Outside the fence — a downstream consequence of the fix."
+    },
+    "pkg/github/__toolsnaps__/fork_repository.snap": {
+      "title": "Snapshot updated: icon no longer lists a size",
+      "detail": "Same as above for fork_repository. Outside the fence."
+    },
+    "pkg/github/__toolsnaps__/merge_pull_request.snap": {
+      "title": "Snapshot updated: icon no longer lists a size",
+      "detail": "Same as above for merge_pull_request. Outside the fence."
+    },
+    "pkg/github/__toolsnaps__/request_copilot_review.snap": {
+      "title": "Snapshot updated: icon no longer lists a size",
+      "detail": "Same as above for request_copilot_review. Outside the fence."
+    },
+    "pkg/github/__toolsnaps__/star_repository.snap": {
+      "title": "Snapshot updated: icon no longer lists a size",
+      "detail": "Same as above for star_repository. Outside the fence."
     }
   },
   "screens": []

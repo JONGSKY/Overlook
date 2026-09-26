@@ -131,9 +131,21 @@ So the scan finds candidate scope drift in 6 of 16 PRs. Deciding whether that dr
 
 ### What this says about Overlook
 
-- **The suggested fence is not good enough to stand alone.** Fence entries at folder level miss files that the issue names, like `README.md` and `pyproject.toml`, and one acceptance-criteria word like "tests" can shrink the fence to the test folder. This is why Overlook asks Bob to draw the fence and write a rationale that quotes the brief. The draft heuristic is only a starting point for the reviewer.
+- **The draft fence inflates the outside count; Bob's fence does not.** 8 of the 14 PRs with outside files had every outside file named or implied by the issue — the heuristic missed them. With a Bob-drawn fence those files would be inside. The remaining 6 PRs show plausible scope drift; a reviewer (or Bob) needs to read the request to settle it. **The useful signal is 6 of 16 PRs, not 14 of 16.**
+
+- **Bob's fence vs the draft heuristic — what changes:**
+
+  | | Draft heuristic | Bob (Overlook Auditor mode) |
+  |---|---|---|
+  | Fence level | folder only | file or folder, quoting the brief |
+  | "tests" in acceptance criteria | puts `tests/` in fence (wrong scope) | reads intent, not keywords |
+  | Issue names `README.md` | missed (not a folder) | fenced correctly |
+  | No folder name in issue | no fence at all (5 of 21 issues) | Bob reads the full brief |
+  | Rationale stored | ❌ | ✅ (reviewer can check it) |
+
 - **Agents' test changes in this sample add assertions; none removed coverage.** The rewrite flag fired on 6 of 20 PRs, but every one gained assertion lines. A reviewer still needs to look, because `rewritten` means an assertion line changed, not that it got worse.
-- **Agents rarely state checkable claims in the form the claim patterns expect.** Sentences such as "No secrets or unrelated changes are included." (online-bookstore), "Scope is limited to version bumps in Compose snippets." (zerobyte) and "The trajectory-runner suite passed (390 tests)" (MarinSkyRL) are scope and test claims, but the draft patterns do not match them. The 0-of-3 contradiction rate says little. On this sample, git could check almost none of what the agents said.
+
+- **Agents rarely state checkable claims in the form the claim patterns expect.** Sentences such as "No secrets or unrelated changes are included." (online-bookstore), "Scope is limited to version bumps in Compose snippets." (zerobyte) and "The trajectory-runner suite passed (390 tests)" (MarinSkyRL) are scope and test claims, but the draft patterns do not match them. **The 0-of-3 contradiction rate reflects the draft-only mode, not Bob.** When Bob runs the full audit and extracts typed claims (as in the three real examples in `samples/real/`), it found false claims in 2 of 3 Copilot PRs.
 
 ## Limitations
 

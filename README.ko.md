@@ -241,8 +241,10 @@ npm run scan      # GitHub API로 공개 에이전트 PR 측정
 
 ## 지표
 
-- **공개 에이전트 PR 측정:** [`docs/measurements.md`](docs/measurements.md)에서 Copilot, Codex, Devin 에이전트가 만든 병합된 PR 22개에 같은 규칙을 적용했습니다. 20개 중 15개가 테스트 파일을 바꿨고 6개가 테스트 기대값을 다시 썼으며, 테스트를 약하게 만든 경우는 없었습니다. 한계도 함께 적었습니다 (영문).
-- **리뷰 시간과 정확도:** 측정 방법은 [`docs/metrics.md`](docs/metrics.md)에 있습니다. 숫자는 실제로 잰 뒤에만 채웁니다.
+- **GT-142 샘플:** Overlook 없이는 리뷰어가 6개 파일에서 34줄의 diff를 읽어야 범위 밖 변경 4개를 찾을 수 있습니다. Overlook은 판정 바에 바로 표시합니다. 에이전트 보고의 주장 4개 중 2개가 거짓이며, git이 자동으로 계산합니다.
+- **실제 감사 (Bob 생성):** Bob이 Copilot PR 3개 중 2개에서 거짓 주장을 발견했습니다 (`samples/real/`). github-mcp-server #1645에서는 파일 7개 중 5개가 fence 밖이고, 에이전트가 한 주장이 git과 모순됨을 포착했습니다.
+- **공개 에이전트 PR 측정:** [`docs/measurements.md`](docs/measurements.md)에서 Copilot, Codex, Devin 에이전트가 만든 PR 22개를 측정했습니다. 스캔의 "16개 중 14개 범위 밖" 수치는 휴리스틱 fence에서 나온 것이며, Bob이 fence를 그리면 실제 신호는 16개 중 6개입니다. 비교표는 문서에 있습니다 (영문).
+- **Bob 사용량과 전후 수치:** [`docs/metrics.md`](docs/metrics.md).
 
 ## 데이터와 라이선스
 

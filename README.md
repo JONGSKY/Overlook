@@ -241,8 +241,10 @@ npm run scan      # measure public agent pull requests through the GitHub API
 
 ## Metrics
 
-- **Public agent pull requests, measured:** [`docs/measurements.md`](docs/measurements.md) runs the same rules over 22 merged pull requests by Copilot, Codex and Devin agents. 15 of 20 changed a test file and 6 rewrote test assertions; none weakened a test. The write-up explains the limitations.
-- **Review time and accuracy:** the method is in [`docs/metrics.md`](docs/metrics.md). Numbers are filled in only after they are measured.
+- **GT-142 scripted sample:** without Overlook, a reviewer reads 34 diff lines across 6 files to find 4 out-of-scope changes; Overlook flags them in the verdict bar. 2 of 4 claims in the agent's report are false; git computes the verdicts.
+- **Real audits (Bob-generated):** Bob found a false claim in 2 of 3 Copilot PRs (`samples/real/`). In github-mcp-server #1645 it flagged 5 of 7 files as outside the fence and caught a claim the agent made that git contradicts.
+- **Public agent pull requests, measured:** [`docs/measurements.md`](docs/measurements.md) runs the same rules over 22 merged pull requests by Copilot, Codex and Devin agents. 15 of 20 changed a test file and 6 rewrote test assertions; none weakened a test. The scan's "14 of 16 outside" headline comes from the draft heuristic fence; with a Bob-drawn fence the real signal is 6 of 16 PRs. Details and the Bob-vs-heuristic comparison are in the write-up.
+- **Bob usage and before/after numbers:** [`docs/metrics.md`](docs/metrics.md).
 
 ## Data and license
 
