@@ -55,7 +55,7 @@ test('fence suggestion matches singular and plural folder names', () => {
   assert.deepEqual(suggestFence(evidence, 'Show relative time on the article page'), ['src/articles/']);
 });
 
-test('site API audits a local folder end to end', async () => {
+test('site API health, static serving, and audit end to end', async () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'overlook-site-'));
   const repo = path.join(dir, 'gt142-sample-app');
   execFileSync('bash', [path.join(ROOT, 'samples/make-sample-repo.sh'), repo], { stdio: 'ignore' });
@@ -63,8 +63,31 @@ test('site API audits a local folder end to end', async () => {
   const server = createSite().listen(0, '127.0.0.1');
   await new Promise((r) => server.once('listening', r));
   const url = `http://127.0.0.1:${server.address().port}`;
+  const get = (p) => fetch(url + p);
   const post = (p, body) => fetch(url + p, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) }).then((r) => r.json());
   try {
+    // Health endpoint
+    const health = await get('/api/health').then((r) => r.json());
+    assert.equal(health.ok, true, '/api/health must return {ok: true}');
+
+    // Static serving: the app shell is served for every clean path
+    for (const p of ['/', '/sample', '/examples', '/audit/a1b2c3d4e5']) {
+      const res = await get(p);
+      assert.equal(res.status, 200, `${p} must return 200`);
+      assert.match(res.headers.get('content-type'), /text\/html/, `${p} content-type`);
+    }
+    // Static serving: a known UI file is served correctly
+    const js = await get('/ui/util.js');
+    assert.equal(js.status, 200, '/ui/util.js must return 200');
+    assert.match(js.headers.get('content-type'), /javascript/, '/ui/util.js content-type');
+    // Static serving: unknown paths return 404 (exercises the double-stat fix for directories)
+    const notFound = await get('/ui/nonexistent-file-xyz.js');
+    assert.equal(notFound.status, 404, 'unknown static path must return 404');
+    // Static serving: directory without an index.html returns 404 (not a crash)
+    const noIndex = await get('/engine');
+    assert.equal(noIndex.status, 404, 'path outside allowed dirs must return 404');
+
+    // Source and audit API
     const src = await post('/api/source', { folder: repo });
     assert.equal(src.commits.length, 7);
     const out = await post('/api/audit', {
@@ -78,14 +101,25 @@ test('site API audits a local folder end to end', async () => {
     assert.equal(out.city.meta.draft, true);
     assert.deepEqual(out.city.meta.refs, { base: 'main', head: 'agent/gt-142-relative-dates' });
     assert.ok(out.city.steps[1].changes['src/shared/utils/relativeTime.ts'].plus > 0, 'per-commit diffs are collected');
-    const again = await fetch(`${url}/api/audits/${out.id}`).then((r) => r.json());
+
+    // Retrieve saved audit
+    const again = await get(`/api/audits/${out.id}`).then((r) => r.json());
     assert.equal(again.city.meta.head, out.city.meta.head);
+
+    // Fence update
     const widened = await post(`/api/audits/${out.id}/fence`, { paths: ['src/articles/', 'src/shared/'] });
     assert.equal(widened.city.totals.outside, 2);
     assert.equal(widened.city.meta.fenceSetBy, 'reviewer');
 
+    // Receipt
     const receipt = await post(`/api/audits/${out.id}/receipt`, { decisions: {} });
     assert.match(receipt.markdown, /Bob explains; git decides/);
+
+    // Unknown audit returns 404
+    const missing = await get('/api/audits/0000000000').then((r) => r.json());
+    assert.ok(missing.error, 'unknown audit id must return an error');
+
+    // Bad GitHub URL returns a clear error
     const bad = await post('/api/source', { github: 'https://example.com/x' });
     assert.match(bad.error, /GitHub URL/);
   } finally {

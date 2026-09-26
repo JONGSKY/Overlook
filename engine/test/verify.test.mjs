@@ -29,8 +29,18 @@ function repoWithAgentChange() {
 
 test('detects the test command', () => {
   const { dir } = repoWithAgentChange();
-  assert.equal(detectTestCommand(dir), 'npm test --silent');
-  fs.rmSync(dir, { recursive: true, force: true });
+  try {
+    assert.equal(detectTestCommand(dir), 'npm test --silent');
+    // A directory with no recognised config returns null.
+    const empty = fs.mkdtempSync(path.join(os.tmpdir(), 'overlook-detect-'));
+    try {
+      assert.equal(detectTestCommand(empty), null);
+    } finally {
+      fs.rmSync(empty, { recursive: true, force: true });
+    }
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
 });
 
 test('cross run: the original test fails on the new code; reverts make the task pass again', async () => {
@@ -47,8 +57,13 @@ test('cross run: the original test fails on the new code; reverts make the task 
     assert.equal(both.passed, true);
     assert.deepEqual(both.reverted, ['src/price.mjs', 'test/price.test.mjs']);
 
-    const checks = await runChecks({ repo: dir, head, checks: [{ text: 'Labels use USD.', command: "node -e \"import('./src/label.mjs').then(m => process.exit(m.label(1) === 'USD 1' ? 0 : 1))\"" }] });
-    assert.equal(checks[0].passed, true);
+    const checks = await runChecks({ repo: dir, head, checks: [
+      { text: 'Labels use USD.', command: "node -e \"import('./src/label.mjs').then(m => process.exit(m.label(1) === 'USD 1' ? 0 : 1))\"" },
+      { text: 'Labels use $.',   command: "node -e \"import('./src/label.mjs').then(m => process.exit(m.label(1) === '$ 1'   ? 0 : 1))\"" },
+    ] });
+    assert.equal(checks[0].passed, true,  'passing check is true');
+    assert.equal(checks[1].passed, false, 'failing check is false');
+    assert.equal(typeof checks[1].exitCode, 'number', 'exit code captured');
 
     const city = { claims: [{ text: 'All tests pass.', type: 'tests_pass', verdict: 'partial', detail: 'x', evidence: ['test-diff'] }, { text: 'Labels use USD.', type: 'feature', verdict: 'unverified', evidence: ['bob-judgement'] }], totals: {} };
     const applied = applyRuns(city, { cross, checks });

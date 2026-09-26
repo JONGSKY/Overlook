@@ -7,7 +7,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { collect, isApiPath, isTestPath, resolveImport, importSpecifiers } from '../collect.mjs';
+import { collect, isApiPath, isTestPath, resolveImport, importSpecifiers, analyzeTestDiff, parseDiff } from '../collect.mjs';
 import { buildCity, districtOf, inFence } from '../build-city.mjs';
 import { applyDecisions } from '../apply-decisions.mjs';
 
@@ -163,6 +163,29 @@ test('apply-decisions: revert commit restores the serializer, re-run shows one f
   assert.ok(!rerun.items.some((i) => i.file === 'src/api/articles.serializer.ts'));
   assert.equal(rerun.totals.affected, 2);
   assert.equal(rerun.claims.find((c) => c.type === 'no_api_change').verdict, 'true');
+});
+
+test('analyzeTestDiff edge cases', () => {
+  // Only assertions added (new test file): not rewritten, not weakened.
+  const onlyAdd = analyzeTestDiff(parseDiff('@@ -0,0 +1,3 @@\n+expect(a).toBe(1);\n+expect(b).toBe(2);\n+expect(c).toBe(3);\n'));
+  assert.deepEqual(onlyAdd, { assertionsRemoved: 0, assertionsAdded: 3, skipsAdded: 0, rewritten: false, weakened: false });
+
+  // Only skips added: weakened even without removed assertions.
+  const onlySkip = analyzeTestDiff(parseDiff('@@ -1 +1 @@\n-it("x", () => {});\n+it.skip("x", () => {});\n'));
+  assert.equal(onlySkip.skipsAdded, 1);
+  assert.equal(onlySkip.weakened, true);
+  assert.equal(onlySkip.rewritten, false);
+
+  // Removed > added: rewritten and weakened.
+  const shrunk = analyzeTestDiff(parseDiff('@@ -1,3 +1,1 @@\n-expect(a).toBe(1);\n-expect(b).toBe(2);\n+expect(a).toBe(1);\n'));
+  assert.equal(shrunk.assertionsRemoved, 2);
+  assert.equal(shrunk.assertionsAdded, 1);
+  assert.equal(shrunk.rewritten, true);
+  assert.equal(shrunk.weakened, true);
+
+  // No assertion lines: nothing flagged.
+  const noAssert = analyzeTestDiff(parseDiff('@@ -1 +1 @@\n-const x = 1;\n+const x = 2;\n'));
+  assert.deepEqual(noAssert, { assertionsRemoved: 0, assertionsAdded: 0, skipsAdded: 0, rewritten: false, weakened: false });
 });
 
 test('helpers: test/API detection, import resolution, districts, fence', () => {
