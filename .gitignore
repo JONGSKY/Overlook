@@ -18,3 +18,7 @@ IBM_Bob_2.0_*.md
 CLAUDE.md
 CLAUDE.local.md
 .mcp.json
+
+# Bundled git for Vercel (built by scripts/vercel-build.mjs)
+gitbin/
+dist/

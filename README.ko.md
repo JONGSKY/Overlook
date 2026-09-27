@@ -14,7 +14,7 @@
 
 [![Built with IBM Bob 2.0](https://img.shields.io/badge/built_with-IBM_Bob_2.0-0f62fe?style=flat-square)](#ibm-bob-20으로-만들었습니다)
 [![Tests](https://img.shields.io/badge/tests-48_passing-3c873a?style=flat-square)](engine/test)
-[![No dependencies](https://img.shields.io/badge/npm_dependencies-0-informational?style=flat-square)](package.json)
+[![No dependencies](https://img.shields.io/badge/runtime_dependencies-0-informational?style=flat-square)](package.json)
 [![MIT license](https://img.shields.io/badge/license-MIT-7c5cd8?style=flat-square)](LICENSE)
 
 </div>
@@ -230,7 +230,7 @@ flowchart LR
   F --> H[PR 영수증]
 ```
 
-모든 것이 npm 의존성 없는 Node.js이고, UI는 빌드 과정이 없는 정적 사이트입니다. 같은 판정 코드가 CLI, 로컬 서버, MCP 서버, 브라우저에서 똑같이 돌아갑니다. 구조는 [`docs/architecture.md`](docs/architecture.md), 데이터 계약은 [`SPEC.md`](SPEC.md)에 있습니다 (영문).
+모든 것이 실행 의존성 없는 Node.js이고(호스팅 빌드만 git을 묶기 위해 `dugite`를 씀), UI는 빌드 과정이 없는 정적 사이트입니다. 같은 판정 코드가 CLI, 로컬 서버, MCP 서버, 브라우저에서 똑같이 돌아갑니다. 구조는 [`docs/architecture.md`](docs/architecture.md), 데이터 계약은 [`SPEC.md`](SPEC.md)에 있습니다 (영문).
 
 <details>
 <summary><b>저장소 구조와 명령</b></summary>

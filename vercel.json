@@ -1,20 +1,48 @@
 {
-  "buildCommand": "",
-  "outputDirectory": ".",
+  "buildCommand": "node scripts/vercel-build.mjs",
+  "outputDirectory": "dist",
   "functions": {
     "api/**/*.mjs": {
-      "maxDuration": 60
+      "maxDuration": 60,
+      "includeFiles": "gitbin/**"
     }
   },
   "rewrites": [
-    { "source": "/api/audits/:id/receipt", "destination": "/api/audits/[id]" },
-    { "source": "/api/audits/:id/fence",   "destination": "/api/audits/[id]" },
-    { "source": "/api/audits/:id/verify",  "destination": "/api/audits/[id]" },
-    { "source": "/",            "destination": "/ui/index.html" },
-    { "source": "/main",        "destination": "/ui/index.html" },
-    { "source": "/examples",    "destination": "/ui/index.html" },
-    { "source": "/sample",      "destination": "/ui/index.html" },
-    { "source": "/sample/:id",  "destination": "/ui/index.html" },
-    { "source": "/audit/:id",   "destination": "/ui/index.html" }
+    {
+      "source": "/api/audits/:id/receipt",
+      "destination": "/api/audits/[id]"
+    },
+    {
+      "source": "/api/audits/:id/fence",
+      "destination": "/api/audits/[id]"
+    },
+    {
+      "source": "/api/audits/:id/verify",
+      "destination": "/api/audits/[id]"
+    },
+    {
+      "source": "/",
+      "destination": "/ui/index.html"
+    },
+    {
+      "source": "/main",
+      "destination": "/ui/index.html"
+    },
+    {
+      "source": "/examples",
+      "destination": "/ui/index.html"
+    },
+    {
+      "source": "/sample",
+      "destination": "/ui/index.html"
+    },
+    {
+      "source": "/sample/:id",
+      "destination": "/ui/index.html"
+    },
+    {
+      "source": "/audit/:id",
+      "destination": "/ui/index.html"
+    }
   ]
 }

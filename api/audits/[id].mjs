@@ -20,22 +20,27 @@ export default async function handler(req, res) {
   const sub = m?.[2] ?? '';
   if (!id || !/^[0-9a-f]{10}$/.test(id)) return res.status(404).json({ error: 'Not found' });
 
-  const doc = readAudit(id);
-  if (!doc) return res.status(404).json({ error: 'Unknown audit' });
+  // Each Vercel Function has its own /tmp, so an audit saved by /api/audit is usually
+  // not on disk here. The browser keeps the audit and sends its city with POST requests;
+  // fence and receipt are pure functions of the city, so they work without the store.
+  let doc = readAudit(id);
 
   // GET /api/audits/<id>
   if (req.method === 'GET' && !sub) {
+    if (!doc) return res.status(404).json({ error: 'This audit is no longer on the server. Run the audit again from the start page.' });
     return res.status(200).json({ id: doc.id, city: doc.city });
   }
 
   let body;
   try { body = await readJson(req); } catch (e) { return res.status(400).json({ error: e.message }); }
+  if (!doc && body.city && typeof body.city === 'object') doc = { id, city: body.city };
+  if (!doc) return res.status(404).json({ error: 'Unknown audit' });
 
   // POST /api/audits/<id>/fence
   if (sub === '/fence' && req.method === 'POST') {
     const paths = (body.paths ?? []).map((x) => String(x).trim()).filter(Boolean);
     doc.city = withFence(doc.city, paths, body.rationale || 'Confirmed by the reviewer.');
-    writeAudit(doc);
+    try { writeAudit(doc); } catch { /* stateless fallback */ }
     return res.status(200).json({ id: doc.id, city: doc.city });
   }
 

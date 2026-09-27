@@ -10,7 +10,7 @@
 import { withFence } from '../engine/core/city.mjs';
 import { createCity3D } from './atlas3d.js';
 import { createHistoryGraph, historyModel } from './history-graph.js';
-import { $, $$, api, esc, icon, plural, short, store, text, timeAgo, toast } from './util.js';
+import { $, $$, api, auditCache, esc, icon, plural, short, store, text, timeAgo, toast } from './util.js';
 
 const LAYOUT_ICON = {
   left: '<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="2.2" y="3.2" width="4" height="9.6" rx="1" fill="currentColor" class="ic-fill"/></svg>',
@@ -55,7 +55,7 @@ function applyStoredFence(city) {
   return next;
 }
 
-function mountWorkspace(root, city, { id, label, step = null, hasApi = false, basePath, sel = null, look = null, lane = null, file = null }, reopen) {
+function mountWorkspace(root, city, { id, label, step = null, hasApi = false, hosted = false, basePath, sel = null, look = null, lane = null, file = null }, reopen) {
   const meta = city.meta || {};
   const byPath = new Map(city.files.map((f) => [f.path, f]));
   const itemByFile = new Map(city.items.map((it) => [it.file, it]));
@@ -72,7 +72,7 @@ function mountWorkspace(root, city, { id, label, step = null, hasApi = false, ba
   const fencePaths = city.fence?.paths || [];
   const fenceConfirmed = meta.fenceSetBy === 'reviewer';
   const runs = city.runs || {};
-  const canRun = Boolean(hasApi && id);
+  const canRun = Boolean(hasApi && id && !hosted);
 
   const V = {
     speed: [0.5, 1, 2].includes(store.get('overlook.speed')) ? store.get('overlook.speed') : 1,
@@ -1099,7 +1099,7 @@ function mountWorkspace(root, city, { id, label, step = null, hasApi = false, ba
   async function saveFence(paths) {
     try {
       let next;
-      if (id && hasApi) ({ city: next } = await api(`/api/audits/${id}/fence`, { paths }));
+      if (id && hasApi) { ({ city: next } = await api(`/api/audits/${id}/fence`, { paths, city })); auditCache.set(id, next); }
       else {
         store.set(`overlook.fence.${meta.head}`, { paths });
         next = withFence(city, paths);
@@ -1161,7 +1161,7 @@ function mountWorkspace(root, city, { id, label, step = null, hasApi = false, ba
     $$('[data-export]', scope).forEach((b) => (b.onclick = openExport));
     $$('[data-pr]', scope).forEach((b) => (b.onclick = async () => {
       try {
-        const { markdown } = await api(`/api/audits/${id}/receipt`, { decisions: V.decisions });
+        const { markdown } = await api(`/api/audits/${id}/receipt`, { decisions: V.decisions, city });
         await navigator.clipboard.writeText(markdown);
         toast('PR comment copied. Paste it on the pull request.');
       } catch (e) { toast(e.message); }

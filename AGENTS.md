@@ -24,7 +24,7 @@ Overlook audits a coding task an AI agent has already finished. It answers three
 - `samples/`: scripted GT-142 repo and its sample audit, `examples/` scripted examples, `real/` real audits of public agent tasks
 
 ## Conventions
-- Node.js 22+, ES modules, no npm dependencies anywhere.
+- Node.js 22+, ES modules, no runtime npm dependencies. The only npm package is `dugite`, a devDependency the Vercel build uses to bundle git (`scripts/vercel-build.mjs`).
 - UI text is English. The UI must work from a static host (sample only) and from the local server.
 - Data contracts are in `SPEC.md` section 3. Update the SPEC and the schema before changing a contract.
 - Commit after every sub-task with a short imperative message.

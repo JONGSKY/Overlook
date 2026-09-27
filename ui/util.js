@@ -13,6 +13,23 @@ export const store = {
   set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* storage unavailable */ } },
 };
 
+/**
+ * Audits this browser ran. On Vercel every function has its own /tmp, so the server
+ * that ran an audit is rarely the one asked for it next; the browser keeps the city.
+ */
+const auditMemo = new Map();
+export const auditCache = {
+  get(id) {
+    if (auditMemo.has(id)) return auditMemo.get(id);
+    try { const c = JSON.parse(sessionStorage.getItem(`overlook.audit.${id}`) || 'null'); if (c) auditMemo.set(id, c); return c; } catch { return null; }
+  },
+  set(id, city) {
+    if (!id || !city) return;
+    auditMemo.set(id, city);
+    try { sessionStorage.setItem(`overlook.audit.${id}`, JSON.stringify(city)); } catch { /* storage full or unavailable */ }
+  },
+};
+
 export async function api(path, body) {
   const res = await fetch(path, body ? { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) } : {});
   const data = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));

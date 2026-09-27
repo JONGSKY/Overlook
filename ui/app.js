@@ -1,15 +1,18 @@
 // app.js — the Overlook site: start an audit from a GitHub URL or a local folder, then review it like a pull request.
 import { showAudit } from './workspace.js';
-import { $, $$, api, esc, icon, short, store } from './util.js';
+import { $, $$, api, auditCache, esc, icon, short, store } from './util.js';
 import { createCity3D } from './atlas3d.js';
 
 const app = $('#app');
 
 let API = false;
+let HOSTED = false;
 async function detectApi() {
   try {
     const r = await fetch('/api/health', { cache: 'no-store' });
-    API = r.ok && (await r.json()).ok === true;
+    const h = r.ok ? await r.json() : {};
+    API = h.ok === true;
+    HOSTED = h.hosted === true;
   } catch { API = false; }
   document.body.classList.toggle('no-api', !API);
 }
@@ -108,8 +111,8 @@ async function route() {
     m = p.match(/^audit\/([0-9a-f]{10})$/);
     if (m) {
       if (!API) throw new Error('This audit lives on a local Overlook server. Start it with npm run site.');
-      const { city } = await api(`/api/audits/${m[1]}`);
-      cleanup = showAudit(app, city, { id: m[1], step, hasApi: API, ...deep });
+      const city = auditCache.get(m[1]) ?? (await api(`/api/audits/${m[1]}`)).city;
+      cleanup = showAudit(app, city, { id: m[1], step, hasApi: API, hosted: HOSTED, ...deep });
       return;
     }
     cleanup = showHome();
@@ -359,7 +362,8 @@ async function loadSource({ manual = false } = {}) {
   try {
     const out = await api('/api/audit', { ...source, base: src.base, head: src.head });
     clearTimeout(t1); clearTimeout(t2);
-    navigate(`audit/${out.id}`);
+    auditCache.set(out.id, out.city);
+      navigate(`audit/${out.id}`);
   } catch (e) {
     clearTimeout(t1); clearTimeout(t2);
     box.innerHTML = '';
@@ -456,6 +460,7 @@ function renderConfigure(box, source, src) {
         fence: $('#fence').value.split(',').map((s) => s.trim()).filter(Boolean),
         audit: bobAudit || undefined,
       });
+      auditCache.set(out.id, out.city);
       navigate(`audit/${out.id}`);
     } catch (err) {
       $('#runStatus').innerHTML = `<span class="form-error">${esc(err.message)}</span>`;

@@ -5,6 +5,7 @@
 // Pull request, compare and commit URLs resolve to a base..head range the same way GitHub
 // computes its diff (merge-base of base and head).
 
+import './git-env.mjs';
 import { execFile } from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';

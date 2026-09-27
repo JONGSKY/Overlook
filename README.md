@@ -14,7 +14,7 @@
 
 [![Built with IBM Bob 2.0](https://img.shields.io/badge/built_with-IBM_Bob_2.0-0f62fe?style=flat-square)](#built-with-ibm-bob-20)
 [![Tests](https://img.shields.io/badge/tests-48_passing-3c873a?style=flat-square)](engine/test)
-[![No dependencies](https://img.shields.io/badge/npm_dependencies-0-informational?style=flat-square)](package.json)
+[![No dependencies](https://img.shields.io/badge/runtime_dependencies-0-informational?style=flat-square)](package.json)
 [![MIT license](https://img.shields.io/badge/license-MIT-7c5cd8?style=flat-square)](LICENSE)
 
 </div>
@@ -230,7 +230,7 @@ flowchart LR
   F --> H[receipt on the PR]
 ```
 
-Everything is plain Node.js with no npm dependencies, and the UI is a static site with no build step. The same verdict code runs in the CLI, the local server, the MCP server and the browser. [`docs/architecture.md`](docs/architecture.md) walks through it, and [`SPEC.md`](SPEC.md) has the data contracts.
+Everything is plain Node.js with no runtime npm dependencies (the hosted build only uses `dugite` to bundle git), and the UI is a static site with no build step. The same verdict code runs in the CLI, the local server, the MCP server and the browser. [`docs/architecture.md`](docs/architecture.md) walks through it, and [`SPEC.md`](SPEC.md) has the data contracts.
 
 <details>
 <summary><b>Repository layout and commands</b></summary>

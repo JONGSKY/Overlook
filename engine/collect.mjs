@@ -5,6 +5,7 @@
 // file lists, status, line counts, steps (commits), diffs, test rewrites and
 // the import graph at head. Nothing here is decided by a model.
 
+import './git-env.mjs';
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
