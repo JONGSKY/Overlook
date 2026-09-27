@@ -1,6 +1,6 @@
 # Bob sessions
 
-Team **Time Has Density** built Overlook with IBM Bob 2.0. Each screenshot below is the task session summary from Bob IDE, captured by the team member who ran the task in their own account. The three accounts on the budget pages below each used their full 40-Bobcoin budget.
+Team **Time Has Density** built Overlook with IBM Bob 2.0. Each screenshot below is the task session summary from Bob IDE, captured by the team member who ran the task in their own account. The four accounts on the budget pages below each used their full 40-Bobcoin budget.
 
 | # | Captured by | Task | Bobcoins |
 |---|---|---|---:|
@@ -8,9 +8,9 @@ Team **Time Has Density** built Overlook with IBM Bob 2.0. Each screenshot below
 | 01 | Asher | Plan, then build the first version in seven subtasks | 39.55 |
 | 02 | seokyoung0213 | Fix the review findings | 39.95 |
 | 03 | JONGSKY | Review and harden the finished codebase | 32.53 |
-| 04 | tour_captain | Run the Overlook Auditor mode on 3 real agent PRs, fill the metrics | 17.12 |
-| 05 | JONGSKY | Vercel deployment + run `/verify` on atlas example | — |
-| | **Team** | **6 tasks** | **136.15+** |
+| 04 | Jeong Hae Jun | Run the Overlook Auditor mode on 3 real agent PRs, fill the metrics | 18.41 |
+| 05 | Jeong Hae Jun | Vercel deployment + run `/verify` on atlas example | 21.02 |
+| | **Team** | **6 tasks, 4 accounts** | **158.46** |
 
 ---
 
@@ -59,7 +59,7 @@ Team **Time Has Density** built Overlook with IBM Bob 2.0. Each screenshot below
 
 ## Task 04 · Prove Bob runs inside Overlook
 
-**Captured by tour_captain** · Sep 27 · Task Id `42b63285d0a90a340949f70e491fd152` · 17.12 Bobcoins
+**Captured by Jeong Hae Jun** · Sep 27 · Task Id `42b63285d0a90a340949f70e491fd152` · 18.41 Bobcoins
 
 ![Task 04 session summary](timehasdensity_task04_session_header.png)
 
@@ -72,28 +72,11 @@ Team **Time Has Density** built Overlook with IBM Bob 2.0. Each screenshot below
 
 ---
 
-## Budgets
-
-Each team member's Bob account page: a 40.00 Bobcoin budget, fully used. Emails are partly hidden.
-
-| Account | Used |
-|---|---:|
-| JONGSKY | 40.03 |
-| Team account (ck…) | 40.02 |
-| Team account (sy…) | 40.27 |
-| **Total** | **120.32** |
-
-The account pages count every task an account ran, so the total is a little above the sum of the four tasks above.
-
-![JONGSKY account: 40.00 budget, 40.03 used](timehasdensity_jongsky_budget.png)
-
-![Team account: 40.00 budget, 40.02 used](timehasdensity_account_ck_budget.png)
-
-![Team account: 40.00 budget, 40.27 used](timehasdensity_account_sy_budget.png)
-
 ## Task 05 · Vercel deployment + /verify on atlas
 
-**Captured by JONGSKY** · Sep 27
+**Captured by Jeong Hae Jun** · Sep 27 · Task Id `f5f78301537c791815c9daf473fdbf71` · 21.02 Bobcoins
+
+![Task 05 session summary](timehasdensity_task05_full_task_session.png)
 
 Full write-up: [`bob_sessions/timehasdensity_task05_vercel_and_verify.md`](timehasdensity_task05_vercel_and_verify.md)
 
@@ -104,3 +87,27 @@ Full write-up: [`bob_sessions/timehasdensity_task05_vercel_and_verify.md`](timeh
 ---
 
 Task Ids and per-phase usage: [`docs/BOB_SESSIONS.md`](../docs/BOB_SESSIONS.md). Files Bob wrote: [`BOB_CONTRIBUTIONS.md`](../BOB_CONTRIBUTIONS.md).
+
+---
+
+## Budgets
+
+Each team member's Bob account page: a 40.00 Bobcoin budget, fully used. Emails are partly hidden.
+
+| Account | Used |
+|---|---:|
+| JONGSKY | 40.03 |
+| Team account (ck…) | 40.02 |
+| Team account (sy…) | 40.27 |
+| Jeong Hae Jun (go…) | 40.09 |
+| **Total** | **160.41** |
+
+The account pages count every task an account ran, so the total is a little above the sum of the tasks above.
+
+![JONGSKY account: 40.00 budget, 40.03 used](timehasdensity_jongsky_budget.png)
+
+![Team account: 40.00 budget, 40.02 used](timehasdensity_account_ck_budget.png)
+
+![Team account: 40.00 budget, 40.27 used](timehasdensity_account_sy_budget.png)
+
+![Jeong Hae Jun account: 40.00 budget, 40.09 used](timehasdensity_account_go_budget.png)

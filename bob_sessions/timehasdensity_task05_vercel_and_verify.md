@@ -1,6 +1,6 @@
 # Task 05 · Vercel deployment + /verify on real example
 
-**Account:** JONGSKY · **Date:** Sep 27, 2026 · **Mode:** Agent
+**Account:** Jeong Hae Jun · **Date:** Sep 27, 2026 · **Mode:** Agent · **Task Id:** `f5f78301537c791815c9daf473fdbf71` · **Bobcoins:** 21.02
 
 ---
 
@@ -65,9 +65,9 @@ City updated: `samples/real/atlas-production-fixes.city.json` now contains `runs
 
 | Commit | Message |
 |--------|---------|
-| `cb114b3` | Add Vercel Serverless Functions and /tmp storage for hosted deployment |
-| `91c26a2` | Run crossTests on atlas: 78 tests pass, tests_pass claim verified true |
-| _(this commit)_ | Record task 05 in bob_sessions/ |
+| `11db229` | Add Vercel Serverless Functions and /tmp storage for hosted deployment |
+| `33c67ec` | Run crossTests on atlas: 78 tests pass, tests_pass claim verified true |
+| `b0457bf` | Record task 05 in bob_sessions/ |
 
 ---
 

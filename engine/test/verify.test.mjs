@@ -110,3 +110,25 @@ test('cross run: the original test fails on the new code; reverts make the task 
     fs.rmSync(dir, { recursive: true, force: true });
   }
 });
+
+test('crossTests: a base test script with arguments finds the worktree\'s local binaries', async () => {
+  // "mytool run" is only on PATH through node_modules/.bin, the way npm sets it up for scripts.
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'overlook-bin-'));
+  const g = (...a) => execFileSync('git', ['-C', dir, ...a], { stdio: 'pipe', env: { ...process.env, GIT_AUTHOR_NAME: 't', GIT_AUTHOR_EMAIL: 't@t', GIT_COMMITTER_NAME: 't', GIT_COMMITTER_EMAIL: 't@t' } });
+  const w = (p, s, mode) => { fs.mkdirSync(path.dirname(path.join(dir, p)), { recursive: true }); fs.writeFileSync(path.join(dir, p), s); if (mode) fs.chmodSync(path.join(dir, p), mode); };
+  g('init', '-q', '-b', 'main');
+  w('package.json', JSON.stringify({ scripts: { test: 'mytool run' } }));
+  w('node_modules/.bin/mytool', '#!/bin/sh\n[ "$1" = "run" ] && exit 0\nexit 3\n', 0o755);
+  w('src/a.txt', 'a\n');
+  g('add', '-A'); g('commit', '-qm', 'base');
+  const base = g('rev-parse', 'HEAD').toString().trim();
+  w('src/a.txt', 'b\n');
+  g('commit', '-qam', 'change');
+  const head = g('rev-parse', 'HEAD').toString().trim();
+  try {
+    const cross = await crossTests({ repo: dir, base, head });
+    assert.equal(cross.passed, true, `local binary with arguments runs (${cross.output ?? ''})`);
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+});

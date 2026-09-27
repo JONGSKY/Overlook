@@ -11,7 +11,7 @@
 [![Live demo](https://img.shields.io/badge/▶_live_demo-overlook--lime.vercel.app-3b82d4?style=for-the-badge)](https://overlook-lime.vercel.app/)
 
 [![Built with IBM Bob 2.0](https://img.shields.io/badge/built_with-IBM_Bob_2.0-0f62fe?style=flat-square)](#ibm-bob-20으로-만들었습니다)
-[![Tests](https://img.shields.io/badge/tests-47_passing-3c873a?style=flat-square)](engine/test)
+[![Tests](https://img.shields.io/badge/tests-48_passing-3c873a?style=flat-square)](engine/test)
 [![No dependencies](https://img.shields.io/badge/npm_dependencies-0-informational?style=flat-square)](package.json)
 [![MIT license](https://img.shields.io/badge/license-MIT-7c5cd8?style=flat-square)](LICENSE)
 
@@ -105,7 +105,7 @@ Bob 없이도 Overlook은 로직만으로 돌아가며 결과를 **Draft audit**
 
 ### Bob과 함께 만든 과정
 
-팀 계정 세 개가 각자 40 Bobcoin 예산을 다 쓸 때까지 Bob을 돌렸습니다. Plan 모드로 계획을 세우고, Agent 모드로 코드와 테스트를 짜고, 서비스를 띄워 확인하고, 다시 고쳤습니다.
+팀 계정 네 개가 각자 40 Bobcoin 예산을 다 쓸 때까지 Bob을 돌렸습니다. Plan 모드로 계획을 세우고, Agent 모드로 코드와 테스트를 짜고, 서비스를 띄워 확인하고, 다시 고쳤습니다.
 
 | | Bob 2.0 | Bob이 한 일 |
 |:---:|---|---|
@@ -113,8 +113,9 @@ Bob 없이도 Overlook은 로직만으로 돌아가며 결과를 **Draft audit**
 | **계획** | Plan 모드, 문서 이해 | 요청서를 읽고 [`docs/PLAN.md`](docs/PLAN.md) 작성: 단계, 완료 기준, 수용 매트릭스, Bobcoin 예산 |
 | **구축** | Agent 모드, 하위 작업 7개 | 첫 버전을 단계별로 구축. 하위 작업마다 새 맥락, 단계마다 테스트와 커밋 |
 | **수정** | Agent 모드, 두 번째 계정 | 리뷰 목록을 반영하고 샘플을 다시 생성 |
-| **감사** | Overlook Auditor 모드 | 제품의 감사 절차를 실제 작업에 돌림: 공개 저장소의 실제 에이전트 작업 3개를 감사하고, Copilot PR 두 개 모두에서 거짓 주장을 찾음 |
 | **리뷰** | Agent 모드 | 완성된 코드 전체를 읽고 쓰지 않는 코드를 지우고 테스트를 보강. 에이전트가 테스트 스크립트를 바꿔 "통과"를 꾸밀 수 있는 구멍도 막음 |
+| **감사** | Overlook Auditor 모드 | 제품의 감사 절차를 실제 작업에 돌림: 공개 저장소의 실제 에이전트 작업 3개를 감사하고, Copilot PR 두 개 모두에서 거짓 주장을 찾음 |
+| **확인** | Agent 모드 | 호스팅용 서버리스 API를 추가하고, Atlas 예시의 원래 테스트를 실제로 돌려 78개 통과를 확인 |
 
 <table>
   <tr>
@@ -122,11 +123,12 @@ Bob 없이도 Overlook은 로직만으로 돌아가며 결과를 **Draft audit**
     <td align="center"><img src="bob_sessions/timehasdensity_task01_full_task_session.png" width="220" alt="Task 01 세션 요약" /><br/><sub>계획과 구축 · 39.55</sub></td>
     <td align="center"><img src="bob_sessions/timehasdensity_task02_full_task_session.png" width="220" alt="Task 02 세션 요약" /><br/><sub>수정 · 39.95</sub></td>
     <td align="center"><img src="bob_sessions/timehasdensity_task03_full_task_session.png" width="220" alt="Task 03 세션 요약" /><br/><sub>리뷰 · 32.53</sub></td>
-    <td align="center"><img src="bob_sessions/timehasdensity_task04_session_header.png" width="220" alt="Task 04 세션 요약" /><br/><sub>감사 · 17.12</sub></td>
+    <td align="center"><img src="bob_sessions/timehasdensity_task04_session_header.png" width="220" alt="Task 04 세션 요약" /><br/><sub>감사 · 18.41</sub></td>
+    <td align="center"><img src="bob_sessions/timehasdensity_task05_full_task_session.png" width="220" alt="Task 05 세션 요약" /><br/><sub>확인 · 21.02</sub></td>
   </tr>
 </table>
 
-**작업 5개 · 136 Bobcoin.** Bobcoin은 판단이 필요한 곳에만 쓰고 사실은 모두 코드로 계산했으며, 단계마다 새 작업을 열어 맥락을 작게 유지했습니다. 팀원별 세션 화면은 [`bob_sessions/`](bob_sessions/), Task Id는 [`docs/BOB_SESSIONS.md`](docs/BOB_SESSIONS.md), Bob이 만든 파일은 [`BOB_CONTRIBUTIONS.md`](BOB_CONTRIBUTIONS.md), 첫 프로토타입에서 지금 버전까지의 과정은 [`docs/EVOLUTION.md`](docs/EVOLUTION.md)에 있습니다.
+**작업 6개 · 계정 4개 · 158 Bobcoin, 모든 계정의 예산 소진.** Bobcoin은 판단이 필요한 곳에만 쓰고 사실은 모두 코드로 계산했으며, 단계마다 새 작업을 열어 맥락을 작게 유지했습니다. 팀원별 세션 화면은 [`bob_sessions/`](bob_sessions/), Task Id는 [`docs/BOB_SESSIONS.md`](docs/BOB_SESSIONS.md), Bob이 만든 파일은 [`BOB_CONTRIBUTIONS.md`](BOB_CONTRIBUTIONS.md), 첫 프로토타입에서 지금 버전까지의 과정은 [`docs/EVOLUTION.md`](docs/EVOLUTION.md)에 있습니다.
 
 ## 써 보기
 
@@ -196,7 +198,7 @@ http://localhost:4280 을 열고 풀 리퀘스트, compare, 커밋, 저장소 �
 |---|---|---|---|
 | github-mcp-server #1645 | [github/github-mcp-server](https://github.com/github/github-mcp-server/pull/1645) (Copilot) | 호환성 수정이 테스트 기대값과 도구 스냅샷 5개까지 다시 씀: 파일 7개 중 5개가 범위 밖, "테스트 통과"는 일부만 사실 | **IBM Bob** (Overlook Auditor 모드) |
 | playwright-mcp #725 | [microsoft/playwright-mcp](https://github.com/microsoft/playwright-mcp/pull/725) (Copilot) | 범위 안이지만, 설명에는 나중 커밋이 되돌린 변경이 여전히 적혀 있음. 하루 뒤 squash 병합 | **IBM Bob** (Overlook Auditor 모드) |
-| Atlas · Bob 세션 10 | [chanjoongx/atlas](https://github.com/chanjoongx/atlas) (IBM Bob 해커톤 2026년 5월, 2위) | main에 바로 커밋. Bob은 프롬프트가 지정한 파일 4개 안에서만 작업 | **IBM Bob** (Overlook Auditor 모드) |
+| Atlas · Bob 세션 10 | [chanjoongx/atlas](https://github.com/chanjoongx/atlas) (IBM Bob 해커톤 2026년 5월, 2위) | main에 바로 커밋. Bob은 프롬프트가 지정한 파일 4개 안에서만 작업했고, 원래 테스트 78개가 모두 통과 | **IBM Bob** (Overlook Auditor 모드) |
 
 **대본 시나리오**도 같은 엔진으로 감사했습니다. 대본 시나리오는 GT-142 데모, 인프라까지 번지는 UI 기능(`infra-drift`), 파일 625개 모노레포의 이름 변경(`monorepo-scale`), 그리고 비교용 깨끗한 작업(`clean-pass`)입니다. 대본 시나리오는 분명히 표시되어 있고, 실제 에이전트 실행으로 소개하지 않습니다.
 
@@ -234,7 +236,7 @@ docs/            구조, 계획, Bob 세션, 발전 과정, 측정, 스크린샷
 ```
 
 ```bash
-npm test          # node:test 테스트 47개
+npm test          # node:test 테스트 48개
 npm run site      # 로컬 사이트와 API (http://localhost:4280)
 npm run mcp       # Bob용 stdio MCP 서버
 npm run sample    # GT-142 샘플 다시 만들기

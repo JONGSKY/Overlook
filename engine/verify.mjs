@@ -76,7 +76,10 @@ function sh(command, cwd, timeoutMs) {
     const started = Date.now();
     // A parent node:test run leaks NODE_TEST_CONTEXT, which makes a nested `node --test` exit 0.
     const { NODE_TEST_CONTEXT, ...env } = process.env;
-    const child = spawn(command, { cwd, shell: true, env: { ...env, CI: '1', FORCE_COLOR: '0' } });
+    // The base test script runs directly, not through npm, so put the worktree's local binaries on PATH the way
+    // npm does ("vitest run", "jest --ci" and friends need it, not only a bare binary name).
+    const bin = path.join(cwd, 'node_modules', '.bin');
+    const child = spawn(command, { cwd, shell: true, env: { ...env, PATH: `${bin}${path.delimiter}${env.PATH ?? ''}`, CI: '1', FORCE_COLOR: '0' } });
     let out = '';
     const take = (d) => { out = (out + d).slice(-200_000); };
     child.stdout.on('data', take);

@@ -49,17 +49,17 @@ Task 02 also ended at the 40-Bobcoin limit. Session summary: `bob_sessions/timeh
 |---|---|---|---|---|---|---|
 | 03 | Whole-codebase review: dead code removed, a double stat and an audit URL path fixed, tests strengthened (temp-dir cleanup, health, static files, failing checks, test-diff analysis), the original test command taken from base, README polished | Agent | `2a3f849272487143b4f35663fa8b3e7d` | 223.1k / 270k | **32.53** | `92996ad`, `5083312`, `4f6b39f` |
 
-### Task 04 · Prove Bob runs inside Overlook (tour_captain, workspace `Overlook`)
+### Task 04 · Prove Bob runs inside Overlook (Jeong Hae Jun's account, workspace `Overlook`)
 
 | # | Task | Mode | Task Id | Context | Bobcoins | Commits |
 |---|---|---|---|---|---|---|
-| 04 | Committed 4 untracked skills; ran Overlook Auditor mode on 3 real agent PRs (atlas, github-mcp-server, playwright-mcp); filled metrics.md; resolved merge conflict and pushed | Agent (Overlook Auditor mode) | `42b63285d0a90a340949f70e491fd152` | 128.7k / 270k | **17.12** | `93f5697`, `80c6027`, `1409a2b`, `583f20f` |
+| 04 | Committed 4 untracked skills; ran Overlook Auditor mode on 3 real agent PRs (atlas, github-mcp-server, playwright-mcp); filled metrics.md; resolved merge conflict and pushed | Agent (Overlook Auditor mode) | `42b63285d0a90a340949f70e491fd152` | 130.1k / 270k | **18.41** | `93f5697`, `80c6027`, `1409a2b`, `583f20f` |
 
-### Task 05 · Vercel deployment + /verify on real example (JONGSKY's account, workspace `Overlook`)
+### Task 05 · Vercel deployment + /verify on real example (Jeong Hae Jun's account, workspace `Overlook`)
 
 | # | Task | Mode | Task Id | Commits |
 |---|---|---|---|---|
-| 05 | Added `api/` Serverless Functions; adapted `out/` storage to `/tmp` on Vercel; fixed bare-binary test command detection and `npm ci` fallback; ran `crossTests` on atlas (78 tests pass); updated city.json with `runs.cross`; recorded session | Agent | _(this conversation)_ | `cb114b3`, `91c26a2`, _(this commit)_ |
+| 05 | Added `api/` Serverless Functions; adapted `out/` storage to `/tmp` on Vercel; fixed bare-binary test command detection and `npm ci` fallback; ran `crossTests` on atlas (78 tests pass); updated city.json with `runs.cross`; recorded session | Agent | `f5f78301537c791815c9daf473fdbf71` (135.8k / 270k, **21.02** Bobcoins) | `11db229`, `33c67ec`, `b0457bf` |
 
 Full write-up: [`bob_sessions/timehasdensity_task05_vercel_and_verify.md`](../bob_sessions/timehasdensity_task05_vercel_and_verify.md)
 
@@ -90,7 +90,8 @@ Two small commits were made by hand and are marked `[manual]` in their commit me
 | `timehasdensity_task01_full_task_session.png` | session summary of task 01, all subtasks included (39.55 Bobcoins, Task Id `d0dc5380…`) | saved |
 | `timehasdensity_task02_full_task_session.png` | session summary of task 02 (39.95 Bobcoins, Task Id `fee241e4…`) | saved |
 | `timehasdensity_task03_full_task_session.png` | session summary of task 03 (32.53 Bobcoins, Task Id `2a3f8492…`) | saved |
-| `timehasdensity_task04_session_header.png` | session summary of task 04 (17.12 Bobcoins, Task Id `42b63285…`, context 128.7k / 270k) | saved |
+| `timehasdensity_task04_session_header.png` | session summary of task 04 (18.41 Bobcoins, Task Id `42b63285…`, context 130.1k / 270k) | saved |
+| `timehasdensity_task05_full_task_session.png` | session summary of task 05 (21.02 Bobcoins, Task Id `f5f78301…`, context 135.8k / 270k) | saved |
 
 Subtask usage is recorded as numbers in `bob_sessions/README.md` instead of separate screenshots.
 

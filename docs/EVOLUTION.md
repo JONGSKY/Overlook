@@ -18,7 +18,7 @@ Bob 2.0 was used at every stage: to plan the project, to build it, and as the en
 | Configure | **Custom modes**, **mode rules**, **skills**, **AGENTS.md** | Bob wrote its own configuration in P1: the `overlook-auditor` mode with a `fileRegex` write limit, the audit rules, the `fence-mapper`, `claim-extractor` and `business-translate` skills |
 | Run | **Parallel subagents**, **MCP**, **slash commands** | In the product, the Auditor mode reads the brief, runs four subagents at once (fence, claims, checks, plain language), calls the Overlook MCP tools, and the Fixer mode fixes forward inside the requested area |
 
-Bob ran five tasks: task 00 (7.00 Bobcoins) started the repository, tasks 01 (39.55) and 02 (39.95) built and fixed the prototype, task 03 (32.53) reviewed and hardened the finished codebase, and task 04 (17.12) ran the Overlook Auditor mode on three real agent tasks: **136.15 Bobcoins** in total. The three build accounts each used their full 40-Bobcoin budget. Task Ids, usage and session summary screenshots are in [`bob_sessions/`](../bob_sessions/) and [`docs/BOB_SESSIONS.md`](BOB_SESSIONS.md).
+Bob ran six tasks on four team accounts, each until its 40-Bobcoin budget was spent: task 00 (7.00 Bobcoins) started the repository, tasks 01 (39.55) and 02 (39.95) built and fixed the prototype, task 03 (32.53) reviewed and hardened the finished codebase, task 04 (18.41) ran the Overlook Auditor mode on three real agent tasks, and task 05 (21.02) added a serverless API for hosting and ran the original tests on the Atlas example: **158.46 Bobcoins** in total. Task Ids, usage and session summary screenshots are in [`bob_sessions/`](../bob_sessions/) and [`docs/BOB_SESSIONS.md`](BOB_SESSIONS.md).
 
 ## History of the current version
 

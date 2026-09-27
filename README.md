@@ -11,7 +11,7 @@
 [![Live demo](https://img.shields.io/badge/▶_live_demo-overlook--lime.vercel.app-3b82d4?style=for-the-badge)](https://overlook-lime.vercel.app/)
 
 [![Built with IBM Bob 2.0](https://img.shields.io/badge/built_with-IBM_Bob_2.0-0f62fe?style=flat-square)](#built-with-ibm-bob-20)
-[![Tests](https://img.shields.io/badge/tests-47_passing-3c873a?style=flat-square)](engine/test)
+[![Tests](https://img.shields.io/badge/tests-48_passing-3c873a?style=flat-square)](engine/test)
 [![No dependencies](https://img.shields.io/badge/npm_dependencies-0-informational?style=flat-square)](package.json)
 [![MIT license](https://img.shields.io/badge/license-MIT-7c5cd8?style=flat-square)](LICENSE)
 
@@ -105,7 +105,7 @@ Without Bob, Overlook still runs on logic alone and labels the result **Draft au
 
 ### How we built it with Bob
 
-Three of our accounts ran Bob until each 40-Bobcoin budget was gone. We planned in Plan mode, wrote code and tests in Agent mode, ran the service to check it, and went back for fixes.
+Four of our accounts ran Bob until each 40-Bobcoin budget was gone. We planned in Plan mode, wrote code and tests in Agent mode, ran the service to check it, and went back for fixes.
 
 | | Bob 2.0 | What Bob did |
 |:---:|---|---|
@@ -113,8 +113,9 @@ Three of our accounts ran Bob until each 40-Bobcoin budget was gone. We planned 
 | **Plan** | Plan mode, document understanding | Read the brief and wrote [`docs/PLAN.md`](docs/PLAN.md): phases, done checks, an acceptance matrix and a Bobcoin budget |
 | **Build** | Agent mode, 7 subtasks | Built the first version phase by phase, each subtask in a fresh context, with tests and a commit after every phase |
 | **Fix** | Agent mode, a second account | Worked through the review list and regenerated the samples |
-| **Audit** | Overlook Auditor mode | Ran the product's own audit on real work: three finished agent tasks in public repositories, finding a false claim in both Copilot PRs |
 | **Review** | Agent mode | Read the whole finished codebase, removed dead code, added tests, and closed a hole where an agent could fake "tests pass" by rewriting the test script |
+| **Audit** | Overlook Auditor mode | Ran the product's own audit on real work: three finished agent tasks in public repositories, finding a false claim in both Copilot PRs |
+| **Verify** | Agent mode | Added a serverless API for hosting and ran the original tests on the Atlas example for real: 78 pass |
 
 <table>
   <tr>
@@ -122,11 +123,12 @@ Three of our accounts ran Bob until each 40-Bobcoin budget was gone. We planned 
     <td align="center"><img src="bob_sessions/timehasdensity_task01_full_task_session.png" width="220" alt="Task 01 session summary" /><br/><sub>Plan and build · 39.55</sub></td>
     <td align="center"><img src="bob_sessions/timehasdensity_task02_full_task_session.png" width="220" alt="Task 02 session summary" /><br/><sub>Fix · 39.95</sub></td>
     <td align="center"><img src="bob_sessions/timehasdensity_task03_full_task_session.png" width="220" alt="Task 03 session summary" /><br/><sub>Review · 32.53</sub></td>
-    <td align="center"><img src="bob_sessions/timehasdensity_task04_session_header.png" width="220" alt="Task 04 session summary" /><br/><sub>Audit · 17.12</sub></td>
+    <td align="center"><img src="bob_sessions/timehasdensity_task04_session_header.png" width="220" alt="Task 04 session summary" /><br/><sub>Audit · 18.41</sub></td>
+    <td align="center"><img src="bob_sessions/timehasdensity_task05_full_task_session.png" width="220" alt="Task 05 session summary" /><br/><sub>Verify · 21.02</sub></td>
   </tr>
 </table>
 
-**5 tasks · 136 Bobcoins.** We spent Bobcoins only where judgment was needed and kept every fact in plain code, and we opened a new task per phase so each context stayed small. Screenshots per teammate are in [`bob_sessions/`](bob_sessions/), Task Ids in [`docs/BOB_SESSIONS.md`](docs/BOB_SESSIONS.md), the files Bob wrote in [`BOB_CONTRIBUTIONS.md`](BOB_CONTRIBUTIONS.md), and the story from first prototype to this version in [`docs/EVOLUTION.md`](docs/EVOLUTION.md).
+**6 tasks · 4 accounts · 158 Bobcoins, every budget used.** We spent Bobcoins only where judgment was needed and kept every fact in plain code, and we opened a new task per phase so each context stayed small. Screenshots per teammate are in [`bob_sessions/`](bob_sessions/), Task Ids in [`docs/BOB_SESSIONS.md`](docs/BOB_SESSIONS.md), the files Bob wrote in [`BOB_CONTRIBUTIONS.md`](BOB_CONTRIBUTIONS.md), and the story from first prototype to this version in [`docs/EVOLUTION.md`](docs/EVOLUTION.md).
 
 ## Try it
 
@@ -196,7 +198,7 @@ You get back a link to the map and a receipt you can post on the pull request.
 |---|---|---|---|
 | github-mcp-server #1645 | [github/github-mcp-server](https://github.com/github/github-mcp-server/pull/1645) (Copilot) | A compatibility fix that also rewrites a test expectation and five tool snapshots: 5 of 7 files outside the request; "tests pass" is only partly true | **IBM Bob** (Overlook Auditor mode) |
 | playwright-mcp #725 | [microsoft/playwright-mcp](https://github.com/microsoft/playwright-mcp/pull/725) (Copilot) | Inside the request, but the description still claims a change a later commit reverted; squash-merged a day later | **IBM Bob** (Overlook Auditor mode) |
-| Atlas · Bob session 10 | [chanjoongx/atlas](https://github.com/chanjoongx/atlas) (IBM Bob hackathon, May 2026, 2nd place) | Committed straight to main; Bob stayed inside the four files the prompt named | **IBM Bob** (Overlook Auditor mode) |
+| Atlas · Bob session 10 | [chanjoongx/atlas](https://github.com/chanjoongx/atlas) (IBM Bob hackathon, May 2026, 2nd place) | Committed straight to main; Bob stayed inside the four files the prompt named, and the original 78 tests pass | **IBM Bob** (Overlook Auditor mode) |
 
 **Scripted scenarios**, audited by the same engine: the GT-142 demo, a UI feature that leaks into infrastructure (`infra-drift`), a rename across a 625-file monorepo (`monorepo-scale`) and a clean pass for contrast. The scripted ones are clearly labelled and never passed off as real agent runs.
 
@@ -234,7 +236,7 @@ docs/            architecture, plan, Bob sessions, evolution, measurements, scre
 ```
 
 ```bash
-npm test          # 47 node:test tests
+npm test          # 48 node:test tests
 npm run site      # local site and API on http://localhost:4280
 npm run mcp       # MCP server over stdio for Bob
 npm run sample    # rebuild the GT-142 sample
