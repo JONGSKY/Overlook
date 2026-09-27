@@ -8,7 +8,7 @@
 
 [English](README.md) · **한국어**
 
-[![Live demo](https://img.shields.io/badge/▶_live_demo-overlook--lime.vercel.app-3b82d4?style=for-the-badge)](https://overlook-lime.vercel.app/)
+[![Live demo](https://img.shields.io/badge/▶_live_demo-overlook--olive.vercel.app-3b82d4?style=for-the-badge)](https://overlook-olive.vercel.app/)
 
 [![Built with IBM Bob 2.0](https://img.shields.io/badge/built_with-IBM_Bob_2.0-0f62fe?style=flat-square)](#ibm-bob-20으로-만들었습니다)
 [![Tests](https://img.shields.io/badge/tests-48_passing-3c873a?style=flat-square)](engine/test)
@@ -22,6 +22,8 @@
 이제 AI 에이전트는 티켓 하나를 받아 완성된 풀 리퀘스트로 돌아옵니다. 보고는 늘 그럴듯합니다. *"완료했습니다. 기사 화면만 바꿨고, API 변경은 없고, 테스트는 모두 통과합니다."* 그런데 정말일까요? 지금은 변경 전체를 읽어 보거나, 아니면 모른 채 넘어갑니다.
 
 **Overlook이 에이전트의 작업을 대신 검토합니다.** GitHub 링크를 붙여 넣으면, 에이전트가 실제로 바꾼 것을 보여주고, 요청한 내용과 비교하고, 보고의 문장 하나하나를 git으로 확인합니다. 그다음 무엇을 남기고 무엇을 되돌릴지 정하면 됩니다.
+
+첫 명세부터 마지막 리뷰까지 **IBM Bob 2.0**으로 만들었고, 제품 안의 감사관도 Bob입니다.
 
 <div align="center">
 
@@ -44,33 +46,33 @@
   </tr>
 </table>
 
-## 왜 필요한가
-
-에이전트는 빠르고, 요청받은 부분은 대체로 잘 해냅니다. 문제는 그 밖입니다. 공용 날짜 헬퍼를 "정리"하고, 지나가는 길에 API 직렬화 코드를 손보고, 실패하던 테스트 기대값을 조용히 바꿔서 통과시킵니다. 변경 하나하나는 diff에서 별것 아니어 보이지만, 모이면 아무도 건드릴 생각이 없던 화면과 계약까지 번집니다.
-
-이 문제를 가장 크게 느끼는 사람들은 이렇습니다.
-
-- **리뷰어와 테크 리드:** 한 줄씩 읽을 수 있는 것보다 많은 에이전트 PR을 승인해야 합니다.
-- **프로덕트 오너:** 요청은 직접 썼지만 diff를 읽을 수 없어서, 나온 결과가 요청한 그대로인지 확인할 방법이 없습니다.
-- **에이전트를 여러 개 동시에 돌리는 팀:** 브랜치들이 예상치 못한 곳에서 겹칩니다.
-
-Overlook은 합치기 전에 네 가지에 답합니다. **에이전트가 범위 안에서만 일했는지, 보고가 사실인지, 원래 테스트가 여전히 통과하는지, 무엇을 결정해야 하는지.**
-
-## 실제로 돌려 본 결과
-
-만든 데모 하나만으로 주장하고 싶지 않아서, 실제 에이전트 작업에도 Overlook을 돌렸습니다.
-
-| | 결과 |
-|---|---|
-| **GT-142**, 우리가 만든 데모 작업 | 보고는 "기사 화면만, API 변경 없음, 테스트 모두 통과"였습니다. Overlook은 **바뀐 파일 6개 중 4개가 요청 범위 밖**, 공용 헬퍼를 통해 **파일 3개가 추가로 영향**, API 직렬화 변경, 다시 쓰인 테스트를 찾았습니다. **주장 4개 중 1개만 사실**이었습니다. |
-| GitHub 공식 MCP 서버의 **Copilot 에이전트 PR** ([#1645](https://github.com/github/github-mcp-server/pull/1645)) | 호환성 수정이 테스트 기대값과 도구 스냅샷 5개까지 다시 썼습니다. **파일 7개 중 5개가 범위 밖**, "테스트 통과"는 일부만 사실입니다. |
-| Microsoft Playwright MCP의 **Copilot 에이전트 PR** ([#725](https://github.com/microsoft/playwright-mcp/pull/725)) | 범위 안에서 작업했지만, 설명에는 나중 커밋이 되돌린 변경이 여전히 적혀 있습니다. |
-| 실제 작업 3개에 대한 **Bob의 감사** | Bob이 요청 범위를 긋고 보고를 주장으로 나눴습니다. **Copilot PR 두 개 모두**에서 거짓 주장을 잡았습니다. 이 판정은 Bob의 판단으로 표시되고 근거가 함께 붙으며, git이 계산한 판정과 나란히 보입니다. |
-| GitHub API로 측정한 **병합된 에이전트 PR 22개** (Copilot, Codex, Devin) | **20개 중 15개**가 테스트 파일을 바꿨고 **6개**가 테스트 기대값을 다시 썼습니다. 자세한 내용과 한계는 [`docs/measurements.md`](docs/measurements.md), 전후 비교 수치는 [`docs/metrics.md`](docs/metrics.md) (영문). |
-
 ## IBM Bob 2.0으로 만들었습니다
 
-Bob은 이 프로젝트에서 두 가지 역할을 합니다. 제품 안의 감사관이고, 이 제품을 함께 만든 팀원입니다.
+### 만든 과정
+
+처음부터 끝까지 Bob을 썼습니다. 명세를 쓰고, 계획하고, 만들고, 고치고, 리뷰하고, 실제 에이전트 작업을 감사하고, 배포했습니다. 팀 계정 네 개로 작업 여섯 개를 돌렸고, 모든 계정이 40 Bobcoin 예산을 다 썼습니다.
+
+- **00 · 시작.** Bob이 명세를 쓰고, `office-insights` 스킬로 요청서를 실제 Word 문서로 만들고, 자신이 쓸 첫 Auditor 모드·규칙·스킬을 구성했습니다.
+- **01 · 계획과 구축.** Plan 모드에서 `.docx` 요청서를 읽고 [`docs/PLAN.md`](docs/PLAN.md)를 썼습니다. 그다음 Agent 모드로 바꿔 첫 버전을 하위 작업 7개로 만들었습니다. 단계마다 새 맥락에서 시작하고, 테스트를 돌리고, 커밋했습니다.
+- **02 · 수정.** 두 번째 계정에서 Bob이 리뷰 목록을 반영하고 샘플을 다시 만들었습니다.
+- **03 · 리뷰.** 완성된 코드 전체를 읽고 쓰지 않는 코드를 지우고 테스트를 보강했습니다. 에이전트가 테스트 스크립트를 바꿔 "통과"를 꾸밀 수 있는 구멍도 막았습니다.
+- **04 · 감사.** Overlook Auditor 모드의 Bob에게 공개 저장소의 실제 에이전트 작업 3개를 맡겼습니다. Bob이 요청 범위를 긋고 보고를 주장으로 나눴고, 우리가 손으로 쓴 감사가 놓친 거짓 주장을 Copilot PR 두 개 모두에서 찾았습니다.
+- **05 · 확인과 배포.** 로컬 API를 호스팅용 서버리스 함수로 나누고, 실제 예시의 원래 테스트를 돌려 78개 통과를 확인했습니다.
+
+<table>
+  <tr>
+    <td align="center"><img src="bob_sessions/timehasdensity_task00_full_task_session.png" width="160" alt="Task 00 세션 요약" /><br/><sub>00 시작 · 7.00</sub></td>
+    <td align="center"><img src="bob_sessions/timehasdensity_task01_full_task_session.png" width="160" alt="Task 01 세션 요약" /><br/><sub>01 계획과 구축 · 39.55</sub></td>
+    <td align="center"><img src="bob_sessions/timehasdensity_task02_full_task_session.png" width="160" alt="Task 02 세션 요약" /><br/><sub>02 수정 · 39.95</sub></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="bob_sessions/timehasdensity_task03_full_task_session.png" width="160" alt="Task 03 세션 요약" /><br/><sub>03 리뷰 · 32.53</sub></td>
+    <td align="center"><img src="bob_sessions/timehasdensity_task04_session_header.png" width="160" alt="Task 04 세션 요약" /><br/><sub>04 감사 · 18.41</sub></td>
+    <td align="center"><img src="bob_sessions/timehasdensity_task05_full_task_session.png" width="160" alt="Task 05 세션 요약" /><br/><sub>05 확인과 배포 · 21.02</sub></td>
+  </tr>
+</table>
+
+**작업 6개 · 계정 4개 · 158 Bobcoin, 모든 계정의 예산 소진.** 예산을 아낀 방법도 있습니다. 사실은 코드로 계산해서 Bobcoin은 판단이 필요한 곳에만 쓰고, 단계마다 새 작업을 열어 맥락을 작게 유지하고, 단계마다 Bob이 커밋해서 모든 변경을 추적할 수 있게 했습니다. 팀원별 세션 화면은 [`bob_sessions/`](bob_sessions/), Task Id는 [`docs/BOB_SESSIONS.md`](docs/BOB_SESSIONS.md), Bob이 만든 파일은 [`BOB_CONTRIBUTIONS.md`](BOB_CONTRIBUTIONS.md), 첫 프로토타입에서 지금 버전까지의 과정은 [`docs/EVOLUTION.md`](docs/EVOLUTION.md)에 있습니다.
 
 ### 제품 안의 Bob
 
@@ -101,38 +103,35 @@ flowchart LR
 | 슬래시 명령 | `/audit`, `/verify`, `/fix-forward`, `/receipt` | [`.bob/commands/`](.bob/commands/) |
 | 모드 규칙 | 증거부터 모으고, git으로 확인 가능한 판정은 직접 정하지 않고, 문제를 누그러뜨리지 않음 | [`.bob/rules-overlook-auditor/`](.bob/rules-overlook-auditor/) |
 
-Bob 없이도 Overlook은 로직만으로 돌아가며 결과를 **Draft audit**으로 표시합니다. 지도, 기록, git으로 계산할 수 있는 판정은 모두 나오지만, 요청 범위는 추정일 뿐이고 기능 주장은 *확인 안 됨*으로 남습니다. 아래 실제 감사 3개는 모두 Bob이 Overlook Auditor 모드로 직접 감사한 결과이고, Copilot PR 두 개 모두에서 거짓 주장을 잡아냈습니다.
+Bob 없이도 Overlook은 로직만으로 돌아가며 결과를 **Draft audit**으로 표시합니다. 지도, 기록, git으로 계산할 수 있는 판정은 모두 나오지만, 요청 범위는 추정일 뿐이고 기능 주장은 *확인 안 됨*으로 남습니다.
 
-### Bob과 함께 만든 과정
+## 왜 필요한가
 
-팀 계정 네 개가 각자 40 Bobcoin 예산을 다 쓸 때까지 Bob을 돌렸습니다. Plan 모드로 계획을 세우고, Agent 모드로 코드와 테스트를 짜고, 서비스를 띄워 확인하고, 다시 고쳤습니다.
+에이전트는 빠르고, 요청받은 부분은 대체로 잘 해냅니다. 문제는 그 밖입니다. 공용 날짜 헬퍼를 "정리"하고, 지나가는 길에 API 직렬화 코드를 손보고, 실패하던 테스트 기대값을 조용히 바꿔서 통과시킵니다. 변경 하나하나는 diff에서 별것 아니어 보이지만, 모이면 아무도 건드릴 생각이 없던 화면과 계약까지 번집니다.
 
-| | Bob 2.0 | Bob이 한 일 |
-|:---:|---|---|
-| **시작** | Agent 모드, `office-insights` 스킬 | 명세와 Word 요청서를 쓰고, 첫 Auditor 모드·규칙·스킬을 구성 |
-| **계획** | Plan 모드, 문서 이해 | 요청서를 읽고 [`docs/PLAN.md`](docs/PLAN.md) 작성: 단계, 완료 기준, 수용 매트릭스, Bobcoin 예산 |
-| **구축** | Agent 모드, 하위 작업 7개 | 첫 버전을 단계별로 구축. 하위 작업마다 새 맥락, 단계마다 테스트와 커밋 |
-| **수정** | Agent 모드, 두 번째 계정 | 리뷰 목록을 반영하고 샘플을 다시 생성 |
-| **리뷰** | Agent 모드 | 완성된 코드 전체를 읽고 쓰지 않는 코드를 지우고 테스트를 보강. 에이전트가 테스트 스크립트를 바꿔 "통과"를 꾸밀 수 있는 구멍도 막음 |
-| **감사** | Overlook Auditor 모드 | 제품의 감사 절차를 실제 작업에 돌림: 공개 저장소의 실제 에이전트 작업 3개를 감사하고, Copilot PR 두 개 모두에서 거짓 주장을 찾음 |
-| **확인** | Agent 모드 | 호스팅용 서버리스 API를 추가하고, Atlas 예시의 원래 테스트를 실제로 돌려 78개 통과를 확인 |
+이 문제를 가장 크게 느끼는 사람들은 이렇습니다.
 
-<table>
-  <tr>
-    <td align="center"><img src="bob_sessions/timehasdensity_task00_full_task_session.png" width="220" alt="Task 00 세션 요약" /><br/><sub>시작 · 7.00</sub></td>
-    <td align="center"><img src="bob_sessions/timehasdensity_task01_full_task_session.png" width="220" alt="Task 01 세션 요약" /><br/><sub>계획과 구축 · 39.55</sub></td>
-    <td align="center"><img src="bob_sessions/timehasdensity_task02_full_task_session.png" width="220" alt="Task 02 세션 요약" /><br/><sub>수정 · 39.95</sub></td>
-    <td align="center"><img src="bob_sessions/timehasdensity_task03_full_task_session.png" width="220" alt="Task 03 세션 요약" /><br/><sub>리뷰 · 32.53</sub></td>
-    <td align="center"><img src="bob_sessions/timehasdensity_task04_session_header.png" width="220" alt="Task 04 세션 요약" /><br/><sub>감사 · 18.41</sub></td>
-    <td align="center"><img src="bob_sessions/timehasdensity_task05_full_task_session.png" width="220" alt="Task 05 세션 요약" /><br/><sub>확인 · 21.02</sub></td>
-  </tr>
-</table>
+- **리뷰어와 테크 리드:** 한 줄씩 읽을 수 있는 것보다 많은 에이전트 PR을 승인해야 합니다.
+- **프로덕트 오너:** 요청은 직접 썼지만 diff를 읽을 수 없어서, 나온 결과가 요청한 그대로인지 확인할 방법이 없습니다.
+- **에이전트를 여러 개 동시에 돌리는 팀:** 브랜치들이 예상치 못한 곳에서 겹칩니다.
 
-**작업 6개 · 계정 4개 · 158 Bobcoin, 모든 계정의 예산 소진.** Bobcoin은 판단이 필요한 곳에만 쓰고 사실은 모두 코드로 계산했으며, 단계마다 새 작업을 열어 맥락을 작게 유지했습니다. 팀원별 세션 화면은 [`bob_sessions/`](bob_sessions/), Task Id는 [`docs/BOB_SESSIONS.md`](docs/BOB_SESSIONS.md), Bob이 만든 파일은 [`BOB_CONTRIBUTIONS.md`](BOB_CONTRIBUTIONS.md), 첫 프로토타입에서 지금 버전까지의 과정은 [`docs/EVOLUTION.md`](docs/EVOLUTION.md)에 있습니다.
+Overlook은 합치기 전에 네 가지에 답합니다. **에이전트가 범위 안에서만 일했는지, 보고가 사실인지, 원래 테스트가 여전히 통과하는지, 무엇을 결정해야 하는지.**
+
+## 실제로 돌려 본 결과
+
+만든 데모 하나만으로 주장하고 싶지 않아서, 실제 에이전트 작업에도 Overlook을 돌렸습니다.
+
+| | 결과 |
+|---|---|
+| **GT-142**, 우리가 만든 데모 작업 | 보고는 "기사 화면만, API 변경 없음, 테스트 모두 통과"였습니다. Overlook은 **바뀐 파일 6개 중 4개가 요청 범위 밖**, 공용 헬퍼를 통해 **파일 3개가 추가로 영향**, API 직렬화 변경, 다시 쓰인 테스트를 찾았습니다. **주장 4개 중 1개만 사실**이었습니다. |
+| GitHub 공식 MCP 서버의 **Copilot 에이전트 PR** ([#1645](https://github.com/github/github-mcp-server/pull/1645)) | 호환성 수정이 테스트 기대값과 도구 스냅샷 5개까지 다시 썼습니다. **파일 7개 중 5개가 범위 밖**, "테스트 통과"는 일부만 사실입니다. |
+| Microsoft Playwright MCP의 **Copilot 에이전트 PR** ([#725](https://github.com/microsoft/playwright-mcp/pull/725)) | 범위 안에서 작업했지만, 설명에는 나중 커밋이 되돌린 변경이 여전히 적혀 있습니다. |
+| 실제 작업 3개에 대한 **Bob의 감사** | Bob이 요청 범위를 긋고 보고를 주장으로 나눴습니다. **Copilot PR 두 개 모두**에서 거짓 주장을 잡았습니다. 이 판정은 Bob의 판단으로 표시되고 근거가 함께 붙으며, git이 계산한 판정과 나란히 보입니다. |
+| GitHub API로 측정한 **병합된 에이전트 PR 22개** (Copilot, Codex, Devin) | **20개 중 15개**가 테스트 파일을 바꿨고 **6개**가 테스트 기대값을 다시 썼습니다. 자세한 내용과 한계는 [`docs/measurements.md`](docs/measurements.md), 전후 비교 수치는 [`docs/metrics.md`](docs/metrics.md) (영문). |
 
 ## 써 보기
 
-**지금 바로 브라우저에서.** [overlook-lime.vercel.app](https://overlook-lime.vercel.app/)에서 데모와 모든 예시를 열 수 있습니다. 로그인도 키도 필요 없습니다.
+**지금 바로 브라우저에서.** [overlook-olive.vercel.app](https://overlook-olive.vercel.app/)에서 데모와 모든 예시를 열 수 있습니다. 로그인도 키도 필요 없습니다. 호스팅 사이트는 감사 결과를 보여주고, 내 링크를 감사하는 것은 로컬에서 합니다.
 
 **아무 GitHub 링크로.** Node.js 22 이상과 git만 있으면 됩니다. 따로 설치할 것은 없습니다.
 
@@ -192,7 +191,7 @@ http://localhost:4280 을 열고 풀 리퀘스트, compare, 커밋, 저장소 �
   </tr>
 </table>
 
-**실제 감사**는 공개 저장소에서 에이전트가 끝낸 작업입니다. 요청과 보고는 원문을 인용했고, git으로 확인할 수 있는 판정은 모두 git에서 계산했습니다.
+**실제 감사**는 공개 저장소에서 에이전트가 끝낸 작업이고, 셋 모두 Bob이 감사했습니다. 요청과 보고는 원문을 인용했고, git으로 확인할 수 있는 판정은 모두 git에서 계산했습니다.
 
 | 예시 | 출처 | Overlook이 찾은 것 | 감사자 |
 |---|---|---|---|
@@ -200,7 +199,7 @@ http://localhost:4280 을 열고 풀 리퀘스트, compare, 커밋, 저장소 �
 | playwright-mcp #725 | [microsoft/playwright-mcp](https://github.com/microsoft/playwright-mcp/pull/725) (Copilot) | 범위 안이지만, 설명에는 나중 커밋이 되돌린 변경이 여전히 적혀 있음. 하루 뒤 squash 병합 | **IBM Bob** (Overlook Auditor 모드) |
 | Atlas · Bob 세션 10 | [chanjoongx/atlas](https://github.com/chanjoongx/atlas) (IBM Bob 해커톤 2026년 5월, 2위) | main에 바로 커밋. Bob은 프롬프트가 지정한 파일 4개 안에서만 작업했고, 원래 테스트 78개가 모두 통과 | **IBM Bob** (Overlook Auditor 모드) |
 
-**대본 시나리오**도 같은 엔진으로 감사했습니다. 대본 시나리오는 GT-142 데모, 인프라까지 번지는 UI 기능(`infra-drift`), 파일 625개 모노레포의 이름 변경(`monorepo-scale`), 그리고 비교용 깨끗한 작업(`clean-pass`)입니다. 대본 시나리오는 분명히 표시되어 있고, 실제 에이전트 실행으로 소개하지 않습니다.
+**대본 시나리오**도 같은 엔진으로 감사했습니다. GT-142 데모, 인프라까지 번지는 UI 기능(`infra-drift`), 파일 625개 모노레포의 이름 변경(`monorepo-scale`), 그리고 비교용 깨끗한 작업(`clean-pass`)입니다. 대본 시나리오는 분명히 표시되어 있고, 실제 에이전트 실행으로 소개하지 않습니다.
 
 ## 동작 방식
 
@@ -230,6 +229,7 @@ flowchart LR
 bob_sessions/    팀 계정별 Bob 작업 세션 요약
 brief/           데모 요청서 (GT-142.docx)
 engine/          sources, collect, 판정, draft audit, verify, 되돌리기, 영수증, site, mcp, 테스트
+api/             호스팅 사이트용 서버리스 함수
 samples/         GT-142 샘플, 대본 예시, 실제 감사
 ui/              정적 사이트
 docs/            구조, 계획, Bob 세션, 발전 과정, 측정, 스크린샷

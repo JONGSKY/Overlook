@@ -81,7 +81,7 @@ City updated: `samples/real/atlas-production-fixes.city.json` now contains `runs
 
 | Feature | Status on Vercel |
 |---------|-----------------|
-| GitHub PR/compare audit | ✅ Full support |
+| GitHub PR/compare audit | ❌ The Vercel runtime has no `git` binary (`spawn git ENOENT`), so cloning fails; `/api/health` reports it and the site stays in examples mode |
 | Local folder audit | ❌ Requires local server |
 | Audit history persistence | ⚠️ `/tmp` only — ephemeral per function instance |
 | `/verify` (cross-test, reverts, checks) | ❌ Requires local git worktree |

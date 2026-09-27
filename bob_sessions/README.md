@@ -80,9 +80,11 @@ Team **Time Has Density** built Overlook with IBM Bob 2.0. Each screenshot below
 
 Full write-up: [`bob_sessions/timehasdensity_task05_vercel_and_verify.md`](timehasdensity_task05_vercel_and_verify.md)
 
-- **Deploy:** added `api/` Serverless Functions for every endpoint; routed sub-paths in `vercel.json`; switched `out/` storage to `/tmp` when `VERCEL=1`; added `.env.example`.
-- **Verify:** fixed `detectTestCommandAtBase` to prefix bare binary names with `./node_modules/.bin/`; added `npm install` fallback when `npm ci` fails due to lock file drift.
-- **Result:** `crossTests` on `chanjoongx/atlas` — 78 tests, 4 files, all passed. `atlas-production-fixes.city.json` updated with `runs.cross`; `tests_pass` claim verdict: `unverified → true`.
+In one line: Bob split the local Node server's API into Vercel serverless functions, moved file storage to `/tmp`, ran the original tests on a real example, and committed it all with the test suite green.
+
+- **Deploy:** one function per endpoint (`api/health`, `api/source`, `api/audit`, `api/audits`, `api/audits/[id]`). Vercel doesn't send sub-paths like `/api/audits/<id>/receipt` to `[id].mjs` on its own, so Bob added rewrites in `vercel.json` for `/receipt`, `/fence` and `/verify`. Functions get 60 seconds, and with `VERCEL=1` audits and clones are stored in `/tmp`. Dashboard settings: framework *Other*, empty build and install commands, Node.js 22.x; `GITHUB_TOKEN` is optional for public repositories.
+- **Verify:** ran the original tests of the Atlas example against its head code: **78 tests in 4 files, all passing**, so that example's "tests pass" claim is now verified rather than just reported. Two fixes on the way: the base test command finds the worktree's local binaries, and `npm install` is the fallback when `npm ci` meets a stale lock file.
+- **Known limits on Vercel:** local-folder audits, `/verify` and the MCP server need the local server. The hosted runtime also has no `git`, so the hosted site stays in examples mode; auditing a link runs locally with `npm run site`.
 
 ---
 
