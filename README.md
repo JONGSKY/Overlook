@@ -9,6 +9,8 @@
 **English** · [한국어](README.ko.md)
 
 [![Live demo](https://img.shields.io/badge/▶_live_demo-overlook--olive.vercel.app-3b82d4?style=for-the-badge)](https://overlook-olive.vercel.app/)
+[![Demo video](https://img.shields.io/badge/🎬_demo_video-2:46-e5484d?style=for-the-badge)](docs/media/overlook-demo.mp4)
+[![Presentation](https://img.shields.io/badge/📑_presentation-PDF-f5a524?style=for-the-badge)](docs/media/overlook-pitch-deck.pdf)
 
 [![Built with IBM Bob 2.0](https://img.shields.io/badge/built_with-IBM_Bob_2.0-0f62fe?style=flat-square)](#built-with-ibm-bob-20)
 [![Tests](https://img.shields.io/badge/tests-48_passing-3c873a?style=flat-square)](engine/test)
@@ -30,6 +32,15 @@ We built it with **IBM Bob 2.0** from the first spec to the last review, and Bob
 ![Overlook: paste a GitHub link over a live map of a real audit](docs/images/overlook-main.png)
 
 </div>
+
+## Presentation and demo video
+
+<table>
+  <tr>
+    <td width="50%" valign="top"><a href="docs/media/overlook-demo.mp4"><img src="docs/media/overlook-demo-poster.png" alt="Demo video" /></a><br/><b><a href="docs/media/overlook-demo.mp4">🎬 Demo video</a></b> · 2:46<br/>The problem, a live audit on the map, and how Bob runs it.</td>
+    <td width="50%" valign="top"><a href="docs/media/overlook-pitch-deck.pdf"><img src="docs/media/overlook-pitch-deck-cover.png" alt="Presentation" /></a><br/><b><a href="docs/media/overlook-pitch-deck.pdf">📑 Presentation</a></b> · PDF, 7 slides<br/>Problem, product, demo, beyond the diff, how Bob is used.</td>
+  </tr>
+</table>
 
 ## What you see
 
@@ -131,7 +142,7 @@ We didn't want to argue from a made-up demo alone, so we ran Overlook on real ag
 
 ## Try it
 
-**In your browser, right now.** [overlook-olive.vercel.app](https://overlook-olive.vercel.app/) opens the demo and every example. No sign-in, no keys. The hosted site shows audits; auditing your own link runs locally.
+**In your browser, right now.** [overlook-olive.vercel.app](https://overlook-olive.vercel.app/) opens the demo and every example. No sign-in, no keys. You can paste a GitHub link there too: it runs the logic-only Draft audit, and the hosted server doesn't keep results for long. For saved audits, running the tests and Bob, run it locally.
 
 **On any GitHub link.** You need Node.js 22+ and git. There's nothing to install.
 

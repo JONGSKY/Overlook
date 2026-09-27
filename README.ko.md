@@ -9,6 +9,8 @@
 [English](README.md) · **한국어**
 
 [![Live demo](https://img.shields.io/badge/▶_live_demo-overlook--olive.vercel.app-3b82d4?style=for-the-badge)](https://overlook-olive.vercel.app/)
+[![Demo video](https://img.shields.io/badge/🎬_demo_video-2:46-e5484d?style=for-the-badge)](docs/media/overlook-demo.mp4)
+[![Presentation](https://img.shields.io/badge/📑_presentation-PDF-f5a524?style=for-the-badge)](docs/media/overlook-pitch-deck.pdf)
 
 [![Built with IBM Bob 2.0](https://img.shields.io/badge/built_with-IBM_Bob_2.0-0f62fe?style=flat-square)](#ibm-bob-20으로-만들었습니다)
 [![Tests](https://img.shields.io/badge/tests-48_passing-3c873a?style=flat-square)](engine/test)
@@ -30,6 +32,15 @@
 ![Overlook: 실제 감사 지도 위에 GitHub 링크를 붙여 넣는 첫 화면](docs/images/overlook-main.png)
 
 </div>
+
+## 발표 자료와 데모 영상
+
+<table>
+  <tr>
+    <td width="50%" valign="top"><a href="docs/media/overlook-demo.mp4"><img src="docs/media/overlook-demo-poster.png" alt="데모 영상" /></a><br/><b><a href="docs/media/overlook-demo.mp4">🎬 데모 영상</a></b> · 2:46<br/>문제, 지도 위의 실제 감사, 그리고 Bob이 감사를 돌리는 방식.</td>
+    <td width="50%" valign="top"><a href="docs/media/overlook-pitch-deck.pdf"><img src="docs/media/overlook-pitch-deck-cover.png" alt="발표 자료" /></a><br/><b><a href="docs/media/overlook-pitch-deck.pdf">📑 발표 자료</a></b> · PDF, 7 장<br/>문제, 제품, 데모, diff 너머, Bob 활용.</td>
+  </tr>
+</table>
 
 ## 이렇게 보입니다
 
@@ -131,7 +142,7 @@ Overlook은 합치기 전에 네 가지에 답합니다. **에이전트가 범�
 
 ## 써 보기
 
-**지금 바로 브라우저에서.** [overlook-olive.vercel.app](https://overlook-olive.vercel.app/)에서 데모와 모든 예시를 열 수 있습니다. 로그인도 키도 필요 없습니다. 호스팅 사이트는 감사 결과를 보여주고, 내 링크를 감사하는 것은 로컬에서 합니다.
+**지금 바로 브라우저에서.** [overlook-olive.vercel.app](https://overlook-olive.vercel.app/)에서 데모와 모든 예시를 열 수 있습니다. 로그인도 키도 필요 없습니다. 여기서도 GitHub 링크를 붙여 넣으면 로직만으로 도는 Draft audit이 실행되지만, 호스팅 서버는 결과를 오래 보관하지 않습니다. 감사 저장, 테스트 실행, Bob과 함께 쓰려면 로컬에서 실행하세요.
 
 **아무 GitHub 링크로.** Node.js 22 이상과 git만 있으면 됩니다. 따로 설치할 것은 없습니다.
 
