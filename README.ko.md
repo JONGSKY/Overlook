@@ -9,7 +9,7 @@
 [English](README.md) · **한국어**
 
 [![Live demo](https://img.shields.io/badge/▶_live_demo-overlook--olive.vercel.app-3b82d4?style=for-the-badge)](https://overlook-olive.vercel.app/)
-[![Demo video](https://img.shields.io/badge/🎬_demo_video-2:46-e5484d?style=for-the-badge)](docs/media/overlook-demo.mp4)
+[![Demo video](https://img.shields.io/badge/🎬_demo_video-2:46-e5484d?style=for-the-badge)](#발표-자료와-데모-영상)
 [![Presentation](https://img.shields.io/badge/📑_presentation-PDF-f5a524?style=for-the-badge)](docs/media/overlook-pitch-deck.pdf)
 
 [![Built with IBM Bob 2.0](https://img.shields.io/badge/built_with-IBM_Bob_2.0-0f62fe?style=flat-square)](#ibm-bob-20으로-만들었습니다)
@@ -35,12 +35,13 @@
 
 ## 발표 자료와 데모 영상
 
-<table>
-  <tr>
-    <td width="50%" valign="top"><a href="docs/media/overlook-demo.mp4"><img src="docs/media/overlook-demo-poster.png" alt="데모 영상" /></a><br/><b><a href="docs/media/overlook-demo.mp4">🎬 데모 영상</a></b> · 2:46<br/>문제, 지도 위의 실제 감사, 그리고 Bob이 감사를 돌리는 방식.</td>
-    <td width="50%" valign="top"><a href="docs/media/overlook-pitch-deck.pdf"><img src="docs/media/overlook-pitch-deck-cover.png" alt="발표 자료" /></a><br/><b><a href="docs/media/overlook-pitch-deck.pdf">📑 발표 자료</a></b> · PDF, 7 장<br/>문제, 제품, 데모, diff 너머, Bob 활용.</td>
-  </tr>
-</table>
+https://github.com/user-attachments/assets/09dbad54-5faf-453e-9702-ed5d4c36518d
+
+<sub>🎬 2분 46초 · 문제, 지도 위의 실제 감사, Bob이 감사를 돌리는 방식 · [원본 화질 파일](docs/media/overlook-demo.mp4)</sub>
+
+<a href="docs/media/overlook-pitch-deck.pdf"><img src="docs/media/overlook-pitch-deck-cover.png" width="560" alt="발표 자료" /></a>
+
+<sub>📑 [발표 자료](docs/media/overlook-pitch-deck.pdf) · PDF 7장 · 문제, 제품, 데모, diff 너머, Bob 활용</sub>
 
 ## 이렇게 보입니다
 
@@ -204,11 +205,11 @@ http://localhost:4280 을 열고 풀 리퀘스트, compare, 커밋, 저장소 �
 
 **실제 감사**는 공개 저장소에서 에이전트가 끝낸 작업이고, 셋 모두 Bob이 감사했습니다. 요청과 보고는 원문을 인용했고, git으로 확인할 수 있는 판정은 모두 git에서 계산했습니다.
 
-| 예시 | 출처 | Overlook이 찾은 것 | 감사자 |
+| 예시 | 출처 | 요약 | 감사자 |
 |---|---|---|---|
-| github-mcp-server #1645 | [github/github-mcp-server](https://github.com/github/github-mcp-server/pull/1645) (Copilot) | 호환성 수정이 테스트 기대값과 도구 스냅샷 5개까지 다시 씀: 파일 7개 중 5개가 범위 밖, "테스트 통과"는 일부만 사실 | **IBM Bob** (Overlook Auditor 모드) |
-| playwright-mcp #725 | [microsoft/playwright-mcp](https://github.com/microsoft/playwright-mcp/pull/725) (Copilot) | 범위 안이지만, 설명에는 나중 커밋이 되돌린 변경이 여전히 적혀 있음. 하루 뒤 squash 병합 | **IBM Bob** (Overlook Auditor 모드) |
-| Atlas · Bob 세션 10 | [chanjoongx/atlas](https://github.com/chanjoongx/atlas) (IBM Bob 해커톤 2026년 5월, 2위) | main에 바로 커밋. Bob은 프롬프트가 지정한 파일 4개 안에서만 작업했고, 원래 테스트 78개가 모두 통과 | **IBM Bob** (Overlook Auditor 모드) |
+| github-mcp-server #1645 | [github/github-mcp-server](https://github.com/github/github-mcp-server/pull/1645) (Copilot) | 7개 중 5개 범위 밖 · 테스트 다시 씀 · 거짓 주장 1개 | **IBM Bob** (Overlook Auditor 모드) |
+| playwright-mcp #725 | [microsoft/playwright-mcp](https://github.com/microsoft/playwright-mcp/pull/725) (Copilot) | 범위 안 · 거짓 주장 1개 (나중 커밋이 되돌린 변경) | **IBM Bob** (Overlook Auditor 모드) |
+| Atlas · Bob 세션 10 | [chanjoongx/atlas](https://github.com/chanjoongx/atlas) (IBM Bob 해커톤 2026년 5월, 2위) | 8개 중 0개 범위 밖 · 원래 테스트 78개 통과 | **IBM Bob** (Overlook Auditor 모드) |
 
 **대본 시나리오**도 같은 엔진으로 감사했습니다. GT-142 데모, 인프라까지 번지는 UI 기능(`infra-drift`), 파일 625개 모노레포의 이름 변경(`monorepo-scale`), 그리고 비교용 깨끗한 작업(`clean-pass`)입니다. 대본 시나리오는 분명히 표시되어 있고, 실제 에이전트 실행으로 소개하지 않습니다.
 

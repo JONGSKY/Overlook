@@ -9,7 +9,7 @@
 **English** · [한국어](README.ko.md)
 
 [![Live demo](https://img.shields.io/badge/▶_live_demo-overlook--olive.vercel.app-3b82d4?style=for-the-badge)](https://overlook-olive.vercel.app/)
-[![Demo video](https://img.shields.io/badge/🎬_demo_video-2:46-e5484d?style=for-the-badge)](docs/media/overlook-demo.mp4)
+[![Demo video](https://img.shields.io/badge/🎬_demo_video-2:46-e5484d?style=for-the-badge)](#presentation-and-demo-video)
 [![Presentation](https://img.shields.io/badge/📑_presentation-PDF-f5a524?style=for-the-badge)](docs/media/overlook-pitch-deck.pdf)
 
 [![Built with IBM Bob 2.0](https://img.shields.io/badge/built_with-IBM_Bob_2.0-0f62fe?style=flat-square)](#built-with-ibm-bob-20)
@@ -35,12 +35,13 @@ We built it with **IBM Bob 2.0** from the first spec to the last review, and Bob
 
 ## Presentation and demo video
 
-<table>
-  <tr>
-    <td width="50%" valign="top"><a href="docs/media/overlook-demo.mp4"><img src="docs/media/overlook-demo-poster.png" alt="Demo video" /></a><br/><b><a href="docs/media/overlook-demo.mp4">🎬 Demo video</a></b> · 2:46<br/>The problem, a live audit on the map, and how Bob runs it.</td>
-    <td width="50%" valign="top"><a href="docs/media/overlook-pitch-deck.pdf"><img src="docs/media/overlook-pitch-deck-cover.png" alt="Presentation" /></a><br/><b><a href="docs/media/overlook-pitch-deck.pdf">📑 Presentation</a></b> · PDF, 7 slides<br/>Problem, product, demo, beyond the diff, how Bob is used.</td>
-  </tr>
-</table>
+https://github.com/user-attachments/assets/09dbad54-5faf-453e-9702-ed5d4c36518d
+
+<sub>🎬 2:46 · the problem, a live audit on the map, and how Bob runs it · [full-quality file](docs/media/overlook-demo.mp4)</sub>
+
+<a href="docs/media/overlook-pitch-deck.pdf"><img src="docs/media/overlook-pitch-deck-cover.png" width="560" alt="Presentation" /></a>
+
+<sub>📑 [Presentation](docs/media/overlook-pitch-deck.pdf) · PDF, 7 slides · problem, product, demo, beyond the diff, how Bob is used</sub>
 
 ## What you see
 
@@ -204,11 +205,11 @@ You get back a link to the map and a receipt you can post on the pull request.
 
 **Real audits** of finished agent work in public repositories, all three audited by Bob. The request and the report are quoted from the source, and every verdict git can check is computed from git.
 
-| Example | Source | What Overlook finds | Auditor |
+| Example | Source | In short | Auditor |
 |---|---|---|---|
-| github-mcp-server #1645 | [github/github-mcp-server](https://github.com/github/github-mcp-server/pull/1645) (Copilot) | A compatibility fix that also rewrites a test expectation and five tool snapshots: 5 of 7 files outside the request; "tests pass" is only partly true | **IBM Bob** (Overlook Auditor mode) |
-| playwright-mcp #725 | [microsoft/playwright-mcp](https://github.com/microsoft/playwright-mcp/pull/725) (Copilot) | Inside the request, but the description still claims a change a later commit reverted; squash-merged a day later | **IBM Bob** (Overlook Auditor mode) |
-| Atlas · Bob session 10 | [chanjoongx/atlas](https://github.com/chanjoongx/atlas) (IBM Bob hackathon, May 2026, 2nd place) | Committed straight to main; Bob stayed inside the four files the prompt named, and the original 78 tests pass | **IBM Bob** (Overlook Auditor mode) |
+| github-mcp-server #1645 | [github/github-mcp-server](https://github.com/github/github-mcp-server/pull/1645) (Copilot) | 5 of 7 files outside · a test rewritten · 1 false claim | **IBM Bob** (Overlook Auditor mode) |
+| playwright-mcp #725 | [microsoft/playwright-mcp](https://github.com/microsoft/playwright-mcp/pull/725) (Copilot) | In scope · 1 false claim (a change a later commit reverted) | **IBM Bob** (Overlook Auditor mode) |
+| Atlas · Bob session 10 | [chanjoongx/atlas](https://github.com/chanjoongx/atlas) (IBM Bob hackathon, May 2026, 2nd place) | 0 of 8 files outside · the original 78 tests pass | **IBM Bob** (Overlook Auditor mode) |
 
 **Scripted scenarios**, audited by the same engine: the GT-142 demo, a UI feature that leaks into infrastructure (`infra-drift`), a rename across a 625-file monorepo (`monorepo-scale`) and a clean pass for contrast. They're clearly labelled and never passed off as real agent runs.
 
